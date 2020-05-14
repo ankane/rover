@@ -4,6 +4,8 @@ Simple, powerful data frames for Ruby
 
 :mountain: Designed for data exploration and machine learning, and powered by [Numo](https://github.com/ruby-numo/numo-narray) for blazing performance
 
+[![Build Status](https://travis-ci.org/ankane/rover.svg?branch=master)](https://travis-ci.org/ankane/rover)
+
 ## Installation
 
 Add this line to your application’s Gemfile:
