@@ -208,6 +208,11 @@ module Rover
       Vector.new(@data[-n..-1])
     end
 
+    def take(n)
+      raise ArgumentError, "attempt to take negative size" if n < 0
+      first(n)
+    end
+
     def crosstab(other)
       index = uniq.sort
       index_pos = index.to_a.map.with_index.to_h

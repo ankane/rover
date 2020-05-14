@@ -196,6 +196,28 @@ class VectorTest < Minitest::Test
     assert_vector [1, 2], Rover::Vector.new([1, 1, 1, 2, 2]).uniq
   end
 
+  def test_first
+    vector = Rover::Vector.new(1..3)
+    assert_vector 1..2, vector.first(2)
+  end
+
+  def test_last
+    vector = Rover::Vector.new(1..3)
+    assert_vector 2..3, vector.last(2)
+  end
+
+  def test_take
+    vector = Rover::Vector.new(1..3)
+    assert_vector 1..2, vector.take(2)
+  end
+
+  def test_take_negative
+    error = assert_raises(ArgumentError) do
+      Rover::Vector.new(1..3).take(-1)
+    end
+    assert_equal "attempt to take negative size", error.message
+  end
+
   def test_bad_size
     error = assert_raises(ArgumentError) do
       Rover::Vector.new(Numo::DFloat.new(2, 3).rand)
