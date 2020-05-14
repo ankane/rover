@@ -83,6 +83,8 @@ Select a column
 df[:a]
 ```
 
+> Note that strings and symbols are different keys, just like hashes
+
 Select multiple columns
 
 ```ruby
