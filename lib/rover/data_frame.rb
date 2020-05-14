@@ -170,6 +170,12 @@ module Rover
       DataFrame.new(new_vectors)
     end
 
+    def sample(*args, **kwargs)
+      # TODO make more efficient
+      indexes = (0...size).to_a.sample(*args, **kwargs)
+      self[indexes]
+    end
+
     def to_a
       a = []
       each_row do |row|

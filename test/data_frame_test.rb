@@ -165,6 +165,14 @@ class DataFrameTest < Minitest::Test
     assert_vector ["one", "three", "two"], df["b"]
   end
 
+  # TODO better test
+  def test_sample
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal 1, df.sample.size
+    assert_equal 2, df.sample(2).size
+    assert_equal 2, df.sample(2, random: Random.new(123)).size
+  end
+
   def test_empty_size
     assert_equal 0,  Rover::DataFrame.new.size
   end
