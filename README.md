@@ -166,7 +166,7 @@ Cross tabulation
 df[:a].crosstab(df[:b])
 ```
 
-## Updates
+## Updating Data
 
 Add a new column
 
