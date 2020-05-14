@@ -41,7 +41,7 @@ Rover::DataFrame.new({
 })
 ```
 
-From an Active Record relation
+From Active Record
 
 ```ruby
 Rover::DataFrame.new(User.all)
