@@ -176,7 +176,7 @@ module Rover
 
     def median
       # need to cast to get correct result
-      # TODO file bug with Numo
+      # https://github.com/ruby-numo/numo-narray/issues/165
       @data.cast_to(Numo::DFloat).median
     end
 
