@@ -22,6 +22,8 @@ Try it out for forecasting by clicking the button below:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ankane/ml-stack/master?filepath=Forecasting.ipynb)
 
+Use the `Run` button to run each line.
+
 ## Creating Data Frames
 
 From an array
