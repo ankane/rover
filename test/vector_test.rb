@@ -10,6 +10,7 @@ class VectorTest < Minitest::Test
     assert_equal 1, vector[0]
     assert_equal [1, 2], vector[0..1].to_a
     assert_equal [2, 3], vector[1..-1].to_a
+    assert_equal [2, 3], vector[1..nil].to_a # endless range
   end
 
   def test_array
