@@ -100,6 +100,19 @@ class VectorTest < Minitest::Test
     assert_equal 10, Rover::Vector.new(1..4).sum
   end
 
+  def test_any?
+    vector = Rover::Vector.new(1..3)
+    assert vector.any?
+    assert vector.any? { |v| v == 2 }
+    assert !vector.any? { |v| v == 4 }
+  end
+
+  def test_all?
+    vector = Rover::Vector.new(1..3)
+    assert vector.all? { |v| v < 4 }
+    assert !vector.all? { |v| v < 3 }
+  end
+
   def test_map
     vector = Rover::Vector.new([10, 20, 30])
     assert_vector [20, 40, 60], vector.map { |v| v * 2 }
