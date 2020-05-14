@@ -224,7 +224,7 @@ Rename a column
 df[:new_a] = df.delete(:a)
 ```
 
-Sort data
+Sort rows
 
 ```ruby
 df.sort_by! { |r| r[:a] }
