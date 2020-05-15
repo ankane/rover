@@ -29,7 +29,11 @@ Use the `Run` button (or `SHIFT` + `ENTER`) to run each line.
 From an array
 
 ```ruby
-Rover::DataFrame.new([{a: 1, b: "one"}, {a: 2, b: "two"}, {a: 3, b: "three"}])
+Rover::DataFrame.new([
+  {a: 1, b: "one"},
+  {a: 2, b: "two"},
+  {a: 3, b: "three"}
+])
 ```
 
 From a hash
