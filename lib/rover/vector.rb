@@ -188,6 +188,16 @@ module Rover
       @data.sum
     end
 
+    # uses Bessel's correction for now since that's all Numo supports
+    def std
+      @data.cast_to(Numo::DFloat).stddev
+    end
+
+    # uses Bessel's correction for now since that's all Numo supports
+    def var
+      @data.cast_to(Numo::DFloat).var
+    end
+
     def all?(&block)
       @data.to_a.all?(&block)
     end

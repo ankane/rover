@@ -125,6 +125,16 @@ class VectorTest < Minitest::Test
     assert_equal 10, Rover::Vector.new(1..4).sum
   end
 
+  # uses Bessel's correction for now since that's all Numo supports
+  def test_std
+    assert_equal 8, Rover::Vector.new([1, 5, 9]).std
+  end
+
+  # uses Bessel's correction for now since that's all Numo supports
+  def test_var
+    assert_equal 16, Rover::Vector.new([1, 5, 9]).var
+  end
+
   def test_any?
     vector = Rover::Vector.new(1..3)
     assert vector.any?
