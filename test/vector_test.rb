@@ -76,13 +76,13 @@ class VectorTest < Minitest::Test
     assert_vector [10, 400, 27000], a ** b
   end
 
-  # TODO use true division
+  # TODO use true division in 0.2.0
   def test_division
     a = Rover::Vector.new([1, 3, 5])
     assert_vector [0, 1, 2], a / 2
   end
 
-  # TODO use true division
+  # TODO use true division in 0.2.0
   def test_division_vector
     a = Rover::Vector.new([1, 3, 5])
     b = Rover::Vector.new([2, 2, 2])
