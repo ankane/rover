@@ -65,6 +65,13 @@ class VectorTest < Minitest::Test
     assert_vector [100, 400, 900], vector ** 2
   end
 
+  def test_operations_vector
+    a = Rover::Vector.new([1, 2, 3])
+    b = Rover::Vector.new([10, 20, 30])
+    assert_vector [11, 22, 33], a + b
+    assert_vector [-9, -18, -27], a - b
+  end
+
   def test_inspect
     vector = Rover::Vector.new(1..10)
     assert_equal "#<Rover::Vector [1, 2, 3, 4, 5, ...]>", vector.inspect
