@@ -68,14 +68,25 @@ class VectorTest < Minitest::Test
   def test_operations_vector
     a = Rover::Vector.new([10, 20, 30])
     b = Rover::Vector.new([1, 2, 3])
-    c = Rover::Vector.new([3, 6, 9])
     assert_vector [11, 22, 33], a + b
     assert_vector [9, 18, 27], a - b
     assert_vector [10, 40, 90], a * b
-    # TODO use true division
-    assert_vector [3, 3, 3], a / c
-    assert_vector [1, 2, 3], a % c
+    assert_vector [10, 10, 10], a / b
+    assert_vector [0, 0, 0], a % b
     assert_vector [10, 400, 27000], a ** b
+  end
+
+  # TODO use true division
+  def test_division
+    a = Rover::Vector.new([1, 3, 5])
+    assert_vector [0, 1, 2], a / 2
+  end
+
+  # TODO use true division
+  def test_division_vector
+    a = Rover::Vector.new([1, 3, 5])
+    b = Rover::Vector.new([2, 2, 2])
+    assert_vector [0, 1, 2], a / b
   end
 
   def test_inspect
