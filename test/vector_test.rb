@@ -127,7 +127,7 @@ class VectorTest < Minitest::Test
 
   # uses Bessel's correction for now since that's all Numo supports
   def test_std
-    assert_equal 8, Rover::Vector.new([1, 5, 9]).std
+    assert_equal 4, Rover::Vector.new([1, 5, 9]).std
   end
 
   # uses Bessel's correction for now since that's all Numo supports
