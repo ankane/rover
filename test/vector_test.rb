@@ -5,6 +5,8 @@ class VectorTest < Minitest::Test
     vector = Rover::Vector.new([1, 2, 3])
     assert_equal [1, 2, 3], vector.to_a
     assert_equal 3, vector.size
+    assert_equal 3, vector.count
+    assert_equal 3, vector.length
     assert_equal [1, 2], vector.first(2).to_a
     assert_equal [2, 3], vector.last(2).to_a
     assert_equal 1, vector[0]

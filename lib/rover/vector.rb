@@ -35,6 +35,8 @@ module Rover
     def size
       @data.size
     end
+    alias_method :length, :size
+    alias_method :count, :size
 
     def uniq
       Vector.new(@data.to_a.uniq)
