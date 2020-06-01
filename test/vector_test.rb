@@ -288,6 +288,15 @@ class VectorTest < Minitest::Test
     assert_vector [1, 3], vector[where]
   end
 
+  def test_each
+    vector = Rover::Vector.new(1..3)
+    values = []
+    vector.each do |value|
+      values << value
+    end
+    assert_equal [1, 2, 3], values
+  end
+
   def test_each_with_index
     array_data = [1,2,3,4,5]
     vector = Rover::Vector.new(array_data)

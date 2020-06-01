@@ -159,7 +159,7 @@ module Rover
     end
 
     def each(&block)
-      to_a.each(&block)
+      @data.each(&block)
     end
 
     def each_with_index(&block)
