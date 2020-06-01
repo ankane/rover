@@ -162,6 +162,10 @@ module Rover
       to_a.each(&block)
     end
 
+    def each_with_index(&block)
+      @data.each_with_index(&block)
+    end
+
     def max
       @data.max
     end
