@@ -217,6 +217,11 @@ class VectorTest < Minitest::Test
     assert_vector [2, 0, -2], -vector
   end
 
+  def test_tally
+    vector = Rover::Vector.new(["hi", "hi", "bye"])
+    assert_equal ({"hi" => 2, "bye" => 1}), vector.tally
+  end
+
   def test_clamp!
     vector = Rover::Vector.new([-100, 0, 100])
     vector.clamp!(-5, 5)

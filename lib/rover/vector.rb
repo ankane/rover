@@ -150,6 +150,15 @@ module Rover
       Vector.new(mapped)
     end
 
+    def tally
+      result = Hash.new(0)
+      @data.each do |v|
+        result[v] += 1
+      end
+      result.default = nil
+      result
+    end
+
     def sort
       Vector.new(@data.respond_to?(:sort) ? @data.sort : @data.to_a.sort)
     end
