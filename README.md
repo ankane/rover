@@ -172,6 +172,12 @@ df[:a].min
 df[:a].max
 ```
 
+Tally [master]
+
+```ruby
+df[:a].tally
+```
+
 Cross tabulation
 
 ```ruby
