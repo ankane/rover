@@ -243,6 +243,11 @@ class DataFrameTest < Minitest::Test
     assert_equal 2, df.median("a")
   end
 
+  def test_sum
+    df = Rover::DataFrame.new({"a" => [1, 2, 6]})
+    assert_equal 9, df.sum("a")
+  end
+
   # TODO better test
   def test_sample
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})

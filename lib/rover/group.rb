@@ -9,7 +9,7 @@ module Rover
       operation(:count)
     end
 
-    [:max, :min, :mean, :median].each do |name|
+    [:max, :min, :mean, :median, :sum].each do |name|
       define_method(name) do |column|
         operation(name, column)
       end
