@@ -172,7 +172,7 @@ df[:a].min
 df[:a].max
 ```
 
-Tally [master]
+Count occurrences [master]
 
 ```ruby
 df[:a].tally
