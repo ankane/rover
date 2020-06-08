@@ -268,10 +268,10 @@ module Rover
       Group.new(self, columns)
     end
 
-    [:max, :min, :median, :mean, :sum].each do |name|
-      define_method(name) do |column|
+    [:max, :min, :median, :mean, :percentile, :sum].each do |name|
+      define_method(name) do |column, *args|
         check_column(column)
-        self[column].send(name)
+        self[column].send(name, *args)
       end
     end
 

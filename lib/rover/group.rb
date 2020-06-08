@@ -9,9 +9,9 @@ module Rover
       operation(:count)
     end
 
-    [:max, :min, :mean, :median, :sum].each do |name|
-      define_method(name) do |column|
-        operation(name, column)
+    [:max, :min, :mean, :median, :percentile, :sum].each do |name|
+      define_method(name) do |column, *args|
+        operation(name, column, *args)
       end
     end
 
