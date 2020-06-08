@@ -1,5 +1,6 @@
 ## 0.1.1 (unreleased)
 
+- Added `group`
 - Added `var`, `std`, `take`, `count`, and `length` to vectors
 - Added `sample` to data frames
 - Improved error message for `read_csv` with no headers

@@ -178,6 +178,34 @@ class DataFrameTest < Minitest::Test
     assert_vector ["one", "three", "two"], df["b"]
   end
 
+  # group
+
+  def test_group
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
+    assert_equal ({"one" => 2, "two" => 1}), df.group("b").count
+  end
+
+  def test_group_multiple
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
+    assert_equal ({[1, "one"] => 1, [2, "one"] => 1, [3, "two"] => 1}), df.group(["a", "b"]).count
+  end
+
+  def test_group_empty
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
+    error = assert_raises(ArgumentError) do
+      df.group([]).count
+    end
+    assert_equal "No columns given", error.message
+  end
+
+  def test_group_missing_keys
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
+    error = assert_raises(ArgumentError) do
+      df.group("c").count
+    end
+    assert_equal "Missing keys: c", error.message
+  end
+
   # TODO better test
   def test_sample
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})

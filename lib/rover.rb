@@ -3,6 +3,7 @@ require "numo/narray"
 
 # modules
 require "rover/data_frame"
+require "rover/group"
 require "rover/vector"
 require "rover/version"
 

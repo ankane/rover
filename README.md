@@ -178,6 +178,20 @@ Cross tabulation
 df[:a].crosstab(df[:b])
 ```
 
+## Grouping [master]
+
+One group
+
+```ruby
+df.group(:a).count
+```
+
+Multiple groups
+
+```ruby
+df.group([:a, :b]).count
+```
+
 ## Updating Data
 
 Add a new column

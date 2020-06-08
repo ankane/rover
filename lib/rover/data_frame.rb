@@ -264,6 +264,10 @@ module Rover
       dup.sort_by!(&block)
     end
 
+    def group(columns)
+      Group.new(self, columns)
+    end
+
     def dup
       df = DataFrame.new
       @vectors.each do |k, v|
