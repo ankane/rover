@@ -20,6 +20,7 @@ module Rover
 
     private
 
+    # TODO use date converter
     def csv_options(options)
       options = {headers: true, converters: :numeric}.merge(options)
       raise ArgumentError, "Must specify headers" unless options[:headers]
