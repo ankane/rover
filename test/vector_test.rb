@@ -307,6 +307,27 @@ class VectorTest < Minitest::Test
 
   # converters
 
+  def test_to_int32
+    vector = Rover::Vector.new([1.0,2.0,3.0, nil])
+    vector = vector.to_int32
+    assert_equal vector[0], 1
+    assert_equal vector.to_numo.class, Numo::Int32
+  end
+
+  def test_to_int64
+    vector = Rover::Vector.new([1.0,2.0,3.0, nil])
+    vector = vector.to_int64
+    assert_equal vector[0], 1
+    assert_equal vector.to_numo.class, Numo::Int64
+  end
+
+  def test_to_dfloat
+    vector = Rover::Vector.new([1,2,3, nil])
+    vector = vector.to_dfloat
+    assert_equal vector[0], 1.0
+    assert_equal vector.to_numo.class, Numo::DFloat
+  end
+
   def test_to_a
     vector = Rover::Vector.new(1..3)
     assert_equal [1, 2, 3], vector.to_a

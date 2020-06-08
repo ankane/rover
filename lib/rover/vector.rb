@@ -22,6 +22,18 @@ module Rover
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
     end
 
+    def to_dfloat
+      Vector.new(@data.cast_to(Numo::DFloat))
+    end
+
+    def to_int32
+      Vector.new(@data.cast_to(Numo::Int32))
+    end
+
+    def to_int64
+      Vector.new(@data.cast_to(Numo::Int64))
+    end
+
     def to_numo
       @data
     end
