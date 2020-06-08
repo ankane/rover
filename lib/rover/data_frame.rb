@@ -269,7 +269,13 @@ module Rover
     end
 
     def max(column)
+      check_column(column)
       self[column].max
+    end
+
+    def min(column)
+      check_column(column)
+      self[column].min
     end
 
     def dup
@@ -387,6 +393,10 @@ module Rover
       raise ArgumentError, "No keys" if keys.empty?
       missing_keys = keys.select { |k| !df.include?(k) }
       raise ArgumentError, "Missing keys: #{missing_keys.join(", ")}" if missing_keys.any?
+    end
+
+    def check_column(key)
+      raise ArgumentError, "Missing column: #{key}" unless include?(key)
     end
 
     def to_vector(v, size = nil)

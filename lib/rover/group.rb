@@ -5,28 +5,29 @@ module Rover
       @columns = Array(columns)
     end
 
-    # TODO make more efficient
     def count
-      check_columns
-
-      result = {}
-      grouped_dfs.each do |k, df|
-        result[k] = df.count
-      end
-      result
+      operation(:count)
     end
 
     def max(column)
-      check_columns([column])
+      operation(:max, column)
+    end
 
-      result = {}
-      grouped_dfs.each do |k, df|
-        result[k] = df.max(column)
-      end
-      result
+    def min(column)
+      operation(:min, column)
     end
 
     private
+
+    def operation(method, *args)
+      check_columns(args.first)
+
+      result = {}
+      grouped_dfs.each do |k, df|
+        result[k] = df.send(method, *args)
+      end
+      result
+    end
 
     # TODO make more efficient
     def grouped_dfs
@@ -50,9 +51,9 @@ module Rover
       result
     end
 
-    def check_columns(extra_columns = [])
+    def check_columns(column)
       raise ArgumentError, "No columns given" if @columns.empty?
-      missing_keys = @columns + extra_columns - @df.keys
+      missing_keys = @columns + [column].compact - @df.keys
       raise ArgumentError, "Missing keys: #{missing_keys.join(", ")}" if missing_keys.any?
     end
   end

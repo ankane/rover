@@ -211,9 +211,26 @@ class DataFrameTest < Minitest::Test
     assert_equal ({"one" => 100, "two" => 3}), df.group("b").max("a")
   end
 
+  def test_group_min
+    df = Rover::DataFrame.new({"a" => [1, 100, 3], "b" => ["one", "one", "two"]})
+    assert_equal ({"one" => 1, "two" => 3}), df.group("b").min("a")
+  end
+
   def test_max
     df = Rover::DataFrame.new({"a" => [1, 100, 3]})
     assert_equal 100, df.max("a")
+  end
+
+  def test_max_missing
+    error = assert_raises(ArgumentError) do
+      Rover::DataFrame.new({"a" => [1, 100, 3]}).max("b")
+    end
+    assert_equal "Missing column: b", error.message
+  end
+
+  def test_min
+    df = Rover::DataFrame.new({"a" => [1, 100, 3]})
+    assert_equal 1, df.min("a")
   end
 
   # TODO better test
