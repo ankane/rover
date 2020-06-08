@@ -105,6 +105,12 @@ class DataFrameTest < Minitest::Test
     assert_equal ["a", "b"], df.vector_names
   end
 
+  def test_read_csv_headers
+    df = Rover.read_csv("test/support/data.csv", headers: ["c", "d"])
+    assert_equal ["c", "d"], df.vector_names
+    assert_equal 4, df.size
+  end
+
   def test_parse_csv
     df = Rover.parse_csv("a,b\n1,one\n2,two\n3,three\n")
     assert_equal ["a", "b"], df.vector_names
