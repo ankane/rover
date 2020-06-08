@@ -180,13 +180,13 @@ df[:a].crosstab(df[:b])
 
 ## Grouping [master]
 
-Count
+Group
 
 ```ruby
 df.group(:a).count
 ```
 
-Max
+Works with all summary statistics
 
 ```ruby
 df.group(:a).max(:b)
