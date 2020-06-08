@@ -233,6 +233,16 @@ class DataFrameTest < Minitest::Test
     assert_equal 1, df.min("a")
   end
 
+  def test_mean
+    df = Rover::DataFrame.new({"a" => [1, 2, 6]})
+    assert_equal 3, df.mean("a")
+  end
+
+  def test_median
+    df = Rover::DataFrame.new({"a" => [1, 2, 6]})
+    assert_equal 2, df.median("a")
+  end
+
   # TODO better test
   def test_sample
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})

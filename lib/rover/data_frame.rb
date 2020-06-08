@@ -268,14 +268,11 @@ module Rover
       Group.new(self, columns)
     end
 
-    def max(column)
-      check_column(column)
-      self[column].max
-    end
-
-    def min(column)
-      check_column(column)
-      self[column].min
+    [:max, :min, :median, :mean].each do |name|
+      define_method(name) do |column|
+        check_column(column)
+        self[column].send(name)
+      end
     end
 
     def dup

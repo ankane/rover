@@ -9,12 +9,10 @@ module Rover
       operation(:count)
     end
 
-    def max(column)
-      operation(:max, column)
-    end
-
-    def min(column)
-      operation(:min, column)
+    [:max, :min, :mean, :median].each do |name|
+      define_method(name) do |column|
+        operation(name, column)
+      end
     end
 
     private
