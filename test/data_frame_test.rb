@@ -206,6 +206,16 @@ class DataFrameTest < Minitest::Test
     assert_equal "Missing keys: c", error.message
   end
 
+  def test_group_max
+    df = Rover::DataFrame.new({"a" => [1, 100, 3], "b" => ["one", "one", "two"]})
+    assert_equal ({"one" => 100, "two" => 3}), df.group("b").max("a")
+  end
+
+  def test_max
+    df = Rover::DataFrame.new({"a" => [1, 100, 3]})
+    assert_equal 100, df.max("a")
+  end
+
   # TODO better test
   def test_sample
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})

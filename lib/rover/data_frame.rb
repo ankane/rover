@@ -268,6 +268,10 @@ module Rover
       Group.new(self, columns)
     end
 
+    def max(column)
+      self[column].max
+    end
+
     def dup
       df = DataFrame.new
       @vectors.each do |k, v|
