@@ -111,6 +111,13 @@ class DataFrameTest < Minitest::Test
     assert_equal 4, df.size
   end
 
+  def test_read_csv_headers_false
+    error = assert_raises(ArgumentError) do
+      Rover.read_csv("test/support/data.csv", headers: false)
+    end
+    assert_equal "Must specify headers", error.message
+  end
+
   def test_parse_csv
     df = Rover.parse_csv("a,b\n1,one\n2,two\n3,three\n")
     assert_equal ["a", "b"], df.vector_names

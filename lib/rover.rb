@@ -10,15 +10,21 @@ module Rover
   class << self
     def read_csv(path, **options)
       require "csv"
-      csv_to_df(CSV.read(path, headers: true, converters: :numeric, **options))
+      csv_to_df(CSV.read(path, **csv_options(options)))
     end
 
     def parse_csv(str, **options)
       require "csv"
-      csv_to_df(CSV.parse(str, headers: true, converters: :numeric, **options))
+      csv_to_df(CSV.parse(str, **csv_options(options)))
     end
 
     private
+
+    def csv_options(options)
+      options = {headers: true, converters: :numeric}.merge(options)
+      raise ArgumentError, "Must specify headers" unless options[:headers]
+      options
+    end
 
     def csv_to_df(table)
       table.by_col!
