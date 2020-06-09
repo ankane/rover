@@ -298,6 +298,14 @@ Left join
 df.left_join(other_df)
 ```
 
+## Encoding
+
+One-hot encoding [master]
+
+```ruby
+df.one_hot
+```
+
 ## Conversion
 
 Array of hashes

@@ -196,6 +196,24 @@ module Rover
       Numo::NArray.column_stack(vectors.values.map(&:to_numo))
     end
 
+    # TODO raise error when collision
+    def one_hot
+      new_vectors = {}
+      vectors.each do |k, v|
+        if v.to_numo.is_a?(Numo::RObject)
+          raise ArgumentError, "All elements must be numeric or strings" unless v.all? { |vi| vi.is_a?(String) }
+
+          v.uniq.each do |v2|
+            # TODO use types
+            new_vectors["#{k}_#{v2}"] = (v == v2).to_numo.cast_to(Numo::Int64)
+          end
+        else
+          new_vectors[k] = v
+        end
+      end
+      DataFrame.new(new_vectors)
+    end
+
     def to_csv
       require "csv"
       CSV.generate do |csv|

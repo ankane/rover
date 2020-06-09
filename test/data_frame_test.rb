@@ -153,6 +153,23 @@ class DataFrameTest < Minitest::Test
 
   # other
 
+  def test_one_hot
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "three", "three"]})
+    expected = Rover::DataFrame.new({
+      "a" => [1, 1, 2],
+      "b_one" => [1, 0, 0],
+      "b_three" => [0, 1, 1]
+    })
+    assert_equal expected, df.one_hot
+  end
+
+  def test_one_hot_non_string
+    error = assert_raises(ArgumentError) do
+      Rover::DataFrame.new({"a" => [Time.now]}).one_hot
+    end
+    assert_equal "All elements must be numeric or strings", error.message
+  end
+
   def test_clear
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
     df.clear
