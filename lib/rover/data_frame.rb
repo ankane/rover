@@ -198,23 +198,21 @@ module Rover
 
     # TODO raise error when collision
     def one_hot(drop: false)
-      new_vectors = {}
+      df = DataFrame.new
       vectors.each do |k, v|
         if v.to_numo.is_a?(Numo::RObject)
-          raise ArgumentError, "All elements must be numeric or strings" unless v.all? { |vi| vi.is_a?(String) }
-
-          # maybe sort values first
-          values = v.uniq.to_a
-          values.shift if drop
-          values.each do |v2|
-            # TODO use types
-            new_vectors["#{k}_#{v2}"] = (v == v2).to_numo.cast_to(Numo::Int64)
-          end
+          df.merge!(v.one_hot(drop: drop, prefix: "#{k}_"))
         else
-          new_vectors[k] = v
+          df[k] = v
         end
       end
-      DataFrame.new(new_vectors)
+      df
+    rescue ArgumentError => e
+      if e.message == "All elements must be strings"
+        # better error message
+        raise ArgumentError, "All elements must be numeric or strings"
+      end
+      raise e
     end
 
     def to_csv

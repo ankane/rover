@@ -33,6 +33,15 @@ class VectorTest < Minitest::Test
     assert_vector [false, true, false], Rover::Vector.new(["one", nil, "three"]).missing
   end
 
+  def test_one_hot
+    vector = Rover::Vector.new(["one", "three", "three"])
+    expected = Rover::DataFrame.new({
+      "one" => [1, 0, 0],
+      "three" => [0, 1, 1]
+    })
+    assert_equal expected, vector.one_hot
+  end
+
   def test_crosstab
     a = Rover::Vector.new([1, 2, 3, 1])
     b = Rover::Vector.new(["a", "b", "c", "a"])

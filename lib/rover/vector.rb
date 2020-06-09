@@ -261,6 +261,20 @@ module Rover
       last(n)
     end
 
+    def one_hot(drop: false, prefix: nil)
+      raise ArgumentError, "All elements must be strings" unless all? { |vi| vi.is_a?(String) }
+
+      new_vectors = {}
+      # maybe sort values first
+      values = uniq.to_a
+      values.shift if drop
+      values.each do |v2|
+        # TODO use types
+        new_vectors["#{prefix}#{v2}"] = (self == v2).to_numo.cast_to(Numo::Int64)
+      end
+      DataFrame.new(new_vectors)
+    end
+
     # TODO add type and size?
     def inspect
       elements = first(5).to_a.map(&:inspect)
