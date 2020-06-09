@@ -307,25 +307,41 @@ class VectorTest < Minitest::Test
 
   # converters
 
-  def test_to_int32
+  def test_to_integer
     vector = Rover::Vector.new([1.0,2.0,3.0, nil])
-    vector = vector.to_int32
+    vector = vector.to(:integer)
     assert_equal vector[0], 1
-    assert_equal vector.to_numo.class, Numo::Int32
-  end
+    assert_equal vector.to_numo.class, Numo::Int64
 
-  def test_to_int64
-    vector = Rover::Vector.new([1.0,2.0,3.0, nil])
-    vector = vector.to_int64
+    vector = Rover::Vector.new(["1","2","3"])
+    vector = vector.to(:integer)
     assert_equal vector[0], 1
+    assert_equal vector[1], 2
+    assert_equal vector[2], 3
     assert_equal vector.to_numo.class, Numo::Int64
   end
 
-  def test_to_dfloat
+  def test_to_float
     vector = Rover::Vector.new([1,2,3, nil])
-    vector = vector.to_dfloat
+    vector = vector.to(:float)
     assert_equal vector[0], 1.0
     assert_equal vector.to_numo.class, Numo::DFloat
+
+    vector = Rover::Vector.new(["1.0","2.1",nil])
+    vector = vector.to(:float)
+    assert_equal vector[0], 1.0
+    assert_equal vector[1], 2.1
+    assert_equal vector[2], nil
+    assert_equal vector.to_numo.class, Numo::DFloat
+  end
+
+  def test_to_boolean
+    vector = Rover::Vector.new([1,2,0])
+    vector = vector.to(:boolean)
+    assert_equal vector[0], 1
+    assert_equal vector[1], 1
+    assert_equal vector[2], 0
+    assert_equal vector.to_numo.class, Numo::Bit
   end
 
   def test_to_a

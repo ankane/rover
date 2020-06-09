@@ -1,5 +1,13 @@
 module Rover
   class Vector
+
+    TYPE_CAST_MAPPING = {
+      boolean: Numo::Bit,
+      float: Numo::DFloat,
+      integer: Numo::Int64,
+      object: Numo::RObject
+    }
+
     def initialize(data)
       @data =
         if data.is_a?(Vector)
@@ -22,16 +30,16 @@ module Rover
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
     end
 
-    def to_dfloat
-      Vector.new(@data.cast_to(Numo::DFloat))
-    end
+    def to(type)
+      numo_type = TYPE_CAST_MAPPING[type]
 
-    def to_int32
-      Vector.new(@data.cast_to(Numo::Int32))
-    end
-
-    def to_int64
-      Vector.new(@data.cast_to(Numo::Int64))
+      if numo_type == Numo::DFloat && @data.class == Numo::RObject
+        Vector.new(@data.to_a.map { |item| item.to_f })
+      elsif numo_type == Numo::Int64 && @data.class == Numo::RObject
+        Vector.new(@data.to_a.map { |item| item.to_i })
+      else
+        Vector.new(@data.cast_to(numo_type))
+      end
     end
 
     def to_numo
