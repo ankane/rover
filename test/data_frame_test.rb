@@ -163,6 +163,15 @@ class DataFrameTest < Minitest::Test
     assert_equal expected, df.one_hot
   end
 
+  def test_one_hot_drop
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "three", "three"]})
+    expected = Rover::DataFrame.new({
+      "a" => [1, 1, 2],
+      "b_three" => [0, 1, 1]
+    })
+    assert_equal expected, df.one_hot(drop: true)
+  end
+
   def test_one_hot_non_string
     error = assert_raises(ArgumentError) do
       Rover::DataFrame.new({"a" => [Time.now]}).one_hot

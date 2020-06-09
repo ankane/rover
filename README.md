@@ -298,12 +298,18 @@ Left join
 df.left_join(other_df)
 ```
 
-## Encoding
+## Encoding [master]
 
-One-hot encoding [master]
+One-hot encoding
 
 ```ruby
 df.one_hot
+```
+
+Drop a variable in each category to avoid the dummy variable trap
+
+```ruby
+df.one_hot(drop: true)
 ```
 
 ## Conversion

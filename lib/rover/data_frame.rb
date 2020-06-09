@@ -197,14 +197,16 @@ module Rover
     end
 
     # TODO raise error when collision
-    def one_hot
+    def one_hot(drop: false)
       new_vectors = {}
       vectors.each do |k, v|
         if v.to_numo.is_a?(Numo::RObject)
           raise ArgumentError, "All elements must be numeric or strings" unless v.all? { |vi| vi.is_a?(String) }
 
           # maybe sort values first
-          v.uniq.each do |v2|
+          values = v.uniq.to_a
+          values.shift if drop
+          values.each do |v2|
             # TODO use types
             new_vectors["#{k}_#{v2}"] = (v == v2).to_numo.cast_to(Numo::Int64)
           end
