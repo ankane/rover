@@ -36,7 +36,9 @@ module Rover
         data = data.to_a
 
         if type
-          raise "Not implemented yet"
+          numo_type = self.numo_type(type)
+          # TODO more safety checks
+          data = numo_type.cast(data)
         else
           data =
             if data.all? { |v| v.is_a?(Integer) }
