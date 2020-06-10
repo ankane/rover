@@ -29,6 +29,15 @@ module Rover
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
     end
 
+    def type
+      type = TYPE_CAST_MAPPING.find { |_, v| @data.is_a?(v) }
+      if type
+        type[0]
+      else
+        nil # TODO raise error
+      end
+    end
+
     def to(type)
       numo_type = TYPE_CAST_MAPPING[type]
 

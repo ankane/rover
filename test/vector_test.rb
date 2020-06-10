@@ -343,6 +343,7 @@ class VectorTest < Minitest::Test
   def test_to_bool
     vector = Rover::Vector.new([1,2,0])
     assert_vector [true, true, false], vector.to(:bool)
+    assert_equal :bool, vector.to(:bool).type
     assert_kind_of Numo::Bit, vector.to(:bool).to_numo
   end
 
