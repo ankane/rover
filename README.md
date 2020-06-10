@@ -338,6 +338,38 @@ CSV
 df.to_csv
 ```
 
+## Types [master]
+
+Pass column types when creating a data frame
+
+```ruby
+Rover::DataFrame.new(data, types: {"a" => :int, "b" => :float})
+```
+
+Or
+
+```ruby
+Rover.read_csv("data.csv", types: {"a" => :int, "b" => :float})
+```
+
+Get column types
+
+```ruby
+df.types
+```
+
+For a specific column
+
+```ruby
+df[:a].type
+```
+
+Change the type of a column
+
+```ruby
+df[:a] = df[:a].to(:int)
+```
+
 ## History
 
 View the [changelog](https://github.com/ankane/rover/blob/master/CHANGELOG.md)
