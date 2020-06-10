@@ -494,12 +494,12 @@ class DataFrameTest < Minitest::Test
     assert_equal "wrong number of arguments (given 2, expected 0..1)", error.message
   end
 
-  # this shouldn't be the case, but no way to distinguish in Ruby
   def test_arguments_types_argument
-    assert_equal [], Rover::DataFrame.new({types: {}}).vector_names
+    assert_equal [:types], Rover::DataFrame.new({types: {}}).vector_names
   end
 
+  # this shouldn't be the case, but we can't use keyword arguments
   def test_arguments_types_keyword
-    assert_equal [], Rover::DataFrame.new(types: {}).vector_names
+    assert_equal [:types], Rover::DataFrame.new(types: {}).vector_names
   end
 end

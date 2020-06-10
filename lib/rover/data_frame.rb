@@ -445,22 +445,22 @@ module Rover
       Vector.new(v, type: type)
     end
 
-    # there doesn't appear to be a way to distinguish between
-    # DataFrame.new({types: ...}) and DataFrame.new(types: ...)
+    # can't use data = {} and keyword arguments
+    # as this causes an unknown keyword error when data is passed as
+    # DataFrame.new({a: ..., b: ...})
+    #
+    # at the moment, there doesn't appear to be a way to distinguish between
+    # DataFrame.new({types: ...}) which should set data, and
+    # DataFrame.new(types: ...) which should set options
     # https://bugs.ruby-lang.org/issues/16891
     #
     # there aren't currently options that should be used without data
-    # but this could change in the future
+    # so keep this simple for now
     def process_args(args)
       known_keywords = [:types]
 
-      if args.size == 1 && args[0].is_a?(Hash) && (args[0].keys - known_keywords).empty?
-        options = args.pop
-        data = {}
-      else
-        data = args[0] || {}
-        options = args[1].is_a?(Hash) ? args.pop : {}
-      end
+      data = args[0] || {}
+      options = args[1].is_a?(Hash) ? args.pop : {}
       raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1
 
       unknown_keywords = options.keys - known_keywords
