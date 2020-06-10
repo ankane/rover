@@ -329,21 +329,17 @@ class VectorTest < Minitest::Test
   end
 
   def test_to_int_nan
-    skip
-
     error = assert_raises do
-      Rover::Vector.new([1.5, 2.5, 3.5, nil]).to(:int)
+      Rover::Vector.new([1.5, 2.5, nil]).to(:int)
     end
-    assert_equal "", error.message
+    assert_equal "Cannot convert missing or infinite values to int", error.message
   end
 
   def test_to_int_infinite
-    skip
-
     error = assert_raises do
-      Rover::Vector.new([1.5, 2.5, 3.5, Float::INFINITY]).to(:int)
+      Rover::Vector.new([1.5, 2.5, Float::INFINITY]).to(:int)
     end
-    assert_equal "", error.message
+    assert_equal "Cannot convert missing or infinite values to int", error.message
   end
 
   def test_to_int_object
