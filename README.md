@@ -141,12 +141,6 @@ Or
 df[df[:a] > 100 | df[:b] == "one"]
 ```
 
-Not
-
-```ruby
-df[df[:a] != 100]
-```
-
 ## Operations
 
 Basic operations
