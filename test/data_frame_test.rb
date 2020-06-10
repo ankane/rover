@@ -20,6 +20,7 @@ class DataFrameTest < Minitest::Test
     assert_vector [1, 2], df.first(2)[:a]
     assert_equal [:a, :b], df.vector_names
     assert_equal [:a, :b], df.keys
+    assert_equal ({a: :int, b: :object}), df.types
     assert df.include?(:a)
     assert !df.include?(:c)
   end
