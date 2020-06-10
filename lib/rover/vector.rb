@@ -16,48 +16,7 @@ module Rover
     }
 
     def initialize(data, type: nil)
-      numo_type = numo_type(type) if type
-
-      data = data.to_numo if data.is_a?(Vector)
-
-      if data.is_a?(Numo::NArray)
-        raise ArgumentError, "Complex types not supported yet" if data.is_a?(Numo::DComplex) || data.is_a?(Numo::SComplex)
-
-        if type
-          case type
-          when /int/
-            # Numo does not check these when casting
-            raise RangeError, "float NaN out of range of integer" if data.respond_to?(:isnan) && data.isnan.any?
-            raise RangeError, "float Inf out of range of integer" if data.respond_to?(:isinf) && data.isinf.any?
-
-            data = data.to_a.map { |v| v.nil? ? nil : v.to_i } if data.is_a?(Numo::RObject)
-          when /float/
-            data = data.to_a.map { |v| v.nil? ? Float::NAN : v.to_f } if data.is_a?(Numo::RObject)
-          end
-
-          data = numo_type.cast(data)
-        end
-      else
-        data = data.to_a
-
-        if type
-          data = numo_type.cast(data)
-        else
-          data =
-            if data.all? { |v| v.is_a?(Integer) }
-              Numo::Int64.cast(data)
-            elsif data.all? { |v| v.is_a?(Numeric) || v.nil? }
-              Numo::DFloat.cast(data.map { |v| v || Float::NAN })
-            elsif data.all? { |v| v == true || v == false }
-              Numo::Bit.cast(data)
-            else
-              Numo::RObject.cast(data)
-            end
-        end
-      end
-
-      @data = data
-
+      @data = cast_data(data, type: type)
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
     end
 
@@ -342,6 +301,50 @@ module Rover
     end
 
     private
+
+    def cast_data(data, type: nil)
+      numo_type = numo_type(type) if type
+
+      data = data.to_numo if data.is_a?(Vector)
+
+      if data.is_a?(Numo::NArray)
+        raise ArgumentError, "Complex types not supported yet" if data.is_a?(Numo::DComplex) || data.is_a?(Numo::SComplex)
+
+        if type
+          case type
+          when /int/
+            # Numo does not check these when casting
+            raise RangeError, "float NaN out of range of integer" if data.respond_to?(:isnan) && data.isnan.any?
+            raise RangeError, "float Inf out of range of integer" if data.respond_to?(:isinf) && data.isinf.any?
+
+            data = data.to_a.map { |v| v.nil? ? nil : v.to_i } if data.is_a?(Numo::RObject)
+          when /float/
+            data = data.to_a.map { |v| v.nil? ? Float::NAN : v.to_f } if data.is_a?(Numo::RObject)
+          end
+
+          data = numo_type.cast(data)
+        end
+      else
+        data = data.to_a
+
+        if type
+          data = numo_type.cast(data)
+        else
+          data =
+            if data.all? { |v| v.is_a?(Integer) }
+              Numo::Int64.cast(data)
+            elsif data.all? { |v| v.is_a?(Numeric) || v.nil? }
+              Numo::DFloat.cast(data.map { |v| v || Float::NAN })
+            elsif data.all? { |v| v == true || v == false }
+              Numo::Bit.cast(data)
+            else
+              Numo::RObject.cast(data)
+            end
+        end
+      end
+
+      data
+    end
 
     def numo_type(type)
       numo_type = TYPE_CAST_MAPPING[type]
