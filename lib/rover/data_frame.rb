@@ -1,23 +1,7 @@
 module Rover
   class DataFrame
-    # there doesn't appear to be a way to distinguish between
-    # DataFrame.new({types: ...}) and DataFrame.new(types: ...)
-    # https://bugs.ruby-lang.org/issues/16891
-    def initialize(data = {}, options = {})
-      raise ArgumentError, "wrong number of arguments (given 2, expected 0..1)" unless options.is_a?(Hash)
-
-      known_keywords = [:types]
-
-      if data.nil? && (options.keys - known_keywords).any?
-        data = options
-        options = {}
-      end
-      data ||= {}
-
-      unknown_keywords = options.keys - known_keywords
-      raise ArgumentError, "unknown keywords: #{unknown_keywords.join(", ")}" if unknown_keywords.any?
-
-      # end Ruby fix
+    def initialize(*args)
+      data, options = process_args(args)
 
       @vectors = {}
       types = options[:types] || {}
@@ -459,6 +443,30 @@ module Rover
       end
 
       Vector.new(v, type: type)
+    end
+
+    # there doesn't appear to be a way to distinguish between
+    # DataFrame.new({types: ...}) and DataFrame.new(types: ...)
+    # https://bugs.ruby-lang.org/issues/16891
+    #
+    # there aren't currently options that should be used without data
+    # but this could change in the future
+    def process_args(args)
+      known_keywords = [:types]
+
+      if args.size == 1 && args[0].is_a?(Hash) && (args[0].keys - known_keywords).empty?
+        options = args.pop
+        data = {}
+      else
+        data = args[0] || {}
+        options = args[1].is_a?(Hash) ? args.pop : {}
+      end
+      raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1
+
+      unknown_keywords = options.keys - known_keywords
+      raise ArgumentError, "unknown keywords: #{unknown_keywords.join(", ")}" if unknown_keywords.any?
+
+      [data, options]
     end
   end
 end
