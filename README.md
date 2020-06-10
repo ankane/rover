@@ -352,6 +352,14 @@ Or
 Rover.read_csv("data.csv", types: {"a" => :int, "b" => :float})
 ```
 
+Supported types are:
+
+- boolean - `bool`
+- float - `float`, `float32`
+- integer - `int`, `int32`, `int16`, `int8`
+- unsigned integer - `uint`, `uint32`, `uint16`, `uint8`
+- object - `object`
+
 Get column types
 
 ```ruby
