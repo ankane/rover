@@ -90,6 +90,10 @@ module Rover
       @vectors.dup
     end
 
+    def types
+      @vectors.map { |k, v| [k, v.type] }.to_h
+    end
+
     def []=(k, v)
       check_key(k)
       v = to_vector(v, size)

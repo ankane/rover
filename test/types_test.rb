@@ -7,6 +7,11 @@ class TypesTest < Minitest::Test
     end
   end
 
+  def test_data_frame
+    df = Rover::DataFrame.new({"a" => 1..3, "b" => ["one", "two", "three"]})
+    assert_equal ({"a" => :int, "b" => :object}), df.types
+  end
+
   def test_complex64
     error = assert_raises(ArgumentError) do
       Rover::Vector.new(Numo::SComplex.cast([1]))
