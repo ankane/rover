@@ -2,13 +2,22 @@ module Rover
   class Vector
     TYPE_CAST_MAPPING = {
       bool: Numo::Bit,
+      float32: Numo::SFloat,
       float: Numo::DFloat,
+      int8: Numo::Int8,
+      int16: Numo::Int16,
+      int32: Numo::Int32,
       int: Numo::Int64,
       object: Numo::RObject
     }
 
-    def initialize(data)
-      @data =
+    def initialize(data, type: nil)
+      if type
+        # TODO improve
+        @data = numo_type(type).cast(data)
+      end
+
+      @data ||=
         if data.is_a?(Vector)
           data.to_numo
         elsif data.is_a?(Numo::NArray)
@@ -39,8 +48,7 @@ module Rover
     end
 
     def to(new_type)
-      numo_type = TYPE_CAST_MAPPING[new_type]
-      raise ArgumentError, "Invalid type: #{new_type}" unless numo_type
+      numo_type = self.numo_type(new_type)
 
       if new_type == :int && (((type == :float || type == :object) && (@data.isnan.any? || @data.isinf.any?)) || (type == :object && missing.to_numo.any?))
         raise "Cannot convert missing or infinite values to int"
@@ -320,6 +328,14 @@ module Rover
     def to_html
       require "iruby"
       IRuby::HTML.table(to_a)
+    end
+
+    private
+
+    def numo_type(type)
+      numo_type = TYPE_CAST_MAPPING[type]
+      raise ArgumentError, "Invalid type: #{type}" unless numo_type
+      numo_type
     end
   end
 end
