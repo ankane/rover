@@ -33,9 +33,9 @@ module Rover
     def to(type)
       numo_type = TYPE_CAST_MAPPING[type]
 
-      if numo_type == Numo::DFloat && @data.class == Numo::RObject
-        Vector.new(@data.to_a.map { |item| item.to_f })
-      elsif numo_type == Numo::Int64 && @data.class == Numo::RObject
+      if numo_type == Numo::DFloat && @data.is_a?(Numo::RObject)
+        Vector.new(@data.to_a.map { |item| item.nil? ? Float::NAN : item.to_f })
+      elsif numo_type == Numo::Int64 && @data.is_a?(Numo::RObject)
         Vector.new(@data.to_a.map { |item| item.to_i })
       else
         Vector.new(@data.cast_to(numo_type))

@@ -311,28 +311,28 @@ class VectorTest < Minitest::Test
     vector = Rover::Vector.new([1.0,2.0,3.0, nil])
     vector = vector.to(:integer)
     assert_equal vector[0], 1
-    assert_equal vector.to_numo.class, Numo::Int64
+    assert_kind_of Numo::Int64, vector.to_numo
 
     vector = Rover::Vector.new(["1","2","3"])
     vector = vector.to(:integer)
     assert_equal vector[0], 1
     assert_equal vector[1], 2
     assert_equal vector[2], 3
-    assert_equal vector.to_numo.class, Numo::Int64
+    assert_kind_of Numo::Int64, vector.to_numo
   end
 
   def test_to_float
     vector = Rover::Vector.new([1,2,3, nil])
     vector = vector.to(:float)
     assert_equal vector[0], 1.0
-    assert_equal vector.to_numo.class, Numo::DFloat
+    assert_kind_of Numo::DFloat, vector.to_numo
 
     vector = Rover::Vector.new(["1.0","2.1",nil])
     vector = vector.to(:float)
     assert_equal vector[0], 1.0
     assert_equal vector[1], 2.1
-    assert_equal vector[2], nil
-    assert_equal vector.to_numo.class, Numo::DFloat
+    assert_equal vector[2].nan?, true
+    assert_kind_of Numo::DFloat, vector.to_numo
   end
 
   def test_to_boolean
@@ -341,7 +341,7 @@ class VectorTest < Minitest::Test
     assert_equal vector[0], 1
     assert_equal vector[1], 1
     assert_equal vector[2], 0
-    assert_equal vector.to_numo.class, Numo::Bit
+    assert_kind_of Numo::Bit, vector.to_numo
   end
 
   def test_to_a
