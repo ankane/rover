@@ -489,7 +489,7 @@ class DataFrameTest < Minitest::Test
 
   def test_arguments
     error = assert_raises(ArgumentError) do
-      Rover::DataFrame.new(1, 2)
+      Rover::DataFrame.new(1, 2, types: {})
     end
     assert_equal "wrong number of arguments (given 2, expected 0..1)", error.message
   end

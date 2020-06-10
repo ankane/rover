@@ -459,7 +459,7 @@ module Rover
     # to prevent new options from breaking existing code
     def process_args(args)
       data = args[0] || {}
-      options = args[1].is_a?(Hash) ? args.pop : {}
+      options = args.size > 1 && args.last.is_a?(Hash) ? args.pop : {}
       raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1
 
       known_keywords = [:types]
