@@ -7,11 +7,16 @@ class TypesTest < Minitest::Test
     end
   end
 
-  def test_large_int
+  def test_int_large
     assert_equal :int, Rover::Vector.new([2**63 - 1]).type
     assert_raises(RangeError) do
       Rover::Vector.new([2**63])
     end
+  end
+
+  # should raise error
+  def test_int_overflow
+    Rover::Vector.new([2**63 - 1]).to(:int32)
   end
 
   def test_constructor_int_nan
