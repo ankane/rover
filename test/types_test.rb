@@ -38,21 +38,21 @@ class TypesTest < Minitest::Test
     error = assert_raises do
       Rover::Vector.new([1.5, 2.5, Float::NAN]).to(:int)
     end
-    assert_equal "Cannot convert missing or infinite values to int", error.message
+    assert_equal "float NaN out of range of integer", error.message
   end
 
   def test_to_int_infinite
     error = assert_raises do
       Rover::Vector.new([1.5, 2.5, Float::INFINITY]).to(:int)
     end
-    assert_equal "Cannot convert missing or infinite values to int", error.message
+    assert_equal "float Inf out of range of integer", error.message
   end
 
   def test_to_int_object_nil
     error = assert_raises do
       Rover::Vector.new(["1", "2", nil]).to(:int)
     end
-    assert_equal "Cannot convert missing or infinite values to int", error.message
+    assert_equal "no implicit conversion from nil to integer", error.message
   end
 
   def test_to_int_object

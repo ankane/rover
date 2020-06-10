@@ -18,16 +18,14 @@ module Rover
 
       if data.is_a?(Numo::NArray)
         if type
-          if type =~ /int/ && (data.is_a?(Numo::SFloat) || data.is_a?(Numo::DFloat) || data.is_a?(Numo::RObject))
-            missing = data.isnan.any? || data.isinf.any?
-            missing |= data.to_a.any?(&:nil?) if data.is_a?(Numo::RObject)
-            raise "Cannot convert missing or infinite values to int" if missing
-          end
+          case type
+          when /int/
+            raise RangeError, "float NaN out of range of integer" if data.respond_to?(:isnan) && data.isnan.any?
+            raise RangeError, "float Inf out of range of integer" if data.respond_to?(:isinf) && data.isinf.any?
 
-          if data.is_a?(Numo::RObject) && type =~ /float/
-            data = data.to_a.map { |v| v.nil? ? Float::NAN : v.to_f }
-          elsif data.is_a?(Numo::RObject) && type =~ /int/
-            data = data.to_a.map(&:to_i)
+            data = data.to_a.map { |v| v.nil? ? nil : v.to_i } if data.is_a?(Numo::RObject)
+          when /float/
+            data = data.to_a.map { |v| v.nil? ? Float::NAN : v.to_f } if data.is_a?(Numo::RObject)
           end
 
           data = numo_type.cast(data)
