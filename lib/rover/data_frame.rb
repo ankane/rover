@@ -455,14 +455,14 @@ module Rover
     # https://bugs.ruby-lang.org/issues/16891
     #
     # there aren't currently options that should be used without data
-    # so keep this simple for now
+    # if this is ever the case, we should still require data
+    # to prevent new options from breaking existing code
     def process_args(args)
-      known_keywords = [:types]
-
       data = args[0] || {}
       options = args[1].is_a?(Hash) ? args.pop : {}
       raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1
 
+      known_keywords = [:types]
       unknown_keywords = options.keys - known_keywords
       raise ArgumentError, "unknown keywords: #{unknown_keywords.join(", ")}" if unknown_keywords.any?
 
