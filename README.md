@@ -172,7 +172,7 @@ df[:a].min
 df[:a].max
 ```
 
-Count occurrences [master]
+Count occurrences
 
 ```ruby
 df[:a].tally
@@ -184,7 +184,7 @@ Cross tabulation
 df[:a].crosstab(df[:b])
 ```
 
-## Grouping [master]
+## Grouping
 
 Group
 
@@ -298,7 +298,7 @@ Left join
 df.left_join(other_df)
 ```
 
-## Encoding [master]
+## Encoding
 
 One-hot encoding
 
@@ -338,7 +338,7 @@ CSV
 df.to_csv
 ```
 
-## Types [master]
+## Types
 
 Pass column types when creating a data frame
 
