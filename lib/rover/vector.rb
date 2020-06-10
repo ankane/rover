@@ -49,7 +49,7 @@ module Rover
             else
               Numo::RObject.cast(data)
             end
-          end
+        end
       end
 
       @data = data
