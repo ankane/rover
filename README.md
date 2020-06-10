@@ -340,7 +340,7 @@ df.to_csv
 
 ## Types
 
-Pass column types when creating a data frame
+You can specify column types when creating a data frame
 
 ```ruby
 Rover::DataFrame.new(data, types: {"a" => :int, "b" => :float})
