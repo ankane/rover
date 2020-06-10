@@ -12,12 +12,12 @@ module Rover
     }
 
     def initialize(data, type: nil)
+      numo_type = self.numo_type(type) if type
+
       data = data.to_numo if data.is_a?(Vector)
 
       if data.is_a?(Numo::NArray)
         if type
-          numo_type = self.numo_type(type)
-
           if type =~ /int/ && (data.is_a?(Numo::SFloat) || data.is_a?(Numo::DFloat) || data.is_a?(Numo::RObject))
             missing = data.isnan.any? || data.isinf.any?
             missing |= data.to_a.any?(&:nil?) if data.is_a?(Numo::RObject)
@@ -36,7 +36,6 @@ module Rover
         data = data.to_a
 
         if type
-          numo_type = self.numo_type(type)
           # TODO more safety checks
           data = numo_type.cast(data)
         else
