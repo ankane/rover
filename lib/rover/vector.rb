@@ -1,18 +1,24 @@
 module Rover
   class Vector
+    # if a user never specifies types,
+    # the defaults are bool, float, int, and object
+    # keep these simple
+    #
+    # we could create aliases for float64, int64, uint64
+    # if so, type should still return the simple type
     TYPE_CAST_MAPPING = {
       bool: Numo::Bit,
       float32: Numo::SFloat,
-      float: Numo::DFloat, # TODO use float64?
+      float: Numo::DFloat,
       int8: Numo::Int8,
       int16: Numo::Int16,
       int32: Numo::Int32,
-      int: Numo::Int64,    # TODO use int64?
+      int: Numo::Int64,
       object: Numo::RObject,
       uint8: Numo::UInt8,
       uint16: Numo::UInt16,
       uint32: Numo::UInt32,
-      uint: Numo::UInt64   # TODO use uint64?
+      uint: Numo::UInt64
     }
 
     def initialize(data, type: nil)
