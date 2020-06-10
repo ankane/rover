@@ -1,15 +1,18 @@
 require_relative "test_helper"
 
 class TypesTest < Minitest::Test
-  def test_constructor
+  def test_constructor_vector
     [:bool, :float32, :float, :int8, :int16, :int32, :int, :object, :uint8, :uint16, :uint32, :uint].each do |type|
       assert_equal type, Rover::Vector.new(1..3, type: type).type
     end
   end
 
-  def test_data_frame
-    df = Rover::DataFrame.new({"a" => 1..3, "b" => ["one", "two", "three"]})
-    assert_equal ({"a" => :int, "b" => :object}), df.types
+  def test_constructor_data_frame
+    [:bool, :float32, :float, :int8, :int16, :int32, :int, :object, :uint8, :uint16, :uint32, :uint].each do |type|
+      df = Rover::DataFrame.new({"a" => 1..3}, types: {"a" => type})
+      assert_equal type, df["a"].type
+      assert_equal ({"a" => type}), df.types
+    end
   end
 
   def test_complex64

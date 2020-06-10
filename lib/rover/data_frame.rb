@@ -1,7 +1,24 @@
 module Rover
   class DataFrame
-    def initialize(data = {})
+    # there doesn't appear to be a way to distinguish between
+    # DataFrame.new({types: ...}) and DataFrame.new(types: ...)
+    # https://bugs.ruby-lang.org/issues/16891
+    def initialize(data = {}, options = {})
+      known_keywords = [:types]
+
+      if data.nil? && (options.keys - known_keywords).any?
+        data = options
+        options = {}
+      end
+      data ||= {}
+
+      unknown_keywords = options.keys - known_keywords
+      raise ArgumentError, "unknown keywords: #{unknown_keywords.join(", ")}" if unknown_keywords.any?
+
+      # end Ruby fix
+
       @vectors = {}
+      types = options[:types] || {}
 
       if data.is_a?(DataFrame)
         data.vectors.each do |k, v|
@@ -11,7 +28,7 @@ module Rover
         data.to_h.each do |k, v|
           @vectors[k] =
             if v.respond_to?(:to_a)
-              Vector.new(v)
+              Vector.new(v, type: types[k])
             else
               v
             end
@@ -20,7 +37,7 @@ module Rover
         # handle scalars
         size = @vectors.values.find { |v| v.is_a?(Vector) }&.size || 1
         @vectors.each_key do |k|
-          @vectors[k] = to_vector(@vectors[k], size)
+          @vectors[k] = to_vector(@vectors[k], size: size, type: types[k])
         end
       elsif data.is_a?(Array)
         vectors = {}
@@ -35,12 +52,12 @@ module Rover
           end
         end
         vectors.each do |k, v|
-          @vectors[k] = to_vector(v)
+          @vectors[k] = to_vector(v, type: types[k])
         end
       elsif defined?(ActiveRecord) && (data.is_a?(ActiveRecord::Relation) || (data.is_a?(Class) && data < ActiveRecord::Base))
         result = data.connection.select_all(data.all.to_sql)
         result.columns.each_with_index do |k, i|
-          @vectors[k] = to_vector(result.rows.map { |r| r[i] })
+          @vectors[k] = to_vector(result.rows.map { |r| r[i] }, type: types[k])
         end
       else
         raise ArgumentError, "Cannot cast to data frame: #{data.class.name}"
@@ -96,7 +113,7 @@ module Rover
 
     def []=(k, v)
       check_key(k)
-      v = to_vector(v, size)
+      v = to_vector(v, size: size)
       raise ArgumentError, "Size mismatch: expected #{size}, got #{v.size}" if @vectors.any? && v.size != size
       @vectors[k] = v
     end
@@ -419,8 +436,11 @@ module Rover
       raise ArgumentError, "Missing column: #{key}" unless include?(key)
     end
 
-    def to_vector(v, size = nil)
-      return v if v.is_a?(Vector)
+    def to_vector(v, size: nil, type: nil)
+      if v.is_a?(Vector)
+        v = v.to(type) if type && v.type != type
+        return v
+      end
 
       if size && !v.respond_to?(:to_a)
         v =
@@ -436,7 +456,7 @@ module Rover
           end
       end
 
-      Vector.new(v)
+      Vector.new(v, type: type)
     end
   end
 end
