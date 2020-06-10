@@ -321,11 +321,29 @@ class VectorTest < Minitest::Test
 
   # converters
 
-  def test_to_int_float
-    vector = Rover::Vector.new([1.0, 2.0, 3.0, nil]).to(:int)
-    # assert_vector [1, 2, 3, 0], vector
+  def test_to_int
+    vector = Rover::Vector.new([1.5, 2.5, 3.5]).to(:int)
+    assert_vector [1, 2, 3], vector
     assert_equal :int, vector.type
     assert_kind_of Numo::Int64, vector.to(:int).to_numo
+  end
+
+  def test_to_int_nan
+    skip
+
+    error = assert_raises do
+      Rover::Vector.new([1.5, 2.5, 3.5, nil]).to(:int)
+    end
+    assert_equal "", error.message
+  end
+
+  def test_to_int_infinite
+    skip
+
+    error = assert_raises do
+      Rover::Vector.new([1.5, 2.5, 3.5, Float::INFINITY]).to(:int)
+    end
+    assert_equal "", error.message
   end
 
   def test_to_int_object
@@ -356,6 +374,13 @@ class VectorTest < Minitest::Test
     assert_vector [1, 2, 3], vector
     assert_equal :object, vector.type
     assert_kind_of Numo::RObject, vector.to_numo
+  end
+
+  def test_to_invalid
+    error = assert_raises(ArgumentError) do
+      Rover::Vector.new(1..3).to(:bad)
+    end
+    assert_equal "Invalid type: bad", error.message
   end
 
   def test_to_a
