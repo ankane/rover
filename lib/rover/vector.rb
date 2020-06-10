@@ -8,9 +8,14 @@ module Rover
       int16: Numo::Int16,
       int32: Numo::Int32,
       int: Numo::Int64,    # TODO use int64?
-      object: Numo::RObject
+      object: Numo::RObject,
+      uint8: Numo::UInt8,
+      uint16: Numo::UInt16,
+      uint32: Numo::UInt32,
+      uint: Numo::UInt64   # TODO use uint64?
     }
 
+    # TODO raise error if data is complex type
     def initialize(data, type: nil)
       numo_type = self.numo_type(type) if type
 

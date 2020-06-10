@@ -2,7 +2,7 @@ require_relative "test_helper"
 
 class TypesTest < Minitest::Test
   def test_constructor
-    [:bool, :float32, :float, :int8, :int16, :int32, :int, :object].each do |type|
+    [:bool, :float32, :float, :int8, :int16, :int32, :int, :object, :uint8, :uint16, :uint32, :uint].each do |type|
       assert_equal type, Rover::Vector.new(1..3, type: type).type
     end
   end
