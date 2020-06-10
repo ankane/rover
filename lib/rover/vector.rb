@@ -1,10 +1,9 @@
 module Rover
   class Vector
-
     TYPE_CAST_MAPPING = {
-      boolean: Numo::Bit,
+      bool: Numo::Bit,
       float: Numo::DFloat,
-      integer: Numo::Int64,
+      int: Numo::Int64,
       object: Numo::RObject
     }
 
