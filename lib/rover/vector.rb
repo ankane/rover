@@ -22,6 +22,8 @@ module Rover
       data = data.to_numo if data.is_a?(Vector)
 
       if data.is_a?(Numo::NArray)
+        raise ArgumentError, "Complex types not supported yet" if data.is_a?(Numo::DComplex) || data.is_a?(Numo::SComplex)
+
         if type
           case type
           when /int/

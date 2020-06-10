@@ -7,6 +7,20 @@ class TypesTest < Minitest::Test
     end
   end
 
+  def test_complex64
+    error = assert_raises(ArgumentError) do
+      Rover::Vector.new(Numo::SComplex.cast([1]))
+    end
+    assert_equal "Complex types not supported yet", error.message
+  end
+
+  def test_complex128
+    error = assert_raises(ArgumentError) do
+      Rover::Vector.new(Numo::DComplex.cast([1]))
+    end
+    assert_equal "Complex types not supported yet", error.message
+  end
+
   def test_int_large
     assert_equal :int, Rover::Vector.new([2**63 - 1]).type
     assert_raises(RangeError) do
