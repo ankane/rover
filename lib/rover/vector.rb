@@ -42,14 +42,15 @@ module Rover
       numo_type = TYPE_CAST_MAPPING[new_type]
       raise ArgumentError, "Invalid type: #{new_type}" unless numo_type
 
-      if numo_type == Numo::DFloat && @data.is_a?(Numo::RObject)
+      if new_type == :int && (((type == :float || type == :object) && (@data.isnan.any? || @data.isinf.any?)) || (type == :object && missing.to_numo.any?))
+        raise "Cannot convert missing or infinite values to int"
+      end
+
+      if type == :object && new_type == :float
         Vector.new(@data.to_a.map { |item| item.nil? ? Float::NAN : item.to_f })
-      elsif numo_type == Numo::Int64 && @data.is_a?(Numo::RObject)
-        Vector.new(@data.to_a.map { |item| item.to_i })
+      elsif type == :object && new_type == :int
+        Vector.new(@data.to_a.map(&:to_i))
       else
-        if new_type == :int && type == :float && (@data.isnan.any? || @data.isinf.any?)
-          raise "Cannot convert missing or infinite values to int"
-        end
         Vector.new(@data.cast_to(numo_type))
       end
     end
