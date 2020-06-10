@@ -321,11 +321,14 @@ class VectorTest < Minitest::Test
 
   # converters
 
-  def test_to_int
-    vector = Rover::Vector.new([1.0, 2.0, 3.0, nil])
-    # assert_vector [1, 2, 3, 0], vector.to(:int)
+  def test_to_int_float
+    vector = Rover::Vector.new([1.0, 2.0, 3.0, nil]).to(:int)
+    # assert_vector [1, 2, 3, 0], vector
+    assert_equal :int, vector.type
     assert_kind_of Numo::Int64, vector.to(:int).to_numo
+  end
 
+  def test_to_int_object
     vector = Rover::Vector.new(["1", "2", "3"]).to(:int)
     assert_vector [1, 2, 3], vector
     assert_equal :int, vector.type
