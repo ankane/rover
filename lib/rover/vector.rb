@@ -36,7 +36,6 @@ module Rover
         data = data.to_a
 
         if type
-          # TODO more safety checks
           data = numo_type.cast(data)
         else
           data =

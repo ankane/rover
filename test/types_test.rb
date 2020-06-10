@@ -24,7 +24,7 @@ class TypesTest < Minitest::Test
     error = assert_raises do
       Rover::Vector.new([1.5, 2.5, Float::NAN], type: :int)
     end
-    # assert_equal "Cannot convert missing or infinite values to int", error.message
+    assert_equal "float NaN out of range of integer", error.message
   end
 
   def test_to_int
