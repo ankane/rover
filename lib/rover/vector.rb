@@ -12,28 +12,46 @@ module Rover
     }
 
     def initialize(data, type: nil)
-      if type
-        # TODO improve
-        @data = numo_type(type).cast(data)
+      data = data.to_numo if data.is_a?(Vector)
+
+      if data.is_a?(Numo::NArray)
+        if type
+          numo_type = self.numo_type(type)
+
+          if type =~ /int/ && (data.is_a?(Numo::SFloat) || data.is_a?(Numo::DFloat) || data.is_a?(Numo::RObject))
+            missing = data.isnan.any? || data.isinf.any?
+            missing |= data.to_a.any?(&:nil?) if data.is_a?(Numo::RObject)
+            raise "Cannot convert missing or infinite values to int" if missing
+          end
+
+          if data.is_a?(Numo::RObject) && type =~ /float/
+            data = data.to_a.map { |v| v.nil? ? Float::NAN : v.to_f }
+          elsif data.is_a?(Numo::RObject) && type =~ /int/
+            data = data.to_a.map(&:to_i)
+          end
+
+          data = numo_type.cast(data)
+        end
+      else
+        data = data.to_a
+
+        if type
+          raise "Not implemented yet"
+        else
+          data =
+            if data.all? { |v| v.is_a?(Integer) }
+              Numo::Int64.cast(data)
+            elsif data.all? { |v| v.is_a?(Numeric) || v.nil? }
+              Numo::DFloat.cast(data.map { |v| v || Float::NAN })
+            elsif data.all? { |v| v == true || v == false }
+              Numo::Bit.cast(data)
+            else
+              Numo::RObject.cast(data)
+            end
+          end
       end
 
-      @data ||=
-        if data.is_a?(Vector)
-          data.to_numo
-        elsif data.is_a?(Numo::NArray)
-          data
-        else
-          data = data.to_a
-          if data.all? { |v| v.is_a?(Integer) }
-            Numo::Int64.cast(data)
-          elsif data.all? { |v| v.is_a?(Numeric) || v.nil? }
-            Numo::DFloat.cast(data.map { |v| v || Float::NAN })
-          elsif data.all? { |v| v == true || v == false }
-            Numo::Bit.cast(data)
-          else
-            Numo::RObject.cast(data)
-          end
-        end
+      @data = data
 
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
     end
@@ -47,20 +65,8 @@ module Rover
       end
     end
 
-    def to(new_type)
-      numo_type = self.numo_type(new_type)
-
-      if new_type == :int && (((type == :float || type == :object) && (@data.isnan.any? || @data.isinf.any?)) || (type == :object && missing.to_numo.any?))
-        raise "Cannot convert missing or infinite values to int"
-      end
-
-      if type == :object && new_type == :float
-        Vector.new(@data.to_a.map { |item| item.nil? ? Float::NAN : item.to_f })
-      elsif type == :object && new_type == :int
-        Vector.new(@data.to_a.map(&:to_i))
-      else
-        Vector.new(@data.cast_to(numo_type))
-      end
+    def to(type)
+      Vector.new(self, type: type)
     end
 
     def to_numo
