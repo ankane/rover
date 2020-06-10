@@ -9,14 +9,14 @@ require "rover/version"
 
 module Rover
   class << self
-    def read_csv(path, **options)
+    def read_csv(path, types: nil, **options)
       require "csv"
-      csv_to_df(CSV.read(path, **csv_options(options)))
+      csv_to_df(CSV.read(path, **csv_options(options)), types: types)
     end
 
-    def parse_csv(str, **options)
+    def parse_csv(str, types: nil, **options)
       require "csv"
-      csv_to_df(CSV.parse(str, **csv_options(options)))
+      csv_to_df(CSV.parse(str, **csv_options(options)), types: types)
     end
 
     private
@@ -28,13 +28,13 @@ module Rover
       options
     end
 
-    def csv_to_df(table)
+    def csv_to_df(table, types: nil)
       table.by_col!
       data = {}
       table.each do |k, v|
         data[k] = v
       end
-      DataFrame.new(data)
+      DataFrame.new(data, types: types)
     end
   end
 end

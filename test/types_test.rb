@@ -15,6 +15,11 @@ class TypesTest < Minitest::Test
     end
   end
 
+  def test_read_csv
+    df = Rover.read_csv("test/support/data.csv", types: {"a" => :int8})
+    assert_equal :int8, df["a"].type
+  end
+
   def test_complex64
     error = assert_raises(ArgumentError) do
       Rover::Vector.new(Numo::SComplex.cast([1]))
