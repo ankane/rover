@@ -17,7 +17,7 @@ module Rover
 
     # TODO raise error if data is complex type
     def initialize(data, type: nil)
-      numo_type = self.numo_type(type) if type
+      numo_type = numo_type(type) if type
 
       data = data.to_numo if data.is_a?(Vector)
 
