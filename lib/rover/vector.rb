@@ -15,7 +15,6 @@ module Rover
       uint: Numo::UInt64   # TODO use uint64?
     }
 
-    # TODO raise error if data is complex type
     def initialize(data, type: nil)
       numo_type = numo_type(type) if type
 
