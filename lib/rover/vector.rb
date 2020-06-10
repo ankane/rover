@@ -3,11 +3,11 @@ module Rover
     TYPE_CAST_MAPPING = {
       bool: Numo::Bit,
       float32: Numo::SFloat,
-      float: Numo::DFloat,
+      float: Numo::DFloat, # TODO use float64?
       int8: Numo::Int8,
       int16: Numo::Int16,
       int32: Numo::Int32,
-      int: Numo::Int64,
+      int: Numo::Int64,    # TODO use int64?
       object: Numo::RObject
     }
 

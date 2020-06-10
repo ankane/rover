@@ -14,9 +14,10 @@ class TypesTest < Minitest::Test
     end
   end
 
-  # should raise error
+  # an error seems more intuitive
+  # but this is same behavior as Numo, NumPy, and Pandas
   def test_int_overflow
-    Rover::Vector.new([2**63 - 1]).to(:int32)
+    assert_vector [-1], Rover::Vector.new([2**63 - 1]).to(:int32)
   end
 
   def test_constructor_int_nan
