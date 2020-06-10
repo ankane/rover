@@ -10,7 +10,7 @@ class TypesTest < Minitest::Test
 
   def test_to_int_nan
     error = assert_raises do
-      Rover::Vector.new([1.5, 2.5, nil]).to(:int)
+      Rover::Vector.new([1.5, 2.5, Float::NAN]).to(:int)
     end
     assert_equal "Cannot convert missing or infinite values to int", error.message
   end
