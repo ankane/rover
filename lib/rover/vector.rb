@@ -27,12 +27,7 @@ module Rover
     end
 
     def type
-      type = TYPE_CAST_MAPPING.find { |_, v| @data.is_a?(v) }
-      if type
-        type[0]
-      else
-        raise "Unknown type"
-      end
+      TYPE_CAST_MAPPING.find { |_, v| @data.is_a?(v) }[0]
     end
 
     def to(type)
