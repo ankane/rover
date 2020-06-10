@@ -20,6 +20,7 @@ module Rover
         if type
           case type
           when /int/
+            # Numo does not check these when casting
             raise RangeError, "float NaN out of range of integer" if data.respond_to?(:isnan) && data.isnan.any?
             raise RangeError, "float Inf out of range of integer" if data.respond_to?(:isinf) && data.isinf.any?
 
