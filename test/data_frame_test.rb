@@ -487,10 +487,12 @@ class DataFrameTest < Minitest::Test
     assert_equal "#<Rover::DataFrame>", df.inspect
   end
 
+  # still get a non-ideal error message for 3 arguments
+  # wrong number of arguments (given 2, expected 0..2)
   def test_arguments
     error = assert_raises(ArgumentError) do
       Rover::DataFrame.new(1, 2)
     end
-    assert_equal "wrong number of arguments (given 2, expected 1)", error.message
+    assert_equal "wrong number of arguments (given 2, expected 0..1)", error.message
   end
 end

@@ -4,7 +4,7 @@ module Rover
     # DataFrame.new({types: ...}) and DataFrame.new(types: ...)
     # https://bugs.ruby-lang.org/issues/16891
     def initialize(data = {}, options = {})
-      raise ArgumentError, "wrong number of arguments (given 2, expected 1)" unless options.is_a?(Hash)
+      raise ArgumentError, "wrong number of arguments (given 2, expected 0..1)" unless options.is_a?(Hash)
 
       known_keywords = [:types]
 
