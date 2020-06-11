@@ -7,9 +7,10 @@ module Rover
 
     [:count, :max, :min, :mean, :median, :percentile, :sum].each do |name|
       define_method(name) do |*args|
+        n = [name, args.first].compact.join("_")
+
         rows = []
         grouped_dfs.each do |k, df|
-          n = [name, args.first].compact.join("_")
           rows << k.merge(n => df.send(name, *args))
         end
 
