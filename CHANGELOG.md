@@ -1,3 +1,7 @@
+## 0.2.0 (unreleased)
+
+- Changed group calculations to return a data frame instead of a hash
+
 ## 0.1.1 (2020-06-10)
 
 - Added methods and options for types

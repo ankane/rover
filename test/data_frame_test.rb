@@ -209,12 +209,14 @@ class DataFrameTest < Minitest::Test
 
   def test_group
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
-    assert_equal ({"one" => 2, "two" => 1}), df.group("b").count
+    expected = Rover::DataFrame.new({"b" => ["one", "two"], "count" => [2, 1]})
+    assert_equal expected, df.group("b").count
   end
 
   def test_group_multiple
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
-    assert_equal ({[1, "one"] => 1, [2, "one"] => 1, [3, "two"] => 1}), df.group(["a", "b"]).count
+    expected = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"], "count" => [1, 1, 1]})
+    assert_equal expected, df.group(["a", "b"]).count
   end
 
   def test_group_empty
@@ -235,12 +237,14 @@ class DataFrameTest < Minitest::Test
 
   def test_group_max
     df = Rover::DataFrame.new({"a" => [1, 100, 3], "b" => ["one", "one", "two"]})
-    assert_equal ({"one" => 100, "two" => 3}), df.group("b").max("a")
+    expected = Rover::DataFrame.new({"b" => ["one", "two"], "max_a" => [100, 3]})
+    assert_equal expected, df.group("b").max("a")
   end
 
   def test_group_min
     df = Rover::DataFrame.new({"a" => [1, 100, 3], "b" => ["one", "one", "two"]})
-    assert_equal ({"one" => 1, "two" => 3}), df.group("b").min("a")
+    expected = Rover::DataFrame.new({"b" => ["one", "two"], "min_a" => [1, 3]})
+    assert_equal expected, df.group("b").min("a")
   end
 
   def test_max
