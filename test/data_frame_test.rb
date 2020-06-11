@@ -213,6 +213,12 @@ class DataFrameTest < Minitest::Test
     assert_equal expected, df.group("b").count
   end
 
+  def test_group_nil
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", nil]})
+    expected = Rover::DataFrame.new({"b" => ["one", nil], "count" => [2, 1]})
+    assert_equal expected, df.group("b").count
+  end
+
   def test_group_multiple
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
     expected = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"], "count" => [1, 1, 1]})

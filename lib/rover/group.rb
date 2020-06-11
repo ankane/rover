@@ -35,7 +35,7 @@ module Rover
         end
 
         result = {}
-        groups.keys.sort_by { |v| v.values_at(*@columns) }.each do |k|
+        groups.keys.each do |k|
           result[k] = @df[groups[k]]
         end
         result
