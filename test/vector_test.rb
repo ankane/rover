@@ -171,6 +171,12 @@ class VectorTest < Minitest::Test
     assert_kind_of Numo::Int64, vector.map { |v| v.size }.to_numo
   end
 
+  def test_zip
+    a = Rover::Vector.new([1, 2, 3])
+    b = Rover::Vector.new(["a", "b", "c"])
+    assert_equal [[1, "a"], [2, "b"], [3, "c"]], a.zip(b)
+  end
+
   def test_abs
     assert_vector [2, 1, 0, 1, 2], Rover::Vector.new(-2..2).abs
     assert_raises(NoMethodError) do

@@ -1,6 +1,8 @@
 ## 0.2.0 (unreleased)
 
+- Added `zip` method to vectors
 - Changed group calculations to return a data frame instead of a hash
+- Changed `each_row` to return enumerator
 - Improved inspect
 
 ## 0.1.1 (2020-06-10)

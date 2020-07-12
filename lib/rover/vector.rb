@@ -233,6 +233,10 @@ module Rover
       @data.to_a.any?(&block)
     end
 
+    def zip(other, &block)
+      to_a.zip(other.to_a, &block)
+    end
+
     def first(n = 1)
       if n >= size
         Vector.new(@data)
