@@ -247,18 +247,19 @@ module Rover
       line_start = 0
       spaces = 2
 
+      summarize = size >= 30
+
       @vectors.each do |k, v|
-        v = v.first(5).to_a
+        v = summarize ? v.first(5).to_a + ["..."] + v.last(5).to_a : v.to_a
         width = ([k] + v).map(&:to_s).map(&:size).max
         width = 3 if width < 3
 
         if lines.empty? || lines[-2].map { |l| l.size + spaces }.sum + width > 120
           line_start = lines.size
           lines << []
-          [size, 5].min.times do |i|
+          v.size.times do |i|
             lines << []
           end
-          lines << [] if size > 5
           lines << []
         end
 
@@ -266,7 +267,6 @@ module Rover
         v.each_with_index do |v2, i|
           lines[line_start + 1 + i] << "%#{width}s" % v2.to_s
         end
-        lines[line_start + 6] << "%#{width}s" % "..." if size > 5
       end
 
       lines.pop

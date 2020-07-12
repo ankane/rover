@@ -489,8 +489,13 @@ class DataFrameTest < Minitest::Test
   end
 
   def test_inspect
-    df = Rover::DataFrame.new({"a" => 1..8, "b" => ["one", "two", "three", "four", "five", "six", "seven", "eight"]})
-    assert_equal "  a      b\n  1    one\n  2    two\n  3  three\n  4   four\n  5   five\n...    ...", df.inspect
+    df = Rover::DataFrame.new({"a" => 1..5, "b" => ["one", "two", "three", "four", "five"]})
+    assert_equal "  a      b\n  1    one\n  2    two\n  3  three\n  4   four\n  5   five", df.inspect
+  end
+
+  def test_inspect_summary
+    df = Rover::DataFrame.new({"a" => 1..99})
+    assert_equal "  a\n  1\n  2\n  3\n  4\n  5\n...\n 95\n 96\n 97\n 98\n 99", df.inspect
   end
 
   def test_inspect_empty
