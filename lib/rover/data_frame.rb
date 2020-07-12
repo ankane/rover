@@ -81,8 +81,9 @@ module Rover
       end
     end
 
-    # return each row as a hash
     def each_row
+      return enum_for(:each_row) unless block_given?
+
       size.times do |i|
         yield @vectors.map { |k, v| [k, v[i]] }.to_h
       end

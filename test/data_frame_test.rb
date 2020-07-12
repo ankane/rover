@@ -503,6 +503,20 @@ class DataFrameTest < Minitest::Test
     assert_equal "#<Rover::DataFrame>", df.inspect
   end
 
+  def test_each_row
+    df = Rover::DataFrame.new({a: 1..3})
+    rows = []
+    df.each_row do |row|
+      rows << row
+    end
+    assert_equal [{a: 1}, {a: 2}, {a: 3}], rows
+  end
+  def test_each_row_enum
+    df = Rover::DataFrame.new({a: 1..3})
+    rows = df.each_row.map { |r| r }
+    assert_equal [{a: 1}, {a: 2}, {a: 3}], rows
+  end
+
   def test_arguments
     error = assert_raises(ArgumentError) do
       Rover::DataFrame.new(1, 2, types: {})
