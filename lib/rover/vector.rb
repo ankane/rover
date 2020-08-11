@@ -44,6 +44,10 @@ module Rover
       a
     end
 
+    def numeric?
+      ![:object, :bool].include?(type)
+    end
+
     def size
       @data.size
     end
