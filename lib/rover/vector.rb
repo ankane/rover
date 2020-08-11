@@ -51,7 +51,7 @@ module Rover
     alias_method :count, :size
 
     def uniq
-      Vector.new(@data.to_a.uniq)
+      Vector.new(to_a.uniq)
     end
 
     def missing

@@ -254,6 +254,7 @@ class VectorTest < Minitest::Test
 
   def test_uniq
     assert_vector [1, 2], Rover::Vector.new([1, 1, 1, 2, 2]).uniq
+    assert_vector [true, false], Rover::Vector.new([true, true, true, false, false]).uniq
   end
 
   def test_first
