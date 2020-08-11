@@ -146,17 +146,21 @@ class VectorTest < Minitest::Test
     assert_equal 16, Rover::Vector.new([1, 5, 9]).var
   end
 
-  def test_any?
+  def test_any
     vector = Rover::Vector.new(1..3)
     assert vector.any?
     assert vector.any? { |v| v == 2 }
     assert !vector.any? { |v| v == 4 }
+    assert (vector == 2).any?
+    assert !(vector == 4).any?
   end
 
-  def test_all?
+  def test_all
     vector = Rover::Vector.new(1..3)
     assert vector.all? { |v| v < 4 }
     assert !vector.all? { |v| v < 3 }
+    assert (vector < 4).all?
+    assert !(vector < 3).all?
   end
 
   def test_map

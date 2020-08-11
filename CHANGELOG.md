@@ -4,6 +4,7 @@
 - Changed group calculations to return a data frame instead of a hash
 - Changed `each_row` to return enumerator
 - Improved inspect
+- Fixed `any?` and `all?` for boolean vectors
 
 ## 0.1.1 (2020-06-10)
 

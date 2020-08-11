@@ -226,11 +226,11 @@ module Rover
     end
 
     def all?(&block)
-      @data.to_a.all?(&block)
+      to_a.all?(&block)
     end
 
     def any?(&block)
-      @data.to_a.any?(&block)
+      to_a.any?(&block)
     end
 
     def zip(other, &block)
