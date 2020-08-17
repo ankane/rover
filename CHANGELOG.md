@@ -1,4 +1,4 @@
-## 0.2.0 (unreleased)
+## 0.2.0 (2020-08-17)
 
 - Added `numeric?` and `zip` methods to vectors
 - Changed group calculations to return a data frame instead of a hash
