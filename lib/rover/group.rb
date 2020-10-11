@@ -2,7 +2,7 @@ module Rover
   class Group
     def initialize(df, columns)
       @df = df
-      @columns = Array(columns)
+      @columns = columns
     end
 
     def group(*columns)
