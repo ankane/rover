@@ -360,6 +360,7 @@ module Rover
     def plot(x = nil, y = nil, type: nil)
       require "vega"
 
+      raise ArgumentError, "Must specify columns" if keys.size != 2 && (!x || !y)
       x ||= keys[0]
       y ||= keys[1]
       type ||= self[x].numeric? && self[y].numeric? ? "scatter" : "column"
