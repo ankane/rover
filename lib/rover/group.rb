@@ -5,6 +5,10 @@ module Rover
       @columns = Array(columns)
     end
 
+    def group(*columns)
+      Group.new(@df, @columns + columns.flatten)
+    end
+
     [:count, :max, :min, :mean, :median, :percentile, :sum].each do |name|
       define_method(name) do |*args|
         n = [name, args.first].compact.join("_")
