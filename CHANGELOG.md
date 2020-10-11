@@ -1,3 +1,7 @@
+## 0.2.1 (unreleased)
+
+- Added `plot` method to data frames
+
 ## 0.2.0 (2020-08-17)
 
 - Added `numeric?` and `zip` methods to vectors

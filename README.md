@@ -200,6 +200,20 @@ Multiple groups
 df.group([:a, :b]).count
 ```
 
+## Visualization [master]
+
+Add [Vega](https://github.com/ankane/vega) to your application’s Gemfile:
+
+```ruby
+gem 'vega'
+```
+
+And use:
+
+```ruby
+df.plot(:a, :b)
+```
+
 ## Updating Data
 
 Add a new column

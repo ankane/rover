@@ -357,6 +357,39 @@ module Rover
       keys.all? { |k| self[k] == other[k] }
     end
 
+    def plot(x = nil, y = nil, type: nil)
+      require "vega"
+
+      x ||= keys[0]
+      y ||= keys[1]
+      type ||= self[x].numeric? && self[y].numeric? ? "scatter" : "column"
+      data = self[[x, y]]
+
+      case type
+      when "scatter"
+        Vega.lite
+          .data(data)
+          .mark(type: "circle", tooltip: true)
+          .encoding(
+            x: {field: x, type: "quantitative", scale: {zero: false}},
+            y: {field: y, type: "quantitative", scale: {zero: false}},
+            size: {value: 60}
+          )
+          .config(axis: {title: nil, labelFontSize: 12})
+      when "column"
+        Vega.lite
+          .data(data)
+          .mark(type: "bar", tooltip: true)
+          .encoding(
+            x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
+            y: {field: y, type: "quantitative"}
+          )
+          .config(axis: {title: nil, labelFontSize: 12})
+      else
+        raise ArgumentError, "Invalid type: #{type}"
+      end
+    end
+
     private
 
     def check_key(key)
