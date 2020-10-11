@@ -387,6 +387,7 @@ module Rover
           .data(data)
           .mark(type: "bar", tooltip: true)
           .encoding(
+            # TODO determine label angle
             x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
             y: {field: y, type: "quantitative"}
           )
