@@ -291,8 +291,8 @@ module Rover
       dup.sort_by!(&block)
     end
 
-    def group(columns)
-      Group.new(self, columns)
+    def group(*columns)
+      Group.new(self, columns.flatten)
     end
 
     [:max, :min, :median, :mean, :percentile, :sum].each do |name|
