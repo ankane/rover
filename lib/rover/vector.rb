@@ -95,7 +95,7 @@ module Rover
       define_method(op) do |other|
         other = other.to_numo if other.is_a?(Vector)
         # TODO better logic
-        if @data.is_a?(Numo::RObject)
+        if @data.is_a?(Numo::RObject) && !other.is_a?(Numo::RObject)
           map { |v| v.send(op, other) }
         else
           Vector.new(@data.send(op, other))

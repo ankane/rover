@@ -34,6 +34,12 @@ class VectorTest < Minitest::Test
     assert !Rover::Vector.new([true, true, false]).numeric?
   end
 
+  def test_add_strings
+    a = Rover::Vector.new(["a", "b", "c"])
+    b = Rover::Vector.new(["d", "e", "f"])
+    assert_vector ["ad", "be", "cf"], a + b
+  end
+
   def test_missing
     assert_vector [false, true, false], Rover::Vector.new([1, nil, 3]).missing
     assert_vector [false, true, false], Rover::Vector.new(["one", nil, "three"]).missing
