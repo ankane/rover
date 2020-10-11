@@ -47,18 +47,18 @@ Rover::DataFrame.new({
 })
 ```
 
-From Active Record
-
-```ruby
-Rover::DataFrame.new(User.all)
-```
-
 From a CSV
 
 ```ruby
 Rover.read_csv("file.csv")
 # or
 Rover.parse_csv("CSV,data,string")
+```
+
+From Active Record
+
+```ruby
+Rover::DataFrame.new(User.all)
 ```
 
 ## Attributes
