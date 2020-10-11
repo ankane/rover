@@ -237,8 +237,12 @@ module Rover
     # for IRuby
     def to_html
       require "iruby"
-      # TODO make more efficient
-      IRuby::HTML.table(to_h, maxrows: 7)
+      if size > 7
+        # pass 8 rows so maxrows is applied
+        IRuby::HTML.table((self[0..4] + self[-4..-1]).to_h, maxrows: 7)
+      else
+        IRuby::HTML.table(to_h)
+      end
     end
 
     # TODO handle long text better
