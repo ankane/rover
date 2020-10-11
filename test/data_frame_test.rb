@@ -119,6 +119,19 @@ class DataFrameTest < Minitest::Test
     assert_equal "Must specify headers", error.message
   end
 
+  def test_read_csv_headers_too_few
+    error = assert_raises(ArgumentError) do
+      Rover.read_csv("test/support/data.csv", headers: ["a"])
+    end
+    assert_equal "Expected 2 headers, got 1", error.message
+  end
+
+  # TODO raise error in 0.3.0?
+  def test_read_csv_headers_too_many
+    df = Rover.read_csv("test/support/data.csv", headers: ["a", "b", "c"])
+    assert_equal ["a", "b", "c"], df.keys
+  end
+
   def test_parse_csv
     df = Rover.parse_csv("a,b\n1,one\n2,two\n3,three\n")
     assert_equal ["a", "b"], df.vector_names
