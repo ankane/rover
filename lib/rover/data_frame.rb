@@ -368,7 +368,15 @@ module Rover
       raise ArgumentError, "Must specify columns" if keys.size != 2 && (!x || !y)
       x ||= keys[0]
       y ||= keys[1]
-      type ||= self[x].numeric? && self[y].numeric? ? "scatter" : "column"
+      type ||= begin
+        if self[x].numeric? && self[y].numeric?
+          "scatter"
+        elsif types[x] == :object && self[y].numeric?
+          "column"
+        else
+          raise "Cannot determine type"
+        end
+      end
       data = self[[x, y]]
 
       case type
