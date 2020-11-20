@@ -210,6 +210,12 @@ class VectorTest < Minitest::Test
     assert_vector [true, true, false], vector <= 2
   end
 
+  def test_equal_big_decimal
+    vector = Rover::Vector.new(1..3).map { |v| BigDecimal(v) }
+    p vector.type
+    vector == vector
+  end
+
   def test_string
     assert_vector ["one", "two", "three"], Rover::Vector.new(["one", "two", "three"])
   end

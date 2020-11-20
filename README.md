@@ -6,7 +6,7 @@ Simple, powerful data frames for Ruby
 
 :evergreen_tree: Uses [Vega](https://github.com/ankane/vega) for visualization
 
-[![Build Status](https://travis-ci.org/ankane/rover.svg?branch=master)](https://travis-ci.org/ankane/rover)
+[![Build Status](https://github.com/ankane/rover/workflows/build/badge.svg?branch=master)](https://github.com/ankane/rover/actions)
 
 ## Installation
 
