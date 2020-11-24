@@ -200,7 +200,7 @@ Multiple groups
 df.group([:a, :b]).count
 ```
 
-## Visualization [master]
+## Visualization
 
 Add [Vega](https://github.com/ankane/vega) to your application’s Gemfile:
 
