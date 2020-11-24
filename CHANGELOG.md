@@ -1,4 +1,4 @@
-## 0.2.1 (unreleased)
+## 0.2.1 (2020-11-23)
 
 - Added `plot` method to data frames
 - Improved error message when too few headers
