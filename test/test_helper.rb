@@ -7,6 +7,7 @@ require "active_record"
 logger = ActiveSupport::Logger.new(ENV["VERBOSE"] ? STDOUT : nil)
 
 ActiveRecord::Base.logger = logger
+ActiveRecord::Migration.verbose = ENV["VERBOSE"]
 
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
 

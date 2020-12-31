@@ -212,7 +212,6 @@ class VectorTest < Minitest::Test
 
   def test_equal_big_decimal
     vector = Rover::Vector.new(1..3).map { |v| BigDecimal(v) }
-    p vector.type
     vector == vector
   end
 

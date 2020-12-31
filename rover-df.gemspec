@@ -15,12 +15,5 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.4"
 
-  spec.add_dependency "numo-narray", ">= 0.9.1.7" # for percentile
-
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "minitest", ">= 5"
-  spec.add_development_dependency "activerecord", ">= 5"
-  spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "iruby"
+  spec.add_dependency "numo-narray", ">= 0.9.1.9"
 end
