@@ -498,11 +498,16 @@ class DataFrameTest < Minitest::Test
   end
 
   def test_reader_missing_column
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    error = assert_raises(ArgumentError) do
-      df[["a", "a2"]]
+    df = Rover::DataFrame.new({"hello" => [1, 2, 3], "hello2" => ["one", "two", "three"]})
+    error = assert_raises(KeyError) do
+      df[["hello", "hello3"]]
     end
-    assert_equal "Missing column: a2", error.message
+    assert_match "Missing column: hello3", error.message
+
+    if RUBY_VERSION.to_f >= 2.6
+      assert_match %{Did you mean?  "hello"}, error.message
+      assert_match "hello2", error.message
+    end
   end
 
   def test_setter
