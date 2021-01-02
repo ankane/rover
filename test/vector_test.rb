@@ -211,6 +211,16 @@ class VectorTest < Minitest::Test
     assert_vector ["10!", "20!", "30!"], vector.map { |v| "#{v}!" }
   end
 
+  def test_select
+    vector = Rover::Vector.new([10, 20, 30])
+    assert_vector [10, 30], vector.select { |v| v != 20 }
+  end
+
+  def test_reject
+    vector = Rover::Vector.new([10, 20, 30])
+    assert_vector [10, 30], vector.reject { |v| v == 20 }
+  end
+
   def test_zip
     a = Rover::Vector.new([1, 2, 3])
     b = Rover::Vector.new(["a", "b", "c"])

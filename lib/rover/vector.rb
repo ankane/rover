@@ -166,6 +166,14 @@ module Rover
       Vector.new(@data.to_a.map(&block))
     end
 
+    def select(&block)
+      Vector.new(@data.to_a.select(&block))
+    end
+
+    def reject(&block)
+      Vector.new(@data.to_a.reject(&block))
+    end
+
     def tally
       result = Hash.new(0)
       @data.each do |v|

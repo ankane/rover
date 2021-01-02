@@ -1,3 +1,7 @@
+## 0.2.3 (unreleased)
+
+- Added `select` and `reject` methods to vectors
+
 ## 0.2.2 (2021-01-01)
 
 - Added line, pie, area, and bar charts
