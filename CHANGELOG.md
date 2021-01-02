@@ -1,6 +1,7 @@
 ## 0.2.2 (unreleased)
 
 - Added line, pie, area, and bar charts
+- Added `|` and `^` for vectors
 
 ## 0.2.1 (2020-11-23)
 
