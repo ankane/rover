@@ -374,7 +374,7 @@ module Rover
         elsif types[x] == :object && self[y].numeric?
           "column"
         else
-          raise "Cannot determine type"
+          raise "Cannot determine type. Use the type option."
         end
       end
       data = self[[x, y]]

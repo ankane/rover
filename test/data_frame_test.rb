@@ -579,7 +579,7 @@ class DataFrameTest < Minitest::Test
     error = assert_raises do
       df.plot("a", "a")
     end
-    assert_equal "Cannot determine type", error.message
+    assert_equal "Cannot determine type. Use the type option.", error.message
   end
 
   def assert_plot_type(expected, plot)
