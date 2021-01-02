@@ -380,7 +380,7 @@ module Rover
       data = self[[x, y]]
 
       case type
-      when "line"
+      when "line", "area"
         x_type =
           if data[x].numeric?
             "quantitative"
@@ -394,7 +394,7 @@ module Rover
 
         Vega.lite
           .data(data)
-          .mark(type: "line", tooltip: true, interpolate: "cardinal", point: {size: 60})
+          .mark(type: type, tooltip: true, interpolate: "cardinal", point: {size: 60})
           .encoding(
             x: {field: x, type: x_type, scale: scale},
             y: {field: y, type: "quantitative"}
