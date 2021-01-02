@@ -137,10 +137,16 @@ And
 df[(df[:a] > 100) & (df[:b] == "one")]
 ```
 
-Or
+Or [master]
 
 ```ruby
 df[(df[:a] > 100) | (df[:b] == "one")]
+```
+
+Exclusive or [master]
+
+```ruby
+df[(df[:a] > 100) ^ (df[:b] == "one")]
 ```
 
 ## Operations
