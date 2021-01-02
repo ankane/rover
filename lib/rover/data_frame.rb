@@ -399,7 +399,7 @@ module Rover
             x: {field: x, type: x_type, scale: scale},
             y: {field: y, type: "quantitative"}
           )
-          .config(axis: {title: nil, labelFontSize: 12})
+          .config(axis: {labelFontSize: 12})
       when "pie"
         Vega.lite
           .data(data)
@@ -418,7 +418,7 @@ module Rover
             x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
             y: {field: y, type: "quantitative"}
           )
-          .config(axis: {title: nil, labelFontSize: 12})
+          .config(axis: {labelFontSize: 12})
       when "bar"
         Vega.lite
           .data(data)
@@ -428,7 +428,7 @@ module Rover
             y: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
             x: {field: y, type: "quantitative"}
           )
-          .config(axis: {title: nil, labelFontSize: 12})
+          .config(axis: {labelFontSize: 12})
       when "scatter"
         Vega.lite
           .data(data)
@@ -438,7 +438,7 @@ module Rover
             y: {field: y, type: "quantitative", scale: {zero: false}},
             size: {value: 60}
           )
-          .config(axis: {title: nil, labelFontSize: 12})
+          .config(axis: {labelFontSize: 12})
       else
         raise ArgumentError, "Invalid type: #{type}"
       end
