@@ -509,6 +509,9 @@ module Rover
 
     def check_column(key)
       raise ArgumentError, "Missing column: #{key}" unless include?(key)
+      # TODO in 0.3.0
+      # use KeyError for did_you_mean suggestions
+      # raise KeyError.new("Missing column: #{key}", receiver: self, key: key) unless include?(key)
     end
 
     def to_vector(v, size: nil, type: nil)
