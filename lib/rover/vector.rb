@@ -161,7 +161,7 @@ module Rover
     end
 
     def map(&block)
-      # covert to Ruby first to cast properly
+      # convert to Ruby first to cast properly
       # https://github.com/ruby-numo/numo-narray/issues/181
       Vector.new(@data.to_a.map(&block))
     end
