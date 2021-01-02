@@ -128,7 +128,13 @@ df[[1, 4, 5]]
 Filter on a condition
 
 ```ruby
+df[df[:a] == 100]
+df[df[:a].in?([100, 200)]
+df[df[:a] != 100]
 df[df[:a] > 100]
+df[df[:a] >= 100]
+df[df[:a] < 100]
+df[df[:a] <= 100]
 ```
 
 And
