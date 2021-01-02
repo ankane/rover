@@ -166,6 +166,11 @@ module Rover
       Vector.new(@data.to_a.map(&block))
     end
 
+    def map!(&block)
+      @data = cast_data(@data.to_a.map(&block))
+      self
+    end
+
     def select(&block)
       Vector.new(@data.to_a.select(&block))
     end

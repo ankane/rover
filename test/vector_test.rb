@@ -211,6 +211,14 @@ class VectorTest < Minitest::Test
     assert_vector ["10!", "20!", "30!"], vector.map { |v| "#{v}!" }
   end
 
+  def test_map!
+    vector = Rover::Vector.new([10, 20, 30])
+    assert_equal :int, vector.type
+    vector.map! { |v| "#{v}!" }
+    assert_vector ["10!", "20!", "30!"], vector
+    assert_equal :object, vector.type
+  end
+
   def test_select
     vector = Rover::Vector.new([10, 20, 30])
     assert_vector [10, 30], vector.select { |v| v != 20 }

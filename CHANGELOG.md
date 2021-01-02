@@ -1,6 +1,6 @@
 ## 0.2.3 (unreleased)
 
-- Added `select` and `reject` methods to vectors
+- Added `select`, `reject`, and `map!` methods to vectors
 
 ## 0.2.2 (2021-01-01)
 
