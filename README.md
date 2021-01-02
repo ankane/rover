@@ -136,11 +136,18 @@ df[df[:a] < 100]
 df[df[:a] <= 100]
 ```
 
-In and not in
+In
 
 ```ruby
-df[df[:a].in?([100, 200)]
-df[!df[:a].in?([100, 200)]
+df[df[:a].in?([1, 2, 3)]
+df[df[:a].in?(1..3)
+df[df[:a].in?(["a", "b", "c"])]
+```
+
+Not in
+
+```ruby
+df[!df[:a].in?([1, 2, 3)]
 ```
 
 And, or, and exclusive or

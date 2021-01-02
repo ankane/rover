@@ -248,6 +248,11 @@ class VectorTest < Minitest::Test
     assert_vector [true, false, true], vector.in?(["one", "three", nil])
   end
 
+  def test_in_range
+    vector = Rover::Vector.new([1, 2, 3])
+    assert_vector [true, true, false], vector.in?(1..2)
+  end
+
   def test_negation
     vector = Rover::Vector.new([-2, 0, 2])
     assert_vector [2, 0, -2], -vector
