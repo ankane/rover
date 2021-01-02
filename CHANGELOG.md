@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Added pie and bar charts
+
 ## 0.2.1 (2020-11-23)
 
 - Added `plot` method to data frames

@@ -400,6 +400,25 @@ module Rover
             y: {field: y, type: "quantitative"}
           )
           .config(axis: {title: nil, labelFontSize: 12})
+      when "bar"
+        Vega.lite
+          .data(data)
+          .mark(type: "bar", tooltip: true)
+          .encoding(
+            # TODO determine label angle
+            y: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
+            x: {field: y, type: "quantitative"}
+          )
+          .config(axis: {title: nil, labelFontSize: 12})
+      when "pie"
+        Vega.lite
+          .data(data)
+          .mark(type: "arc", tooltip: true)
+          .encoding(
+            color: {field: x, type: "nominal", axis: {title: nil}, legend: {labelFontSize: 12}},
+            theta: {field: y, type: "quantitative"}
+          )
+          .view(stroke: nil)
       else
         raise ArgumentError, "Invalid type: #{type}"
       end
