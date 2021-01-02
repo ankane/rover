@@ -139,7 +139,7 @@ df[df[:a] <= 100]
 In
 
 ```ruby
-df[df[:a].in?([1, 2, 3)]
+df[df[:a].in?([1, 2, 3])]
 df[df[:a].in?(1..3)]
 df[df[:a].in?(["a", "b", "c"])]
 ```
@@ -147,7 +147,7 @@ df[df[:a].in?(["a", "b", "c"])]
 Not in
 
 ```ruby
-df[!df[:a].in?([1, 2, 3)]
+df[!df[:a].in?([1, 2, 3])]
 ```
 
 And, or, and exclusive or
