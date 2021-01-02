@@ -415,7 +415,7 @@ module Rover
           .data(data)
           .mark(type: "arc", tooltip: true)
           .encoding(
-            color: {field: x, type: "nominal", axis: {title: nil}, legend: {labelFontSize: 12}},
+            color: {field: x, type: "nominal", sort: "none", axis: {title: nil}, legend: {labelFontSize: 12}},
             theta: {field: y, type: "quantitative"}
           )
           .view(stroke: nil)
