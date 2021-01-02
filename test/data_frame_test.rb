@@ -497,6 +497,14 @@ class DataFrameTest < Minitest::Test
     assert_vector [1, 3], df[where]["a"]
   end
 
+  def test_reader_missing_column
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    error = assert_raises do
+      df[["a", "c"]]
+    end
+    assert_equal "Missing column: c", error.message
+  end
+
   def test_setter
     df = Rover::DataFrame.new({"a" => [1, 2, 3]})
     df["b"] = 1

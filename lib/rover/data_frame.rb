@@ -72,6 +72,7 @@ module Rover
         # multiple columns
         df = DataFrame.new
         where.each do |k|
+          check_column(k)
           df[k] = @vectors[k]
         end
         df
