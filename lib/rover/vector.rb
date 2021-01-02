@@ -91,7 +91,7 @@ module Rover
       @data[k] = v
     end
 
-    %w(+ - * / % ** &).each do |op|
+    %w(+ - * / % ** & |).each do |op|
       define_method(op) do |other|
         other = other.to_numo if other.is_a?(Vector)
         # TODO better logic

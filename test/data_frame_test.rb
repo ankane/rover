@@ -513,6 +513,16 @@ class DataFrameTest < Minitest::Test
     assert_vector [1, 2, 3], df["a"]
   end
 
+  def test_filtering_and
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_vector [2], df[(df["a"] > 1) & (df["b"] == "two")]["a"]
+  end
+
+  def test_filtering_or
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_vector [2, 3], df[(df["a"] > 2) | (df["b"] == "two")]["a"]
+  end
+
   def test_inspect
     df = Rover::DataFrame.new({"a" => 1..5, "b" => ["one", "two", "three", "four", "five"]})
     assert_equal "  a      b\n  1    one\n  2    two\n  3  three\n  4   four\n  5   five", df.inspect

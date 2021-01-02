@@ -134,13 +134,13 @@ df[df[:a] > 100]
 And
 
 ```ruby
-df[df[:a] > 100 & df[:b] == "one"]
+df[(df[:a] > 100) & (df[:b] == "one")]
 ```
 
 Or
 
 ```ruby
-df[df[:a] > 100 | df[:b] == "one"]
+df[(df[:a] > 100) | (df[:b] == "one")]
 ```
 
 ## Operations
