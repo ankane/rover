@@ -129,7 +129,6 @@ Filter on a condition
 
 ```ruby
 df[df[:a] == 100]
-df[df[:a].in?([100, 200)]
 df[df[:a] != 100]
 df[df[:a] > 100]
 df[df[:a] >= 100]
@@ -137,22 +136,19 @@ df[df[:a] < 100]
 df[df[:a] <= 100]
 ```
 
-And
+In and not in
+
+```ruby
+df[df[:a].in?([100, 200)]
+df[!df[:a].in?([100, 200)]
+```
+
+And, or, and exclusive or
 
 ```ruby
 df[(df[:a] > 100) & (df[:b] == "one")]
-```
-
-Or [master]
-
-```ruby
-df[(df[:a] > 100) | (df[:b] == "one")]
-```
-
-Exclusive or [master]
-
-```ruby
-df[(df[:a] > 100) ^ (df[:b] == "one")]
+df[(df[:a] > 100) | (df[:b] == "one")] # [master]
+df[(df[:a] > 100) ^ (df[:b] == "one")] # [master]
 ```
 
 ## Operations
