@@ -154,8 +154,8 @@ And, or, and exclusive or
 
 ```ruby
 df[(df[:a] > 100) & (df[:b] == "one")] # and
-df[(df[:a] > 100) | (df[:b] == "one")] # or  [master]
-df[(df[:a] > 100) ^ (df[:b] == "one")] # xor [master]
+df[(df[:a] > 100) | (df[:b] == "one")] # or
+df[(df[:a] > 100) ^ (df[:b] == "one")] # xor
 ```
 
 ## Operations
@@ -229,7 +229,7 @@ And use:
 df.plot(:a, :b)
 ```
 
-Specify the chart type (`line`, `pie`, `column`, `bar`, `area`, or `scatter`) [master]
+Specify the chart type (`line`, `pie`, `column`, `bar`, `area`, or `scatter`)
 
 ```ruby
 df.plot(:a, :b, type: "pie")

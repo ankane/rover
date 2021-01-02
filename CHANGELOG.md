@@ -1,4 +1,4 @@
-## 0.2.2 (unreleased)
+## 0.2.2 (2021-01-01)
 
 - Added line, pie, area, and bar charts
 - Added `|` and `^` for vectors
