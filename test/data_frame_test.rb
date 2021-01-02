@@ -588,7 +588,11 @@ class DataFrameTest < Minitest::Test
 
   def test_vector_map!
     df = Rover::DataFrame.new({"a" => [10, 20, 30]})
+    assert_equal :int, df["a"].type
+    assert_equal :int, df.types["a"]
+
     df["a"].map! { |v| v + 0.5 }
+
     assert_vector [10.5, 20.5, 30.5], df["a"]
     assert_equal :float, df["a"].type
     assert_equal :float, df.types["a"]
