@@ -146,9 +146,9 @@ df[!df[:a].in?([100, 200)]
 And, or, and exclusive or
 
 ```ruby
-df[(df[:a] > 100) & (df[:b] == "one")]
-df[(df[:a] > 100) | (df[:b] == "one")] # [master]
-df[(df[:a] > 100) ^ (df[:b] == "one")] # [master]
+df[(df[:a] > 100) & (df[:b] == "one")] # and
+df[(df[:a] > 100) | (df[:b] == "one")] # or  [master]
+df[(df[:a] > 100) ^ (df[:b] == "one")] # xor [master]
 ```
 
 ## Operations
