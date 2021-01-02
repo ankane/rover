@@ -140,7 +140,7 @@ In
 
 ```ruby
 df[df[:a].in?([1, 2, 3)]
-df[df[:a].in?(1..3)
+df[df[:a].in?(1..3)]
 df[df[:a].in?(["a", "b", "c"])]
 ```
 
