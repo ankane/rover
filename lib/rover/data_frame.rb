@@ -380,16 +380,35 @@ module Rover
       data = self[[x, y]]
 
       case type
-      when "scatter"
+      when "line"
+        x_type =
+          if data[x].numeric?
+            "quantitative"
+          elsif data[x].all? { |v| v.is_a?(Date) || v.is_a?(Time) }
+            "temporal"
+          else
+            "nominal"
+          end
+
+        scale = x_type == "temporal" ? {type: "utc"} : {}
+
         Vega.lite
           .data(data)
-          .mark(type: "circle", tooltip: true)
+          .mark(type: "line", tooltip: true, interpolate: "cardinal", point: {size: 60})
           .encoding(
-            x: {field: x, type: "quantitative", scale: {zero: false}},
-            y: {field: y, type: "quantitative", scale: {zero: false}},
-            size: {value: 60}
+            x: {field: x, type: x_type, scale: scale},
+            y: {field: y, type: "quantitative"}
           )
           .config(axis: {title: nil, labelFontSize: 12})
+      when "pie"
+        Vega.lite
+          .data(data)
+          .mark(type: "arc", tooltip: true)
+          .encoding(
+            color: {field: x, type: "nominal", sort: "none", axis: {title: nil}, legend: {labelFontSize: 12}},
+            theta: {field: y, type: "quantitative"}
+          )
+          .view(stroke: nil)
       when "column"
         Vega.lite
           .data(data)
@@ -410,15 +429,16 @@ module Rover
             x: {field: y, type: "quantitative"}
           )
           .config(axis: {title: nil, labelFontSize: 12})
-      when "pie"
+      when "scatter"
         Vega.lite
           .data(data)
-          .mark(type: "arc", tooltip: true)
+          .mark(type: "circle", tooltip: true)
           .encoding(
-            color: {field: x, type: "nominal", sort: "none", axis: {title: nil}, legend: {labelFontSize: 12}},
-            theta: {field: y, type: "quantitative"}
+            x: {field: x, type: "quantitative", scale: {zero: false}},
+            y: {field: y, type: "quantitative", scale: {zero: false}},
+            size: {value: 60}
           )
-          .view(stroke: nil)
+          .config(axis: {title: nil, labelFontSize: 12})
       else
         raise ArgumentError, "Invalid type: #{type}"
       end

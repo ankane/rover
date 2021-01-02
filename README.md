@@ -214,7 +214,7 @@ And use:
 df.plot(:a, :b)
 ```
 
-Specify the chart type (`column`, `bar`, `pie`, or `scatter`) [master]
+Specify the chart type (`line`, `pie`, `column`, `bar`, or `scatter`) [master]
 
 ```ruby
 df.plot(:a, :b, type: "pie")

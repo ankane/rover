@@ -1,6 +1,6 @@
 ## 0.2.2 (unreleased)
 
-- Added pie and bar charts
+- Added line, pie, and bar charts
 
 ## 0.2.1 (2020-11-23)
 
