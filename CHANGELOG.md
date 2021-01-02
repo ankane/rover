@@ -2,6 +2,7 @@
 
 - Added line, pie, area, and bar charts
 - Added `|` and `^` for vectors
+- Fixed typecasting with `map`
 
 ## 0.2.1 (2020-11-23)
 

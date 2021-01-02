@@ -198,6 +198,16 @@ class VectorTest < Minitest::Test
     assert_kind_of Numo::Int64, vector.map { |v| v.size }.to_numo
   end
 
+  def test_map_int_to_float
+    vector = Rover::Vector.new([10, 20, 30])
+    assert_vector [10.5, 20.5, 30.5], vector.map { |v| v + 0.5 }
+  end
+
+  def test_map_int_to_string
+    vector = Rover::Vector.new([10, 20, 30])
+    assert_vector ["10!", "20!", "30!"], vector.map { |v| "#{v}!" }
+  end
+
   def test_zip
     a = Rover::Vector.new([1, 2, 3])
     b = Rover::Vector.new(["a", "b", "c"])

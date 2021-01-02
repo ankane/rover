@@ -161,9 +161,9 @@ module Rover
     end
 
     def map(&block)
-      mapped = @data.map(&block)
-      mapped = mapped.to_a if mapped.is_a?(Numo::RObject) # re-evaluate cast
-      Vector.new(mapped)
+      # covert to Ruby first to cast properly
+      # https://github.com/ruby-numo/numo-narray/issues/181
+      Vector.new(@data.to_a.map(&block))
     end
 
     def tally
