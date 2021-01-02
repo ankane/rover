@@ -306,7 +306,12 @@ module Rover
     # for IRuby
     def to_html
       require "iruby"
-      IRuby::HTML.table(to_a)
+      if size > 7
+        # pass 8 rows so maxrows is applied
+        IRuby::HTML.table(first(4).to_a + last(4).to_a, maxrows: 7)
+      else
+        IRuby::HTML.table(to_a)
+      end
     end
 
     private
