@@ -265,7 +265,7 @@ class VectorTest < Minitest::Test
     assert_vector [false, true, false], !Rover::Vector.new([true, false, true])
   end
 
-  def test_missing
+  def test_nan
     vector = Rover::Vector.new([1, nil, 3])
     assert vector[1].nan?
   end
