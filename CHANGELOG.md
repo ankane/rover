@@ -1,6 +1,7 @@
 ## 0.2.4 (unreleased)
 
-- Fixed error with `last` when size is smaller than `n`
+- Fixed error with `first` and `last for data frames
+- Fixed error with `last` when vector size is smaller than `n`
 
 ## 0.2.3 (2021-02-08)
 

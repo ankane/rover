@@ -163,7 +163,7 @@ module Rover
       last(n)
     end
 
-    def first(n = nil)
+    def first(n = 1)
       new_vectors = {}
       @vectors.each do |k, v|
         new_vectors[k] = v.first(n)
@@ -171,7 +171,7 @@ module Rover
       DataFrame.new(new_vectors)
     end
 
-    def last(n = nil)
+    def last(n = 1)
       new_vectors = {}
       @vectors.each do |k, v|
         new_vectors[k] = v.last(n)

@@ -598,6 +598,16 @@ class DataFrameTest < Minitest::Test
     assert_equal :float, df.types["a"]
   end
 
+  def test_first
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal Rover::DataFrame.new({"a" => [1], "b" => ["one"]}), df.first
+  end
+
+  def test_last
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal Rover::DataFrame.new({"a" => [3], "b" => ["three"]}), df.last
+  end
+
   def test_plot
     df = Rover::DataFrame.new({"a" => ["one", "two", "three"], "b" => [1, 2, 3]})
     assert_plot_type "column", df.plot("a", "b")
