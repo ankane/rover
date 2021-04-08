@@ -263,7 +263,11 @@ module Rover
     end
 
     def last(n = 1)
-      Vector.new(@data[-n..-1])
+      if n >= size
+        Vector.new(@data)
+      else
+        Vector.new(@data[-n..-1])
+      end
     end
 
     def take(n)

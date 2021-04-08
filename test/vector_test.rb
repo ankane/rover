@@ -331,6 +331,16 @@ class VectorTest < Minitest::Test
     assert_vector 2..3, vector.last(2)
   end
 
+  def test_last1
+    vector = Rover::Vector.new(1..1)
+    assert_vector 1..1, vector.last
+  end
+
+  def test_short_last
+    vector = Rover::Vector.new(1..3)
+    assert_vector 1..3, vector.last(4)
+  end
+
   def test_take
     vector = Rover::Vector.new(1..3)
     assert_vector 1..2, vector.take(2)
