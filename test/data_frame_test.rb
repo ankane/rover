@@ -608,6 +608,18 @@ class DataFrameTest < Minitest::Test
     assert_equal Rover::DataFrame.new({"a" => [3], "b" => ["three"]}), df.last
   end
 
+  def test_head
+    df = Rover::DataFrame.new({"a" => 1..10})
+    assert_equal Rover::DataFrame.new({"a" => 1..5}), df.head
+    assert_equal Rover::DataFrame.new({"a" => 1..3}), df.head(3)
+  end
+
+  def test_tail
+    df = Rover::DataFrame.new({"a" => 1..10})
+    assert_equal Rover::DataFrame.new({"a" => 6..10}), df.tail
+    assert_equal Rover::DataFrame.new({"a" => 8..10}), df.tail(3)
+  end
+
   def test_plot
     df = Rover::DataFrame.new({"a" => ["one", "two", "three"], "b" => [1, 2, 3]})
     assert_plot_type "column", df.plot("a", "b")
