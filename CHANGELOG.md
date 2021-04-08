@@ -1,3 +1,7 @@
+## 0.2.4 (unreleased)
+
+- Fixed error with `last` when data is smaller than `n`
+
 ## 0.2.3 (2021-02-08)
 
 - Added `select`, `reject`, and `map!` methods to vectors
