@@ -1,6 +1,6 @@
 ## 0.2.4 (unreleased)
 
-- Fixed error with `last` when data is smaller than `n`
+- Fixed error with `last` when size is smaller than `n`
 
 ## 0.2.3 (2021-02-08)
 
