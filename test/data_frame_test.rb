@@ -601,11 +601,13 @@ class DataFrameTest < Minitest::Test
   def test_first
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
     assert_equal Rover::DataFrame.new({"a" => [1], "b" => ["one"]}), df.first
+    assert_equal Rover::DataFrame.new({"a" => [1, 2], "b" => ["one", "two"]}), df.first(2)
   end
 
   def test_last
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
     assert_equal Rover::DataFrame.new({"a" => [3], "b" => ["three"]}), df.last
+    assert_equal Rover::DataFrame.new({"a" => [2, 3], "b" => ["two", "three"]}), df.last(2)
   end
 
   def test_head
