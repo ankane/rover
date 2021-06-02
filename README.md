@@ -259,6 +259,14 @@ df[:a][0..2] = 1
 df[:a][0..2] = [1, 2, 3]
 ```
 
+Update all elements
+
+```ruby
+df[:a] = df[:a].map { |v| v.gsub("a", "b") }
+# or
+df[:a].map! { |v| v.gsub("a", "b") }
+```
+
 Update elements matching a condition
 
 ```ruby
