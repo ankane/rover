@@ -123,6 +123,20 @@ df[1..3]
 df[[1, 4, 5]]
 ```
 
+Iterate over rows
+
+```ruby
+df.each_row { |row| ... }
+```
+
+Iterate over a column
+
+```ruby
+df[:a].each { |item| ... }
+# or
+df[:a].each_with_index { |item, index| ... }
+```
+
 ## Filtering
 
 Filter on a condition
