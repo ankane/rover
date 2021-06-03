@@ -20,11 +20,11 @@ gem 'rover-df'
 
 A data frame is an in-memory table. It’s a useful data structure for data analysis and machine learning. It uses columnar storage for fast operations on columns.
 
-Try it out for forecasting by clicking the button below:
+Try it out for forecasting by clicking the button below (it can take a few minutes to start):
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ankane/ml-stack/master?filepath=Forecasting.ipynb)
 
-It can take a few minutes to start. Use the `Run` button (or `SHIFT` + `ENTER`) to run each line.
+Use the `Run` button (or `SHIFT` + `ENTER`) to run each line.
 
 ## Creating Data Frames
 
