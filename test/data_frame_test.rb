@@ -170,7 +170,7 @@ class DataFrameTest < Minitest::Test
   def test_one_hot
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "three", "three"]})
     expected = Rover::DataFrame.new({
-      "a" => [1, 1, 2],
+      "a" => [1, 2, 3],
       "b_one" => [1, 0, 0],
       "b_three" => [0, 1, 1]
     })
@@ -180,7 +180,7 @@ class DataFrameTest < Minitest::Test
   def test_one_hot_drop
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "three", "three"]})
     expected = Rover::DataFrame.new({
-      "a" => [1, 1, 2],
+      "a" => [1, 2, 3],
       "b_three" => [0, 1, 1]
     })
     assert_equal expected, df.one_hot(drop: true)

@@ -360,7 +360,7 @@ module Rover
     def ==(other)
       size == other.size &&
       keys == other.keys &&
-      keys.all? { |k| self[k] == other[k] }
+      keys.all? { |k| self[k].to_numo == other[k].to_numo }
     end
 
     def plot(x = nil, y = nil, type: nil)
