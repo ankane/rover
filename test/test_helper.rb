@@ -4,6 +4,10 @@ require "minitest/autorun"
 require "minitest/pride"
 require "active_record"
 
+silence_warnings do
+  require "iruby"
+end
+
 logger = ActiveSupport::Logger.new(ENV["VERBOSE"] ? STDOUT : nil)
 
 ActiveRecord::Base.logger = logger
