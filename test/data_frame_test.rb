@@ -570,6 +570,14 @@ class DataFrameTest < Minitest::Test
     assert_equal "#<Rover::DataFrame>", df.inspect
   end
 
+  def test_equal
+    df = Rover::DataFrame.new({a: 1..3})
+    assert_equal df, Rover::DataFrame.new({a: 1..3})
+    refute_equal df, Rover::DataFrame.new({b: 1..3})
+    refute_equal df, Rover::DataFrame.new({a: 1..3, b: 1..3})
+    refute_equal df, Rover::DataFrame.new({a: 2..4})
+  end
+
   def test_each_row
     df = Rover::DataFrame.new({a: 1..3})
     rows = []
