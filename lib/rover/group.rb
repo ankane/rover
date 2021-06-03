@@ -9,7 +9,7 @@ module Rover
       Group.new(@df, @columns + columns.flatten)
     end
 
-    [:count, :max, :min, :mean, :median, :percentile, :sum].each do |name|
+    [:count, :max, :min, :mean, :median, :percentile, :sum, :std, :var].each do |name|
       define_method(name) do |*args|
         n = [name, args.first].compact.join("_")
 

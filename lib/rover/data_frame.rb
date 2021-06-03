@@ -301,7 +301,7 @@ module Rover
       Group.new(self, columns.flatten)
     end
 
-    [:max, :min, :median, :mean, :percentile, :sum].each do |name|
+    [:max, :min, :median, :mean, :percentile, :sum, :std, :var].each do |name|
       define_method(name) do |column, *args|
         check_column(column)
         self[column].send(name, *args)

@@ -195,6 +195,8 @@ df[:a].median
 df[:a].percentile(90)
 df[:a].min
 df[:a].max
+df[:a].std
+df[:a].var
 ```
 
 Count occurrences
