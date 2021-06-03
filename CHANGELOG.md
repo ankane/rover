@@ -1,7 +1,7 @@
 ## 0.2.4 (unreleased)
 
 - Fixed `==` for data frames
-- Fixed error with `first` and `last for data frames
+- Fixed error with `first` and `last` for data frames
 - Fixed error with `last` when vector size is smaller than `n`
 
 ## 0.2.3 (2021-02-08)
