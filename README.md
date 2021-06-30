@@ -433,6 +433,32 @@ Change the type of a column
 df[:a] = df[:a].to(:int)
 ```
 
+## Vectors
+
+Creating a vector from an array
+
+```ruby
+vector = Rover::Vector.new([1, 2, 30])
+```
+
+Getting mean:
+
+```ruby
+vector.mean
+```
+
+Getting median:
+
+```ruby
+vector.median
+```
+
+Getting standard deviation:
+
+```ruby
+vector.std
+```
+
 ## History
 
 View the [changelog](https://github.com/ankane/rover/blob/master/CHANGELOG.md)
