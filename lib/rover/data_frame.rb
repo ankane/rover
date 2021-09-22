@@ -475,10 +475,12 @@ module Rover
 
       left = how == "left"
 
+      types = {}
       vectors = {}
       keys = (self.keys + other.keys).uniq
       keys.each do |k|
         vectors[k] = []
+        types[k] = join_type(self.types[k], other.types[k])
       end
 
       each_row do |r|
@@ -498,7 +500,7 @@ module Rover
         end
       end
 
-      DataFrame.new(vectors)
+      DataFrame.new(vectors, types: types)
     end
 
     def check_join_keys(df, keys)
@@ -520,6 +522,19 @@ module Rover
         else
           raise ArgumentError, "Missing column: #{key}"
         end
+      end
+    end
+
+    def join_type(a, b)
+      if a.nil?
+        b
+      elsif b.nil?
+        a
+      elsif a == b
+        a
+      else
+        # TODO specify
+        nil
       end
     end
 

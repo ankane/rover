@@ -1,3 +1,7 @@
+## 0.2.5 (unreleased)
+
+- Fixed column types with joins
+
 ## 0.2.4 (2021-06-03)
 
 - Added grouping for `std` and `var`

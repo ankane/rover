@@ -443,6 +443,24 @@ class DataFrameTest < Minitest::Test
     assert_equal [:a, :b, :c], result.keys
   end
 
+  def test_inner_join_nil
+    df = Rover::DataFrame.new({
+      a: [1, 2, 3],
+      b: [nil, nil, nil]
+    }, types: {b: :object})
+
+    other_df = Rover::DataFrame.new({
+      a: [1, 1, 2]
+    })
+
+    expected = Rover::DataFrame.new({
+      a: [1, 1, 2],
+      b: [nil, nil, nil]
+    }, types: {b: :object})
+
+    assert_equal expected, df.inner_join(other_df)
+  end
+
   def test_inner_join_on_bad
     df = Rover::DataFrame.new({
       a: [1, 2, 3],
