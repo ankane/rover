@@ -1,4 +1,4 @@
-## 0.2.5 (unreleased)
+## 0.2.5 (2021-09-25)
 
 - Fixed column types with joins
 
