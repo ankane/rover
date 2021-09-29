@@ -35,9 +35,21 @@ module Rover
 
       table.by_col!
       data = {}
+      keys = table.map { |k, _| [k, true] }.to_h
+      unnamed_suffix = 1
       table.each do |k, v|
+        # TODO do same for empty string in 0.3.0
+        if k.nil?
+          k = "unnamed"
+          while keys.include?(k)
+            unnamed_suffix += 1
+            k = "unnamed#{unnamed_suffix}"
+          end
+          keys[k] = true
+        end
         data[k] = v
       end
+
       DataFrame.new(data, types: types)
     end
   end
