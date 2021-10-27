@@ -61,7 +61,7 @@ Rover.read_csv("file.csv")
 Rover.parse_csv("CSV,data,string")
 ```
 
-From Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/master/ruby/red-parquet) gem) [unreleased]
+From Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/master/ruby/red-parquet) gem)
 
 ```ruby
 Rover.read_parquet("file.parquet")
@@ -401,7 +401,7 @@ CSV
 df.to_csv
 ```
 
-Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/master/ruby/red-parquet) gem) [unreleased]
+Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/master/ruby/red-parquet) gem)
 
 ```ruby
 df.to_parquet
