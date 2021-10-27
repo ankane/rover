@@ -23,4 +23,9 @@ class ParquetTest < Minitest::Test
     expected = [:int, :int32, :int16, :int8, :uint, :int, :uint16, :uint8, :float, :float32]
     assert_equal expected, df.types.values
   end
+
+  def test_to_parquet
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal df, Rover.parse_parquet(df.to_parquet)
+  end
 end

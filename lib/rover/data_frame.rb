@@ -235,6 +235,42 @@ module Rover
       end
     end
 
+    def to_parquet
+      require "parquet"
+
+      schema = {}
+      types.each do |name, type|
+        schema[name] =
+          case type
+          when :int
+            :int64
+          when :uint
+            :uint64
+          when :float
+            :double
+          when :float32
+            :float
+          when :object
+            if @vectors[name].all? { |v| v.is_a?(String) }
+              :string
+            else
+              raise "Unknown type"
+            end
+          else
+            type
+          end
+      end
+      # TODO improve performance
+      raw_records = []
+      size.times do |i|
+        raw_records << @vectors.map { |_, v| v[i] }
+      end
+      table = Arrow::Table.new(schema, raw_records)
+      buffer = Arrow::ResizableBuffer.new(1024)
+      table.save(buffer, format: :parquet)
+      buffer.data.to_s
+    end
+
     # for IRuby
     def to_html
       require "iruby"

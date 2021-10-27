@@ -401,6 +401,12 @@ CSV
 df.to_csv
 ```
 
+Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/master/ruby/red-parquet) gem) [unreleased]
+
+```ruby
+df.to_parquet
+```
+
 ## Types
 
 You can specify column types when creating a data frame
