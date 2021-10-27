@@ -66,7 +66,7 @@ From Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/ma
 ```ruby
 Rover.read_parquet("file.parquet")
 # or
-Rover.parse_parquet("string")
+Rover.parse_parquet("PAR1...")
 ```
 
 ## Attributes
