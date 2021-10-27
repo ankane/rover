@@ -8,4 +8,7 @@ gem "activerecord", ">= 5"
 gem "sqlite3"
 gem "iruby", require: false
 gem "vega"
-gem "red-parquet"
+
+# do not install by default
+# since it tries to install arrow
+gem "red-parquet" if ENV["TEST_PARQUET"]
