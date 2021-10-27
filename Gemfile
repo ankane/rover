@@ -11,4 +11,5 @@ gem "vega"
 
 # do not install by default
 # since it tries to install arrow
+# with apt/homebrew install
 gem "red-parquet" if ENV["TEST_PARQUET"]
