@@ -2,7 +2,6 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     strategy:
       fail-fast: false
       matrix:
@@ -14,4 +13,8 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
+    - run: |
+        wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+        apt install -y -V ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+        apt-get update && apt-get install libarrow-dev
     - run: bundle exec rake test
