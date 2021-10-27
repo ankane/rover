@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - run: |
+        wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+        apt install -y -V ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+        apt-get update
+        apt-get install libarrow-dev
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - run: |
-        wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
-        apt install -y -V ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
-        apt-get update && apt-get install libarrow-dev
     - run: bundle exec rake test
