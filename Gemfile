@@ -8,3 +8,4 @@ gem "activerecord", ">= 5"
 gem "sqlite3"
 gem "iruby", require: false
 gem "vega"
+gem "red-parquet"

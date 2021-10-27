@@ -1,6 +1,7 @@
 ## 0.2.6 (unreleased)
 
 - Added support for `nil` headers to `read_csv` and `parse_csv`
+- Added `read_parquet` and `parse_parquet` methods
 
 ## 0.2.5 (2021-09-25)
 

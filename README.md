@@ -61,6 +61,14 @@ Rover.read_csv("file.csv")
 Rover.parse_csv("CSV,data,string")
 ```
 
+From Parquet (requires the [red-parquet](https://github.com/apache/arrow/tree/master/ruby/red-parquet) gem) [unreleased]
+
+```ruby
+Rover.read_parquet("file.parquet")
+# or
+Rover.parse_parquet("string")
+```
+
 ## Attributes
 
 Get number of rows

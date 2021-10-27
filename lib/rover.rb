@@ -19,6 +19,16 @@ module Rover
       csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
     end
 
+    def read_parquet(path)
+      require "parquet"
+      parquet_to_df(Arrow::Table.load(path))
+    end
+
+    def parse_parquet(str)
+      require "parquet"
+      parquet_to_df(Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet))
+    end
+
     private
 
     # TODO use date converter
@@ -51,6 +61,33 @@ module Rover
       end
 
       DataFrame.new(data, types: types)
+    end
+
+    PARQUET_TYPE_MAPPING = {
+      "float" => Numo::SFloat,
+      "double" => Numo::DFloat,
+      "int8" => Numo::Int8,
+      "int16" => Numo::Int16,
+      "int32" => Numo::Int32,
+      "int64" => Numo::Int64,
+      "string" => Numo::RObject,
+      "uint8" => Numo::UInt8,
+      "uint16" => Numo::UInt16,
+      "uint32" => Numo::UInt32,
+      "uint64" => Numo::UInt64
+    }
+
+    def parquet_to_df(table)
+      data = {}
+      table.each_column do |column|
+        k = column.field.name
+        type = column.field.data_type.to_s
+        numo_type = PARQUET_TYPE_MAPPING[type]
+        raise "Unknown type: #{type}" unless numo_type
+        # TODO improve performance
+        data[k] = numo_type.cast(column.data.values)
+      end
+      DataFrame.new(data)
     end
   end
 end
