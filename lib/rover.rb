@@ -64,6 +64,7 @@ module Rover
     end
 
     PARQUET_TYPE_MAPPING = {
+      "bool" => Numo::Bit,
       "float" => Numo::SFloat,
       "double" => Numo::DFloat,
       "int8" => Numo::Int8,

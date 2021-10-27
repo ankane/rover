@@ -250,6 +250,8 @@ module Rover
             :double
           when :float32
             :float
+          when :bool
+            :boolean
           when :object
             if @vectors[name].all? { |v| v.is_a?(String) }
               :string

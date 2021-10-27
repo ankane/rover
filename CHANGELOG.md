@@ -1,3 +1,7 @@
+## 0.2.7 (unreleased)
+
+- Added support for booleans to Parquet methods
+
 ## 0.2.6 (2021-10-27)
 
 - Added support for `nil` headers to `read_csv` and `parse_csv`
