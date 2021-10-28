@@ -21,12 +21,12 @@ module Rover
 
     def read_parquet(path)
       require "parquet"
-      parquet_to_df(Arrow::Table.load(path))
+      arrow_table_to_df(Arrow::Table.load(path))
     end
 
     def parse_parquet(str)
       require "parquet"
-      parquet_to_df(Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet))
+      arrow_table_to_df(Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet))
     end
 
     private
@@ -72,23 +72,32 @@ module Rover
       "int32" => Numo::Int32,
       "int64" => Numo::Int64,
       "string" => Numo::RObject,
+      "binary" => Numo::RObject,
+      "decimal" => Numo::RObject,
       "uint8" => Numo::UInt8,
       "uint16" => Numo::UInt16,
       "uint32" => Numo::UInt32,
       "uint64" => Numo::UInt64
     }
 
-    def parquet_to_df(table)
+    # @param [Arrow::Table] table
+    # @return [Rover::DataFrame]
+    def arrow_table_to_df(table)
       data = {}
       table.each_column do |column|
         k = column.field.name
         type = column.field.data_type.to_s
-        numo_type = PARQUET_TYPE_MAPPING[type]
+        numo_type = PARQUET_TYPE_MAPPING[format_arrow_type(type)]
         raise "Unknown type: #{type}" unless numo_type
         # TODO improve performance
         data[k] = numo_type.cast(column.data.values)
       end
       DataFrame.new(data)
+    end
+
+    # Decimal in parquet can have a lot of types, for example decimal128(38, 15) or decimal(10, 2)
+    def format_arrow_type(type)
+      PARQUET_TYPE_MAPPING.key?(type) ? type : type[/\Adecimal/]
     end
   end
 end
