@@ -78,6 +78,15 @@ class DataFrameTest < Minitest::Test
     assert_vector users.map(&:name), df["name"]
   end
 
+  def test_active_record_result
+    User.delete_all
+    users = 3.times.map { |i| User.create!(name: "User #{i}") }
+    df = Rover::DataFrame.new(User.connection.select_all("SELECT * FROM users"))
+    assert_equal ["id", "name"], df.vector_names
+    assert_vector users.map(&:id), df["id"]
+    assert_vector users.map(&:name), df["name"]
+  end
+
   def test_invalid_data
     error = assert_raises(ArgumentError) do
       Rover::DataFrame.new(1)
