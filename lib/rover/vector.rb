@@ -357,14 +357,14 @@ module Rover
 
       case sort_desc
         when true
-          v = rank(direction="desc")
-          v.each_with_index do |e, idx|
-            return idx unless (v[0] >= e || idx==v.length) 
+          arr = rank(direction="desc").to_a.reverse
+          arr.each_with_index do |e, idx|
+            return idx unless (arr[0] >= e || idx==arr.length) 
           end
         when false # default
-          v = rank(direction="asc")
-          v.each_with_index do |e, idx|
-            return idx unless (v[0] <= e || idx==v.length) 
+          arr = rank(direction="asc").to_a.reverse
+          arr.each_with_index do |e, idx|
+            return idx unless (arr[0] <= e || idx==arr.length) 
           end
       end
 

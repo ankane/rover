@@ -232,22 +232,22 @@ class DataFrameTest < Minitest::Test
 	end
 
 	def test_best_in
-    df = Rover::DataFrame.new({"a" => [2, 3, 10, 1]})
+    df = Rover::DataFrame.new({"a" => [1,10,3,2]})
 		assert_equal 3, df["a"].best_in
 	end
 
 	def test_best_in_descending
-    df = Rover::DataFrame.new({"a" => [7, 12, 13, 1]})
+    df = Rover::DataFrame.new({"a" => [1,13,12,7]})
 		assert_equal 3, df["a"].best_in(direction="desc")
 	end
 
 	def test_worst_in
-    df = Rover::DataFrame.new({"a" => [2, 3, 10, 1]})
+    df = Rover::DataFrame.new({"a" => [1,10,3,2]})
 		assert_equal 3, df["a"].worst_in()
 	end
 
 	def test_worst_in_descending
-    df = Rover::DataFrame.new({"a" => [7, 12, 13, 1]})
+    df = Rover::DataFrame.new({"a" => [1,13,12,7]})
 		assert_equal 3, df["a"].worst_in(direction="desc")
 	end
 
