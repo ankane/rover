@@ -331,6 +331,62 @@ module Rover
       end
     end
 
+    # ranking the values in the Vector
+    def rank(direction="asc")
+      # return a Vector reporting the ranking of the input vector, in same order as original
+      raise ArgumentError, "All elements must be numeric" unless all? { |vi| vi.is_a?(Numeric) }
+      sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
+      data = @data.to_a.map { |x| x != x ? nil : x} # converts any NaN to nil; makes sorting easier
+      sorted = case sort_desc
+        when true
+          # this sorting descending will put nulls at the end
+          data.sort { |a,b| a && b ? b <=> a : a ? -1 : 1 }
+        when false # default
+          # this sorting ascending will put nulls at the end
+          data.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }
+      end
+
+      Vector.new( data.map{ |e| e ? sorted.index(e)+1 : nil } )
+    end
+
+    def best_in(direction="asc")
+      # based on the last value of the input vector
+      # this returns the number of elements the last value is better than
+      # useful when the vector represents, for example, time-ordered data (e.g., "best value in 3 weeks!")
+      sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
+
+      case sort_desc
+        when true
+          v = rank(direction="desc")
+          v.each_with_index do |e, idx|
+            return idx unless (v[0] >= e || idx==v.length) 
+          end
+        when false # default
+          v = rank(direction="asc")
+          v.each_with_index do |e, idx|
+            return idx unless (v[0] <= e || idx==v.length) 
+          end
+      end
+
+      return 0
+    end
+
+    def worst_in(direction="asc")
+      # this is a compementary method to best_in      
+      # useful when the vector represents, for example, time-ordered data (e.g., "worst value in 3 weeks!")
+      # a worst_in() is like calling a best_in() in the opposite direction
+      sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
+
+      case sort_desc
+        when true
+          return best_in(direction="asc")
+        when false # default
+          return best_in(direction="desc")
+      end
+
+      return 0
+    end
+
     private
 
     def cast_data(data, type: nil)

@@ -201,6 +201,56 @@ class DataFrameTest < Minitest::Test
     assert_equal 9, df.sum("a")
   end
 
+  def test_rank
+    df = Rover::DataFrame.new({"a" => [2, 1, 13, 10]})
+		assert_equal Rover::Vector.new([2,1,4,3]), df["a"].rank()
+  end
+
+  def test_rank_with_repeated
+    df = Rover::DataFrame.new({"a" => [2, 1, 13, 1, 10]})
+		assert_equal Rover::Vector.new([3,1,5,1,4]), df["a"].rank()
+  end
+
+  def test_rank_with_nil
+    df = Rover::DataFrame.new({"a" => [2, nil, 1, nil, 13]})
+		assert_equal Rover::Vector.new([2,4,1,4,3]), df["a"].rank()
+  end
+
+  def test_rank_with_nil_2
+    df = Rover::DataFrame.new({"a" => [2, nil, 2, nil, 13]})
+		assert_equal Rover::Vector.new([1,4,1,4,3]), df["a"].rank()
+  end
+
+	def test_rank_descending
+    df = Rover::DataFrame.new({"a" => [2, 1, 13, 10]})
+		assert_equal Rover::Vector.new([3,4,1,2]), df["a"].rank(direction="desc")
+	end
+
+	def test_rank_descending_with_nil
+    df = Rover::DataFrame.new({"a" => [2, nil, 1, nil, 13]})
+		assert_equal Rover::Vector.new([2,4,3,4,1]), df["a"].rank(direction="desc")
+	end
+
+	def test_best_in
+    df = Rover::DataFrame.new({"a" => [2, 3, 10, 1]})
+		assert_equal 3, df["a"].best_in
+	end
+
+	def test_best_in_descending
+    df = Rover::DataFrame.new({"a" => [7, 12, 13, 1]})
+		assert_equal 3, df["a"].best_in(direction="desc")
+	end
+
+	def test_worst_in
+    df = Rover::DataFrame.new({"a" => [2, 3, 10, 1]})
+		assert_equal 3, df["a"].worst_in()
+	end
+
+	def test_worst_in_descending
+    df = Rover::DataFrame.new({"a" => [7, 12, 13, 1]})
+		assert_equal 3, df["a"].worst_in(direction="desc")
+	end
+
   # TODO better test
   def test_sample
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
