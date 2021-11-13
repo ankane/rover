@@ -332,37 +332,27 @@ module Rover
     end
 
     # ranking the values in the Vector
-    def rank(direction="asc")
+    def rank(ascending=true)
       # return a Vector reporting the ranking of the input vector, in same order as original
       raise ArgumentError, "All elements must be numeric" unless all? { |vi| vi.is_a?(Numeric) }
-      sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
+      ascending = true unless !!ascending == ascending
       data = @data.to_a.map { |x| x != x ? nil : x} # converts any NaN to nil; makes sorting easier
- 
-      sorted = case sort_desc
-      when true
-        # this sorting descending will put nulls at the end
-        data.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }
-      when false # default
-        # this sorting ascending will put nulls at the end
-        data.sort { |a,b| a && b ? b <=> a : a ? -1 : 1 }
+
+      if ascending # default
+        sorted = data.sort { |a,b| a && b ? b <=> a : a ? -1 : 1 } # puts nulls at the end
+      else
+        sorted = data.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 } # puts nulls at the end
       end
 
       Vector.new( data.map{ |e| e ? sorted.index(e)+1 : nil } )
     end
 
-    def best_in(direction="asc")
+    def best_in(ascending=true)
       # based on the last value of the input vector
       # this returns the number of elements the last value is better than
       # useful when the vector represents, for example, time-ordered data (e.g., "best value in 3 weeks!")
-      sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
-
-      case sort_desc
-      when true
-        arr = rank(direction="desc").to_a.reverse
-      when false # default
-        arr = rank(direction="asc").to_a.reverse
-      end
-
+      ascending = true unless !!ascending == ascending
+      arr = rank(ascending=ascending).to_a.reverse
       idx = 0
       arr.each do |e|
         return idx if idx >= arr.length
@@ -372,19 +362,12 @@ module Rover
       return idx
     end
 
-    def worst_in(direction="asc")
+    def worst_in(ascending=true)
       # this is a compementary method to best_in      
       # useful when the vector represents, for example, time-ordered data (e.g., "worst value in 3 weeks!")
       # a worst_in() is like calling a best_in() in the opposite direction
-      sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
-
-      case sort_desc
-      when true
-        arr = rank(direction="desc").to_a.reverse
-      when false # default
-        arr = rank(direction="asc").to_a.reverse
-      end
-
+      ascending = true unless !!ascending == ascending
+      arr = rank(ascending=ascending).to_a.reverse
       idx = 0
       arr.each do |e|
         return idx if idx >= arr.length        

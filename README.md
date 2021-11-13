@@ -245,14 +245,14 @@ Rank return a vector describing each vector element's rank compared to the other
 
 ```ruby
 df[:a].rank
-# same as df[:a].rank(direction="asc")
+# short-hand for df[:a].rank(ascending=true)
 ```
 Default ranking is in ascending order, where higher numbers are considered better (lower) rank. Example: "number of widgets sold", where a higher number is "better".
 
 Rank in desdending order, where lower numbers are considered better (lower) rank. Example: "number of widgets returned by customer", where a lower number is "better".
 
 ```ruby
-df[:a].rank(direction="desc")
+df[:a].rank(ascending=false)
 ```
 
 TO DO: consider allowing any datatype that is comparable (has <=> implemented). Currently does not work on vectors of Strings, although in principle it could. Awaiting a use-case.
@@ -262,7 +262,7 @@ Considering the last element of a ranked vector, this returns the number of elem
 
 ```ruby
 df[:a].best_in
-# same as df[:a].best_in(direction="asc")
+# same as df[:a].best_in(ascending=true)
 ```
 
 returns 0 if it isn't the better than its previous value or it exhaust previous values in the vector
@@ -272,7 +272,7 @@ This answers the question, "the best value in N periods". Given a vector of 13 w
 As you might expect, you can specify a direction for the ranking to be used by best_in:
 
 ```ruby
-df[:a].best_in(direction="desc")
+df[:a].best_in(ascending=false)
 ```
 
 Sometimes you want to know if it's the worst value in some number of periods:

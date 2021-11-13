@@ -223,12 +223,12 @@ class DataFrameTest < Minitest::Test
 
 	def test_rank_descending
     df = Rover::DataFrame.new({"a" => [2, 1, 13, 10]})
-		assert_equal Rover::Vector.new([2,1,4,3]), df["a"].rank(direction="desc")
+		assert_equal Rover::Vector.new([2,1,4,3]), df["a"].rank(ascending=false)
 	end
 
 	def test_rank_descending_with_nil
     df = Rover::DataFrame.new({"a" => [2, nil, 1, nil, 13]})
-		assert_equal Rover::Vector.new([2,nil,1,nil,3]), df["a"].rank(direction="desc")
+		assert_equal Rover::Vector.new([2,nil,1,nil,3]), df["a"].rank(ascending=false)
 	end
 
 	def test_best_in
@@ -238,7 +238,7 @@ class DataFrameTest < Minitest::Test
 
 	def test_best_in_descending
     df = Rover::DataFrame.new({"a" => [1,13,12,7]})
-		assert_equal 3, df["a"].best_in(direction="desc")
+		assert_equal 3, df["a"].best_in(ascending=false)
 	end
 
 	def test_worst_in
@@ -248,7 +248,7 @@ class DataFrameTest < Minitest::Test
 
 	def test_worst_in_descending
     df = Rover::DataFrame.new({"a" => [15,13,12,7]})
-		assert_equal 1, df["a"].worst_in(direction="desc")
+		assert_equal 1, df["a"].worst_in(ascending=false)
 	end
 
   # TODO better test
