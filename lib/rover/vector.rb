@@ -337,13 +337,14 @@ module Rover
       raise ArgumentError, "All elements must be numeric" unless all? { |vi| vi.is_a?(Numeric) }
       sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
       data = @data.to_a.map { |x| x != x ? nil : x} # converts any NaN to nil; makes sorting easier
+ 
       sorted = case sort_desc
-        when true
-          # this sorting descending will put nulls at the end
-          data.sort { |a,b| a && b ? b <=> a : a ? -1 : 1 }
-        when false # default
-          # this sorting ascending will put nulls at the end
-          data.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }
+      when true
+        # this sorting descending will put nulls at the end
+        data.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 }
+      when false # default
+        # this sorting ascending will put nulls at the end
+        data.sort { |a,b| a && b ? b <=> a : a ? -1 : 1 }
       end
 
       Vector.new( data.map{ |e| e ? sorted.index(e)+1 : nil } )
@@ -356,19 +357,19 @@ module Rover
       sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
 
       case sort_desc
-        when true
-          arr = rank(direction="desc").to_a.reverse
-          arr.each_with_index do |e, idx|
-            return idx unless (arr[0] >= e || idx==arr.length) 
-          end
-        when false # default
-          arr = rank(direction="asc").to_a.reverse
-          arr.each_with_index do |e, idx|
-            return idx unless (arr[0] <= e || idx==arr.length) 
-          end
+      when true
+        arr = rank(direction="desc").to_a.reverse
+      when false # default
+        arr = rank(direction="asc").to_a.reverse
       end
 
-      return 0
+      idx = 0
+      arr.each do |e|
+        return idx if idx >= arr.length
+        return idx if arr[0] > e  
+        idx +=1
+      end
+      return idx
     end
 
     def worst_in(direction="asc")
@@ -378,13 +379,19 @@ module Rover
       sort_desc = ["desc", "descending"].include?(direction.downcase) ? true : false 
 
       case sort_desc
-        when true
-          return best_in(direction="asc")
-        when false # default
-          return best_in(direction="desc")
+      when true
+        arr = rank(direction="desc").to_a.reverse
+      when false # default
+        arr = rank(direction="asc").to_a.reverse
       end
 
-      return 0
+      idx = 0
+      arr.each do |e|
+        return idx if idx >= arr.length        
+        return idx if arr[0] < e  
+        idx +=1
+      end
+      return idx
     end
 
     private
