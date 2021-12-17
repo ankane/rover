@@ -89,6 +89,14 @@ module Rover
           type = column.field.data_type.to_s
           numo_type = PARQUET_TYPE_MAPPING[type]
           raise "Unknown type: #{type}" unless numo_type
+
+          # TODO automatic conversion?
+          # int => float
+          # bool => object
+          if (type.include?("int") || type == "bool") && column.n_nulls > 0
+            raise "Nulls not supported for #{type} column: #{k}"
+          end
+
           # TODO improve performance
           data[k] = numo_type.cast(column.data.values)
         end

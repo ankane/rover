@@ -35,6 +35,11 @@ class ParquetTest < Minitest::Test
   end
 
   def test_null
+    error = assert_raises do
+      Rover.read_parquet("test/support/null.parquet")
+    end
+    assert_equal "Nulls not supported for int32 column: a", error.message
+
     df = Rover.read_parquet("test/support/null.parquet", types: {"a" => :object})
     assert_vector [1, nil, 3], df["a"]
 
