@@ -19,14 +19,14 @@ module Rover
       csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
     end
 
-    def read_parquet(path)
+    def read_parquet(path, types: nil)
       require "parquet"
-      parquet_to_df(Arrow::Table.load(path))
+      parquet_to_df(Arrow::Table.load(path), types: types)
     end
 
-    def parse_parquet(str)
+    def parse_parquet(str, types: nil)
       require "parquet"
-      parquet_to_df(Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet))
+      parquet_to_df(Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet), types: types)
     end
 
     private
@@ -78,15 +78,20 @@ module Rover
       "uint64" => Numo::UInt64
     }
 
-    def parquet_to_df(table)
+    def parquet_to_df(table, types: nil)
       data = {}
+      types ||= {}
       table.each_column do |column|
         k = column.field.name
-        type = column.field.data_type.to_s
-        numo_type = PARQUET_TYPE_MAPPING[type]
-        raise "Unknown type: #{type}" unless numo_type
-        # TODO improve performance
-        data[k] = numo_type.cast(column.data.values)
+        if types[k]
+          data[k] = Vector.new(column.data.values, type: types[k])
+        else
+          type = column.field.data_type.to_s
+          numo_type = PARQUET_TYPE_MAPPING[type]
+          raise "Unknown type: #{type}" unless numo_type
+          # TODO improve performance
+          data[k] = numo_type.cast(column.data.values)
+        end
       end
       DataFrame.new(data)
     end

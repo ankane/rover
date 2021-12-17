@@ -33,4 +33,12 @@ class ParquetTest < Minitest::Test
     df = Rover.read_parquet("test/support/types.parquet")
     assert df.to_parquet
   end
+
+  def test_null
+    df = Rover.read_parquet("test/support/null.parquet", types: {"a" => :object})
+    assert_vector [1, nil, 3], df["a"]
+
+    df = Rover.read_parquet("test/support/null.parquet", types: {"a" => :float})
+    assert df["a"][1].nan?
+  end
 end

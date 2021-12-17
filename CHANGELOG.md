@@ -2,6 +2,7 @@
 
 - Added support for booleans to Parquet methods
 - Added support for creating data frames from `ActiveRecord::Result`
+- Added `types` option to `read_parquet` and `parse_parquet` methods
 
 ## 0.2.6 (2021-10-27)
 
