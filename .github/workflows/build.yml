@@ -5,7 +5,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [3.0, 2.7, 2.6]
+        ruby: [3.1, "3.0", 2.7, 2.6]
     runs-on: ubuntu-latest
     env:
       TEST_PARQUET: 1
