@@ -1,4 +1,4 @@
-## 0.2.7 (unreleased)
+## 0.2.7 (2022-01-16)
 
 - Added support for booleans to Parquet methods
 - Added support for creating data frames from `ActiveRecord::Result`
