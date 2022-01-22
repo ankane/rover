@@ -52,8 +52,8 @@ module Rover
       if table_key.nil? then
         key="unnamed#{unnamed_suffix}"
         while h.include?(key)
-          key="unnamed#{unnamed_suffix}"
           unnamed_suffix+=1
+          key="unnamed#{unnamed_suffix}"
         end
       end
       data[key]=[]
