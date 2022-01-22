@@ -50,8 +50,8 @@ module Rover
     k[0].each_with_index{|table_key,index|
       key=table_key
       if table_key.nil? then
-        key="unnamed"
-        while keys.include?(k)
+        key="unnamed#{unnamed_suffix}"
+        while keys.include?(key)
           key="unnamed#{unnamed_suffix}"
           unnamed_suffix+=1
         end
