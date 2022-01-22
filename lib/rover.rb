@@ -51,7 +51,7 @@ module Rover
       key=table_key
       if table_key.nil? then
         key="unnamed#{unnamed_suffix}"
-        while keys.include?(key)
+        while h.include?(key)
           key="unnamed#{unnamed_suffix}"
           unnamed_suffix+=1
         end
