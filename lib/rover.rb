@@ -42,27 +42,31 @@ module Rover
       if headers && headers.size < table.headers.size
         raise ArgumentError, "Expected #{table.headers.size} headers, got #{headers.size}"
       end
-
-      table.by_col!
-      data = {}
-      keys = table.map { |k, _| [k, true] }.to_h
-      unnamed_suffix = 1
-      table.each do |k, v|
-        # TODO do same for empty string in 0.3.0
-        if k.nil?
-          k = "unnamed"
-          while keys.include?(k)
-            unnamed_suffix += 1
-            k = "unnamed#{unnamed_suffix}"
-          end
-          keys[k] = true
+    data = {}
+    k = table.to_a
+    h = {}
+    unnamed_suffix = 1
+    data={}
+    k[0].each_with_index{|table_key,index|
+      key=table_key
+      if table_key.nil? then
+        key="unnamed"
+        while keys.include?(k)
+          key="unnamed#{unnamed_suffix}"
+          unnamed_suffix+=1
         end
-        data[k] = v
       end
-
-      DataFrame.new(data, types: types)
+      data[key]=[]
+      h[index]=key
+    }
+    k.shift
+    k.each{|x|
+      x.each_with_index{|val,index|
+        data[h[index]].push(val)
+      }
+    }
+    DataFrame.new(data, types: types)
     end
-
     PARQUET_TYPE_MAPPING = {
       "bool" => Numo::Bit,
       "float" => Numo::SFloat,
