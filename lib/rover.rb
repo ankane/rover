@@ -42,24 +42,23 @@ module Rover
       if headers && headers.size < table.headers.size
         raise ArgumentError, "Expected #{table.headers.size} headers, got #{headers.size}"
       end
-    k = table.to_a
     h = {}
     unnamed_suffix = 1
-    data={}
-    k[0].each_with_index{|table_key,index|
+    data = {}
+    table.headers.each_with_index{|table_key,index|
       key=table_key
       if table_key.nil? then
-        key="unnamed#{unnamed_suffix}"
-        while h.include?(key)
-          unnamed_suffix+=1
+        key="unnamed"
+        while h.include?(k)
           key="unnamed#{unnamed_suffix}"
+          unnamed_suffix+=1
         end
       end
       data[key]=[]
       h[index]=key
     }
-    k.shift
-    k.each{|x|
+    table.instance_variable_get(:@table).each{|x|
+      x=x.fields
       x.each_with_index{|val,index|
         data[h[index]].push(val)
       }
