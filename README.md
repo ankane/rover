@@ -13,7 +13,7 @@ Simple, powerful data frames for Ruby
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'rover-df'
+gem "rover-df"
 ```
 
 ## Intro
@@ -236,7 +236,7 @@ df.group(:a).max(:b)
 Multiple groups
 
 ```ruby
-df.group([:a, :b]).count
+df.group(:a, :b).count
 ```
 
 ## Visualization
@@ -244,7 +244,7 @@ df.group([:a, :b]).count
 Add [Vega](https://github.com/ankane/vega) to your application’s Gemfile:
 
 ```ruby
-gem 'vega'
+gem "vega"
 ```
 
 And use:
