@@ -47,8 +47,8 @@ module Rover
     data = {}
     table.headers.each_with_index{|table_key,index|
       key=table_key.to_s
-      if table_key.empty? then
-        key="unnamed"
+      if key.empty? then
+        key="unnamed#{unnamed_suffix}"
         while h.include?(k)
           key="unnamed#{unnamed_suffix}"
           unnamed_suffix+=1
