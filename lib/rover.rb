@@ -1,3 +1,5 @@
+
+   
 # dependencies
 require "numo/narray"
 
@@ -9,14 +11,29 @@ require "rover/version"
 
 module Rover
   class << self
-    def read_csv(path, types: nil, **options)
+    def read_csv(path, types: nil, use_csv_module: false, **options)
+      data=[]
+      if !use_csv_module then
+      line_separator=options[:line_separator]||"\n"
+      character_separator=options[:character_separator]||","
+      fill=options[:blank_filler]
+      csv_content=File.read(path)
+      lines=csv_content.split(line_separator)
+      data.push(lines.shift.split(character_separator))
+      lines.each{|line|
+      data.push(line.split(character_separator).map{|cell|
+        (cell.tr("^0-9","")==cell and !cell.empty?) ? cell.to_f : fill
+      })
+      }
+    else
       require "csv"
-      csv_to_df(CSV.read(path, **csv_options(options)), types: types, headers: options[:headers])
+      data=CSV.read(path, **csv_options(options)).to_a
     end
-
+      csv_to_df(data, types: types, headers: options[:headers])
+    end
     def parse_csv(str, types: nil, **options)
       require "csv"
-      csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
+      csv_to_df(CSV.parse(str, **csv_options(options)).to_a, types: types, headers: options[:headers])
     end
 
     def read_parquet(path, types: nil)
@@ -45,10 +62,10 @@ module Rover
     h = {}
     unnamed_suffix = 1
     data = {}
-    table.headers.each_with_index{|table_key,index|
+    table[0].each_with_index{|table_key,index|
       key=table_key.to_s
       if key.empty? then
-        key="unnamed#{unnamed_suffix}"
+        key="unnamed"
         while h.include?(k)
           key="unnamed#{unnamed_suffix}"
           unnamed_suffix+=1
@@ -57,8 +74,8 @@ module Rover
       data[key]=[]
       h[index]=key
     }
-    table.instance_variable_get(:@table).each{|x|
-      x=x.fields
+    table.shift
+    table.each{|x|
       x.each_with_index{|val,index|
         data[h[index]].push(val)
       }
