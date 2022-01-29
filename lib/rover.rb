@@ -1,5 +1,3 @@
-
-   
 # dependencies
 require "numo/narray"
 
@@ -33,7 +31,7 @@ module Rover
     end
     def parse_csv(str, types: nil, **options)
       require "csv"
-      csv_to_df(CSV.parse(str, **csv_options(options)).to_a, types: types, headers: options[:headers])
+      csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
     end
 
     def read_parquet(path, types: nil)
