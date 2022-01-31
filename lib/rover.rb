@@ -13,7 +13,7 @@ module Rover
       require "csv"
       csv_to_df(CSV.read(path, **csv_options(options)), types: types, headers: options[:headers])
     end
-
+    
     def parse_csv(str, types: nil, **options)
       require "csv"
       csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
@@ -30,39 +30,45 @@ module Rover
     end
 
     private
-
+    def csv_to_numeric(table)
+    table.to_a.map.with_index{|x,i|
+      i==0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","")==cell ? cell.to_f : Float::NAN) : nil}
+    }
+    end
     # TODO use date converter
     def csv_options(options)
-      options = {headers: true, converters: :numeric}.merge(options)
+      options = {headers: true}.merge(options)
       raise ArgumentError, "Must specify headers" unless options[:headers]
       options
     end
-
+    
     def csv_to_df(table, types: nil, headers: nil)
-      if headers && headers.size < table.headers.size
-        raise ArgumentError, "Expected #{table.headers.size} headers, got #{headers.size}"
+      if headers && headers.size < table[0].size
+        raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
-
-      table.by_col!
+      table=csv_to_numeric(table)
       data = {}
-      keys = table.map { |k, _| [k, true] }.to_h
-      unnamed_suffix = 1
-      table.each do |k, v|
-        # TODO do same for empty string in 0.3.0
-        if k.nil?
-          k = "unnamed"
-          while keys.include?(k)
-            unnamed_suffix += 1
-            k = "unnamed#{unnamed_suffix}"
+      keys = {}
+      unnamed_suffix = 2
+      table.shift.each_with_index do |table_key,index|
+        key=table_key.to_s
+        if key.empty? then
+          key="unnamed"
+          while data.include?(key)
+            key="unnamed#{unnamed_suffix}"
+            unnamed_suffix+=1
           end
-          keys[k] = true
         end
-        data[k] = v
+        data[key]=[]
+        keys[index]=key
       end
-
+      table.each do |v|
+        v.each_with_index do |val,index|
+          data[keys[index]].push(val)
+        end
+      end
       DataFrame.new(data, types: types)
     end
-
     PARQUET_TYPE_MAPPING = {
       "bool" => Numo::Bit,
       "float" => Numo::SFloat,
