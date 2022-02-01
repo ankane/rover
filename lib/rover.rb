@@ -13,7 +13,7 @@ module Rover
       require "csv"
       csv_to_df(CSV.read(path, **csv_options(options)), types: types, headers: options[:headers])
     end
-    
+
     def parse_csv(str, types: nil, **options)
       require "csv"
       csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
@@ -41,7 +41,7 @@ module Rover
       raise ArgumentError, "Must specify headers" unless options[:headers]
       options
     end
-    
+
     def csv_to_df(table, types: nil, headers: nil)
       if headers && headers.size < table[0].size
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
@@ -67,8 +67,10 @@ module Rover
           data[keys[index]].push(val)
         end
       end
+ 
       DataFrame.new(data, types: types)
     end
+
     PARQUET_TYPE_MAPPING = {
       "bool" => Numo::Bit,
       "float" => Numo::SFloat,
