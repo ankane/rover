@@ -30,6 +30,7 @@ module Rover
     end
 
     private
+
     def csv_to_numeric(table)
     table.to_a.map.with_index{|x,i|
       i==0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","")==cell ? cell.to_f : Float::NAN) : nil}
@@ -46,10 +47,12 @@ module Rover
       if headers && headers.size < table[0].size
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
+ 
       table=csv_to_numeric(table)
       data = {}
       keys = {}
       unnamed_suffix = 2
+ 
       table.shift.each_with_index do |table_key,index|
         key=table_key.to_s
         if key.empty? then
@@ -62,6 +65,7 @@ module Rover
         data[key]=[]
         keys[index]=key
       end
+    
       table.each do |v|
         v.each_with_index do |val,index|
           data[keys[index]].push(val)
