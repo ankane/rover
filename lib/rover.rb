@@ -52,7 +52,7 @@ module Rover
       data = {}
       keys = {}
       unnamed_suffix = 1
-      table.shift.each_with_index do |k,v|
+      table.shift.each_with_index do |k, v|
         k = k.to_s
         if k.empty?
           k = "unnamed"
