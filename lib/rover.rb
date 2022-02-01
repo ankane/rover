@@ -31,14 +31,9 @@ module Rover
 
     private
 
-    def csv_to_numeric(table)
-    table.to_a.map.with_index{|x,i|
-      i == 0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","") == cell ? cell.to_i : Float::NAN) : nil}
-    }
-    end
     # TODO use date converter
     def csv_options(options)
-      options = {headers: true}.merge(options)
+      options = {headers: true, converters: :numeric}.merge(options)
       raise ArgumentError, "Must specify headers" unless options[:headers]
       options
     end
@@ -48,7 +43,6 @@ module Rover
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
 
-      table = csv_to_numeric(table)
       data = {}
       keys = {}
       unnamed_suffix = 1
