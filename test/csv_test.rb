@@ -3,7 +3,8 @@ require_relative "test_helper"
 class CsvTest < Minitest::Test
   def test_read_csv
     df = Rover.read_csv("test/support/data.csv")
-    assert_equal ["a", "b"], df.vector_names
+    expected = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal expected, df
   end
 
   def test_read_csv_default_types
