@@ -44,14 +44,20 @@ module Rover
       end
 
       table = table.to_a
+      h = table.shift
+      headers = (headers||h)
+      used = {}
       data = {}
       keys = {}
       unnamed_suffix = 1
-      table.shift.each_with_index do |k, v|
+      headers.each do |k|
+        used[k] = true unless !k
+      end
+      headers.each_with_index do |k, v|
         # TODO do same for empty string in 0.3.0
-        if k.nil?
+        if (!k || data.include?(k)) and !used[k]
           k = "unnamed"
-          while data.include?(k)
+          while used.include?(k) or data.include?(k)
             unnamed_suffix += 1
             k = "unnamed#{unnamed_suffix}"
           end
@@ -59,7 +65,6 @@ module Rover
         data[k] = []
         keys[v] = k
       end
-
       table.each do |v|
         v.each_with_index do |k, v|
           data[keys[v]].push(k)
