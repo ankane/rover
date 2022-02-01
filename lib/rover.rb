@@ -66,8 +66,8 @@ module Rover
       end
 
       table.each do |v|
-        v.each_with_index do |val,index|
-          data[keys[index]].push(val)
+        v.each_with_index do |k, v|
+          data[keys[v]].push(k)
         end
       end
       DataFrame.new(data, types: types)
