@@ -42,8 +42,8 @@ module Rover
       if headers && table[0] && headers.size < table[0].size
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
-      table = table.to_a
 
+      table = table.to_a
       data = {}
       keys = {}
       unnamed_suffix = 1
