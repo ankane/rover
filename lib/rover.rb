@@ -70,6 +70,7 @@ module Rover
           data[keys[v]].push(k)
         end
       end
+
       DataFrame.new(data, types: types)
     end
 
