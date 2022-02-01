@@ -33,7 +33,7 @@ module Rover
 
     def csv_to_numeric(table)
     table.to_a.map.with_index{|x,i|
-      i==0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","")==cell ? cell.to_i : Float::NAN) : nil}
+      i == 0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","") == cell ? cell.to_i : Float::NAN) : nil}
     }
     end
     # TODO use date converter
@@ -48,7 +48,7 @@ module Rover
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
 
-      table=csv_to_numeric(table)
+      table = csv_to_numeric(table)
       data = {}
       keys = {}
       unnamed_suffix = 2
@@ -62,7 +62,7 @@ module Rover
           end
         end
         data[k] = []
-        keys[v]=k
+        keys[v] = k
       end
 
       table.each do |v|
