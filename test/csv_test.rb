@@ -35,7 +35,7 @@ class CsvTest < Minitest::Test
   def test_read_csv_headers_unnamed
     df = Rover.read_csv("test/support/unnamed.csv")
     # TODO change last value to unnamed4 in 0.3.0
-    assert_equal ["unnamed2", "unnamed", "unnamed3", "unnamed4"], df.keys
+    assert_equal ["unnamed2", "unnamed", "unnamed3", ""], df.keys
   end
 
   def test_parse_csv
