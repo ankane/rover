@@ -47,7 +47,7 @@ module Rover
       if headers && headers.size < table[0].size
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
- 
+
       table=csv_to_numeric(table)
       data = {}
       keys = {}
@@ -65,13 +65,12 @@ module Rover
         data[key]=[]
         keys[index]=key
       end
-    
+
       table.each do |v|
         v.each_with_index do |val,index|
           data[keys[index]].push(val)
         end
       end
- 
       DataFrame.new(data, types: types)
     end
 
