@@ -51,6 +51,13 @@ class CsvTest < Minitest::Test
     assert_equal ["a", "b", "c"], df.keys
   end
 
+  # TODO decide on best approach, but this is current behavior
+  def test_read_csv_columns_too_many
+    df = Rover.read_csv("test/support/columns.csv")
+    expected = Rover::DataFrame.new({"one" => ["one", "one"], "unnamed" => ["two", "two"]})
+    assert_equal expected, df
+  end
+
   def test_read_csv_headers_unnamed
     df = Rover.read_csv("test/support/unnamed.csv")
     # TODO change last value to unnamed4 in 0.3.0
