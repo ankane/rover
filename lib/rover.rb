@@ -51,7 +51,7 @@ module Rover
       table = csv_to_numeric(table)
       data = {}
       keys = {}
-      unnamed_suffix = 2
+      unnamed_suffix = 1
       table.shift.each_with_index do |k,v|
         k = k.to_s
         if k.empty? then
