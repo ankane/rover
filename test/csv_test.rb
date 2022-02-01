@@ -6,6 +6,25 @@ class CsvTest < Minitest::Test
     assert_equal ["a", "b"], df.vector_names
   end
 
+  def test_read_csv_default_types
+    df = Rover.read_csv("test/support/types.csv")
+    assert_equal :int, df.types["a"]
+    assert_equal :object, df.types["b"]
+    assert_equal :float, df.types["c"]
+  end
+
+  def test_read_csv_empty
+    df = Rover.read_csv("test/support/empty.csv")
+    assert_empty df
+    assert_empty df.keys
+  end
+
+  def test_read_csv_empty_headers
+    df = Rover.read_csv("test/support/empty.csv", headers: [])
+    assert_empty df
+    assert_empty df.keys
+  end
+
   def test_read_csv_headers
     df = Rover.read_csv("test/support/data.csv", headers: ["c", "d"])
     assert_equal ["c", "d"], df.vector_names
