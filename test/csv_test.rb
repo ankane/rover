@@ -19,6 +19,12 @@ class CsvTest < Minitest::Test
     assert_empty df.keys
   end
 
+  def test_read_csv_empty_headers
+    df = Rover.read_csv("test/support/empty.csv", headers: [])
+    assert_empty df
+    assert_empty df.keys
+  end
+
   def test_read_csv_headers
     df = Rover.read_csv("test/support/data.csv", headers: ["c", "d"])
     assert_equal ["c", "d"], df.vector_names
