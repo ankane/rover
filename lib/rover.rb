@@ -33,7 +33,7 @@ module Rover
 
     def csv_to_numeric(table)
     table.to_a.map.with_index{|x,i|
-      i==0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","")==cell ? cell.to_f : Float::NAN) : nil}
+      i==0 ? x : x.map{|cell| cell ? (cell.tr("^0-9","")==cell ? cell.to_i : Float::NAN) : nil}
     }
     end
     # TODO use date converter
@@ -54,16 +54,16 @@ module Rover
       unnamed_suffix = 2
  
       table.shift.each_with_index do |table_key,index|
-        key=table_key.to_s
-        if key.empty? then
-          key="unnamed"
-          while data.include?(key)
-            key="unnamed#{unnamed_suffix}"
+        k = table_key.to_s
+        if k.empty? then
+          k = "unnamed"
+          while data.include?(k)
+            k = "unnamed#{unnamed_suffix}"
             unnamed_suffix+=1
           end
         end
-        data[key]=[]
-        keys[index]=key
+        data[k] = []
+        keys[index]=k
       end
 
       table.each do |v|
