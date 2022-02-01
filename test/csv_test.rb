@@ -58,8 +58,8 @@ class CsvTest < Minitest::Test
   end
 
   def test_parse_csv_headers_unnamed
-    df = Rover.parse_csv(",unnamed,")
-    assert_equal ["unnamed2", "unnamed", "unnamed3"], df.keys
+    df = Rover.parse_csv(",unnamed,,unnamed3")
+    assert_equal ["unnamed2", "unnamed", "unnamed4", "unnamed3"], df.keys
   end
 
   def test_parse_csv
