@@ -52,18 +52,17 @@ module Rover
       data = {}
       keys = {}
       unnamed_suffix = 2
- 
-      table.shift.each_with_index do |table_key,index|
-        k = table_key.to_s
+      table.shift.each_with_index do |k,v|
+        k = k.to_s
         if k.empty? then
           k = "unnamed"
           while data.include?(k)
+            unnamed_suffix += 1
             k = "unnamed#{unnamed_suffix}"
-            unnamed_suffix+=1
           end
         end
         data[k] = []
-        keys[index]=k
+        keys[v]=k
       end
 
       table.each do |v|
