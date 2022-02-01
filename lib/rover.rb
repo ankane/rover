@@ -44,7 +44,7 @@ module Rover
     end
 
     def csv_to_df(table, types: nil, headers: nil)
-      if headers && headers.size < table[0].size
+      if headers && table[0] && headers.size < table[0].size
         raise ArgumentError, "Expected #{table[0].size} headers, got #{headers.size}"
       end
 
