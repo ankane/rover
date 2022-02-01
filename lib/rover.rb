@@ -47,8 +47,8 @@ module Rover
       keys = {}
       unnamed_suffix = 1
       table.shift.each_with_index do |k, v|
-        k = k.to_s
-        if k.empty?
+        # TODO do same for empty string in 0.3.0
+        if k.nil?
           k = "unnamed"
           while data.include?(k)
             unnamed_suffix += 1
