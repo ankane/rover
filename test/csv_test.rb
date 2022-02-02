@@ -3,7 +3,8 @@ require_relative "test_helper"
 class CsvTest < Minitest::Test
   def test_read_csv
     df = Rover.read_csv("test/support/data.csv")
-    assert_equal ["a", "b"], df.vector_names
+    expected = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal expected, df
   end
 
   def test_read_csv_default_types
@@ -49,6 +50,13 @@ class CsvTest < Minitest::Test
   def test_read_csv_headers_too_many
     df = Rover.read_csv("test/support/data.csv", headers: ["a", "b", "c"])
     assert_equal ["a", "b", "c"], df.keys
+  end
+
+  # TODO decide on best approach, but this is current behavior
+  def test_read_csv_columns_too_many
+    df = Rover.read_csv("test/support/columns.csv")
+    expected = Rover::DataFrame.new({"one" => ["one", "one"], "unnamed" => ["two", "two"]})
+    assert_equal expected, df
   end
 
   def test_read_csv_headers_unnamed
