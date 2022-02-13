@@ -441,6 +441,8 @@ module Rover
           )
           .config(axis: {labelFontSize: 12})
       when "pie"
+        raise "Cannot use group on type pie." unless group.nil?
+
         Vega.lite
           .data(data)
           .mark(type: "arc", tooltip: true)
