@@ -401,7 +401,7 @@ module Rover
       keys.all? { |k| self[k].to_numo == other[k].to_numo }
     end
 
-    def plot(x = nil, y = nil, type: nil)
+    def plot(x = nil, y = nil, type: nil, group: nil)
       require "vega"
 
       raise ArgumentError, "Must specify columns" if keys.size != 2 && (!x || !y)
@@ -416,7 +416,7 @@ module Rover
           raise "Cannot determine type. Use the type option."
         end
       end
-      data = self[[x, y]]
+      data = self[group.nil? ? [x, y] : [x, y, group]]
 
       case type
       when "line", "area"
@@ -436,7 +436,8 @@ module Rover
           .mark(type: type, tooltip: true, interpolate: "cardinal", point: {size: 60})
           .encoding(
             x: {field: x, type: x_type, scale: scale},
-            y: {field: y, type: "quantitative"}
+            y: {field: y, type: "quantitative"},
+            color: group.nil? ? {} : {field: group}
           )
           .config(axis: {labelFontSize: 12})
       when "pie"
@@ -455,7 +456,8 @@ module Rover
           .encoding(
             # TODO determine label angle
             x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
-            y: {field: y, type: "quantitative"}
+            y: {field: y, type: "quantitative"},
+            color: group.nil? ? {} : {field: group}
           )
           .config(axis: {labelFontSize: 12})
       when "bar"
@@ -465,7 +467,8 @@ module Rover
           .encoding(
             # TODO determine label angle
             y: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
-            x: {field: y, type: "quantitative"}
+            x: {field: y, type: "quantitative"},
+            color: group.nil? ? {} : {field: group}
           )
           .config(axis: {labelFontSize: 12})
       when "scatter"
@@ -475,7 +478,8 @@ module Rover
           .encoding(
             x: {field: x, type: "quantitative", scale: {zero: false}},
             y: {field: y, type: "quantitative", scale: {zero: false}},
-            size: {value: 60}
+            size: {value: 60},
+            color: group.nil? ? {} : {field: group}
           )
           .config(axis: {labelFontSize: 12})
       else
