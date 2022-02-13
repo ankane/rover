@@ -17,6 +17,24 @@ class PlotTest < Minitest::Test
     assert_plot_type "scatter", df.plot("b", "b", type: "scatter")
   end
 
+  def test_multiple_series
+    df = Rover::DataFrame.new({"category" => ["A", "A", "A", "B", "B", "B", "C", "C", "C"], 
+                              "group" => ["x", "y", "z", "x", "y", "z", "x", "y", "z"],
+                              "value" => [0.1, 0.6, 0.9, 0.7, 0.2, 1.1, 0.6, 0.1, 0.2]})
+
+    error = assert_raises do
+      df.plot("group", "value", type: "pie", group: "category")
+    end
+    assert_equal "Cannot use group on type pie.", error.message
+
+    assert_plot_type "line", df.plot("group", "value", type: "line", group: "category")
+    assert_plot_type "column", df.plot("group", "value", type: "column", group: "category")
+    assert_plot_type "bar", df.plot("group", "value", type: "bar", group: "category")
+    assert_plot_type "area", df.plot("group", "value", type: "area", group: "category")
+    # TODO: Scatter WORKS, but display is empty in Notebook
+    assert_plot_type "scatter", df.plot("group", "value", type: "scatter", group: "category")
+  end
+
   def test_type_unknown
     df = Rover::DataFrame.new({"a" => ["one", "two", "three"]})
     error = assert_raises do
