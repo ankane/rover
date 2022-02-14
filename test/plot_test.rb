@@ -31,7 +31,10 @@ class PlotTest < Minitest::Test
     assert_plot_type "column", df.plot("group", "value", type: "column", group: "category")
     assert_plot_type "bar", df.plot("group", "value", type: "bar", group: "category")
     assert_plot_type "area", df.plot("group", "value", type: "area", group: "category")
-    # TODO: Scatter WORKS, but display is empty in Notebook
+
+    df = Rover::DataFrame.new({"category" => ["A", "A", "A", "B", "B", "B", "C", "C", "C"], 
+                              "group" => [1, 2, 3, 1, 2, 3, 1, 2, 3],
+                              "value" => [0.1, 0.6, 0.9, 0.7, 0.2, 1.1, 0.6, 0.1, 0.2]})
     assert_plot_type "scatter", df.plot("group", "value", type: "scatter", group: "category")
   end
 
