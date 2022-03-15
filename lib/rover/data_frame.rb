@@ -441,7 +441,7 @@ module Rover
           )
           .config(axis: {labelFontSize: 12})
       when "pie"
-        raise "Cannot use group on type pie." unless group.nil?
+        raise ArgumentError, "Cannot use group option with pie chart" unless group.nil?
 
         Vega.lite
           .data(data)
