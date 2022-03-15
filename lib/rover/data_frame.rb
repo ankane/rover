@@ -430,15 +430,16 @@ module Rover
           end
 
         scale = x_type == "temporal" ? {type: "utc"} : {}
+        encoding = {
+          x: {field: x, type: x_type, scale: scale},
+          y: {field: y, type: "quantitative"}
+        }
+        encoding[:color] = {field: group} if group
 
         Vega.lite
           .data(data)
           .mark(type: type, tooltip: true, interpolate: "cardinal", point: {size: 60})
-          .encoding(
-            x: {field: x, type: x_type, scale: scale},
-            y: {field: y, type: "quantitative"},
-            color: group.nil? ? {} : {field: group}
-          )
+          .encoding(encoding)
           .config(axis: {labelFontSize: 12})
       when "pie"
         raise ArgumentError, "Cannot use group option with pie chart" unless group.nil?
@@ -452,41 +453,50 @@ module Rover
           )
           .view(stroke: nil)
       when "column"
+        encoding = {
+          x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
+          y: {field: y, type: "quantitative"}
+        }
+        if group
+          encoding[:color] = {field: group}
+          # TODO add stack option
+          encoding[:xOffset] = {field: group}
+        end
+
         Vega.lite
           .data(data)
           .mark(type: "bar", tooltip: true)
-          .encoding(
-            # TODO determine label angle
-            x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
-            y: {field: y, type: "quantitative"},
-            color: group.nil? ? {} : {field: group},
-            # TODO add stack option
-            xOffset: group.nil? ? {} : {field: group}
-          )
+          .encoding(encoding)
           .config(axis: {labelFontSize: 12})
       when "bar"
+        encoding = {
+          # TODO determine label angle
+          y: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
+          x: {field: y, type: "quantitative"}
+        }
+        if group
+          encoding[:color] = {field: group}
+          # TODO add stack option
+          encoding[:yOffset] = {field: group}
+        end
+
         Vega.lite
           .data(data)
           .mark(type: "bar", tooltip: true)
-          .encoding(
-            # TODO determine label angle
-            y: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
-            x: {field: y, type: "quantitative"},
-            color: group.nil? ? {} : {field: group},
-            # TODO add stack option
-            yOffset: group.nil? ? {} : {field: group}
-          )
+          .encoding(encoding)
           .config(axis: {labelFontSize: 12})
       when "scatter"
+        encoding = {
+          x: {field: x, type: "quantitative", scale: {zero: false}},
+          y: {field: y, type: "quantitative", scale: {zero: false}},
+          size: {value: 60}
+        }
+        encoding[:color] = {field: group} if group
+
         Vega.lite
           .data(data)
           .mark(type: "circle", tooltip: true)
-          .encoding(
-            x: {field: x, type: "quantitative", scale: {zero: false}},
-            y: {field: y, type: "quantitative", scale: {zero: false}},
-            size: {value: 60},
-            color: group.nil? ? {} : {field: group}
-          )
+          .encoding(encoding)
           .config(axis: {labelFontSize: 12})
       else
         raise ArgumentError, "Invalid type: #{type}"
