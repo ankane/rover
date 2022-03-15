@@ -21,20 +21,23 @@ module Rover
       end
     end
 
-    def read_parquet(path, types: nil)
-      require "parquet"
-      parquet_to_df(Arrow::Table.load(path), types: types)
+    def read_parquet(path, **options)
+      parquet_to_df(**options) do
+        Arrow::Table.load(path)
+      end
     end
 
-    def parse_parquet(str, types: nil)
-      require "parquet"
-      parquet_to_df(Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet), types: types)
+    def parse_parquet(str, **options)
+      parquet_to_df(**options) do
+        Arrow::Table.load(Arrow::Buffer.new(str), format: :parquet)
+      end
     end
 
     private
 
     def csv_to_df(types: nil, headers: nil, **csv_options)
       require "csv"
+
       raise ArgumentError, "Must specify headers" if headers == false
 
       # TODO use date converter
@@ -94,7 +97,10 @@ module Rover
       "uint64" => Numo::UInt64
     }
 
-    def parquet_to_df(table, types: nil)
+    def parquet_to_df(types: nil)
+      require "parquet"
+
+      table = yield
       data = {}
       types ||= {}
       table.each_column do |column|
