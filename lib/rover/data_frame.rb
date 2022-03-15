@@ -459,7 +459,9 @@ module Rover
             # TODO determine label angle
             x: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
             y: {field: y, type: "quantitative"},
-            color: group.nil? ? {} : {field: group}
+            color: group.nil? ? {} : {field: group},
+            # TODO add stack option
+            xOffset: group.nil? ? {} : {field: group}
           )
           .config(axis: {labelFontSize: 12})
       when "bar"
@@ -470,7 +472,9 @@ module Rover
             # TODO determine label angle
             y: {field: x, type: "nominal", sort: "none", axis: {labelAngle: 0}},
             x: {field: y, type: "quantitative"},
-            color: group.nil? ? {} : {field: group}
+            color: group.nil? ? {} : {field: group},
+            # TODO add stack option
+            yOffset: group.nil? ? {} : {field: group}
           )
           .config(axis: {labelFontSize: 12})
       when "scatter"
