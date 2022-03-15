@@ -29,16 +29,6 @@ class ParquetTest < Minitest::Test
     assert_equal :int8, df.types["a"]
   end
 
-  def test_to_parquet
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    assert_equal df, Rover.parse_parquet(df.to_parquet)
-  end
-
-  def test_to_parquet_types
-    df = Rover.read_parquet("test/support/types.parquet")
-    assert df.to_parquet
-  end
-
   def test_null
     error = assert_raises do
       Rover.read_parquet("test/support/null.parquet")
@@ -50,5 +40,15 @@ class ParquetTest < Minitest::Test
 
     df = Rover.read_parquet("test/support/null.parquet", types: {"a" => :float})
     assert df["a"][1].nan?
+  end
+
+  def test_to_parquet
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal df, Rover.parse_parquet(df.to_parquet)
+  end
+
+  def test_to_parquet_types
+    df = Rover.read_parquet("test/support/types.parquet")
+    assert df.to_parquet
   end
 end
