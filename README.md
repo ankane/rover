@@ -265,6 +265,12 @@ Group data [unreleased]
 df.plot(:a, :b, group: :c)
 ```
 
+Stacked columns or bars [unreleased]
+
+```ruby
+df.plot(:a, :b, group: :c, stacked: true)
+```
+
 ## Updating Data
 
 Add a new column
