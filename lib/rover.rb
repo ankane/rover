@@ -9,14 +9,16 @@ require "rover/version"
 
 module Rover
   class << self
-    def read_csv(path, types: nil, **options)
-      require "csv"
-      csv_to_df(CSV.read(path, **csv_options(options)), types: types, headers: options[:headers])
+    def read_csv(path, **options)
+      csv_to_df(**options) do |csv_options|
+        CSV.read(path, **csv_options)
+      end
     end
 
-    def parse_csv(str, types: nil, **options)
-      require "csv"
-      csv_to_df(CSV.parse(str, **csv_options(options)), types: types, headers: options[:headers])
+    def parse_csv(str, **options)
+      csv_to_df(**options) do |csv_options|
+        CSV.parse(str, **csv_options)
+      end
     end
 
     def read_parquet(path, types: nil)
@@ -31,14 +33,13 @@ module Rover
 
     private
 
-    # TODO use date converter
-    def csv_options(options)
-      options = {converters: :numeric}.merge(options)
-      raise ArgumentError, "Must specify headers" if options.delete(:headers) == false
-      options
-    end
+    def csv_to_df(types: nil, headers: nil, **csv_options)
+      require "csv"
+      raise ArgumentError, "Must specify headers" if headers == false
 
-    def csv_to_df(table, types: nil, headers: nil)
+      # TODO use date converter
+      table = yield({converters: :numeric}.merge(csv_options))
+
       if headers && table.first && headers.size < table.first.size
         raise ArgumentError, "Expected #{table.first.size} headers, got #{headers.size}"
       end
