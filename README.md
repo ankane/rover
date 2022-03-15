@@ -259,6 +259,12 @@ Specify the chart type (`line`, `pie`, `column`, `bar`, `area`, or `scatter`)
 df.plot(:a, :b, type: "pie")
 ```
 
+Group data [unreleased]
+
+```ruby
+df.plot(:a, :b, group: :c)
+```
+
 ## Updating Data
 
 Add a new column

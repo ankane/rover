@@ -1,3 +1,7 @@
+## 0.2.8 (unreleased)
+
+- Added `group` option to `plot`
+
 ## 0.2.7 (2022-01-16)
 
 - Added support for booleans to Parquet methods
