@@ -12,6 +12,14 @@ class PlotTest < Minitest::Test
     assert_plot_type "column", df.plot
   end
 
+  def test_default_columns_not_two
+    df = Rover::DataFrame.new({"a" => ["one", "two", "three"]})
+    error = assert_raises(ArgumentError) do
+      df.plot
+    end
+    assert_equal "Must specify columns", error.message
+  end
+
   def test_type
     df = Rover::DataFrame.new({"a" => ["one", "two", "three"], "b" => [1, 2, 3]})
     assert_plot_type "pie", df.plot("a", "b", type: "pie")
