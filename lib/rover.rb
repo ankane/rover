@@ -73,6 +73,9 @@ module Rover
       end
 
       table_headers.each_with_index do |k, i|
+        # use first value for duplicate headers like headers: true
+        next if data[k]
+
         values = []
         table.each do |row|
           values << row[i]

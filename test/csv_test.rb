@@ -80,4 +80,9 @@ class CsvTest < Minitest::Test
     df = Rover.parse_csv("a,b\n1,one\n2,two\n3,three\n")
     assert_equal ["a", "b"], df.vector_names
   end
+
+  def test_parse_csv_headers_duplicate
+    df = Rover.parse_csv("a,a\n1,2\n")
+    assert_equal Rover::DataFrame.new({"a" => [1]}), df
+  end
 end
