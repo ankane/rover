@@ -259,13 +259,13 @@ Specify the chart type (`line`, `pie`, `column`, `bar`, `area`, or `scatter`)
 df.plot(:a, :b, type: "pie")
 ```
 
-Group data [unreleased]
+Group data
 
 ```ruby
 df.plot(:a, :b, group: :c)
 ```
 
-Stacked columns or bars [unreleased]
+Stacked columns or bars
 
 ```ruby
 df.plot(:a, :b, group: :c, stacked: true)
