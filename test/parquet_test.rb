@@ -18,10 +18,15 @@ class ParquetTest < Minitest::Test
   end
 
   # uint32 is read as int
-  def test_read_parquet_types
+  def test_default_types
     df = Rover.read_parquet("test/support/types.parquet")
     expected = [:int, :int32, :int16, :int8, :uint, :int, :uint16, :uint8, :float, :float32, :object, :bool]
     assert_equal expected, df.types.values
+  end
+
+  def test_types
+    df = Rover.read_parquet("test/support/data.parquet", types: {"a" => :int8})
+    assert_equal :int8, df.types["a"]
   end
 
   def test_to_parquet
