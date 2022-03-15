@@ -20,6 +20,11 @@ class CsvTest < Minitest::Test
     assert_equal :float, df.types["c"]
   end
 
+  def test_types
+    df = Rover.read_csv("test/support/types.csv", types: {"a" => :int8})
+    assert_equal :int8, df.types["a"]
+  end
+
   def test_empty
     df = Rover.read_csv("test/support/empty.csv")
     assert_empty df
