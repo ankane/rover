@@ -7,45 +7,51 @@ class CsvTest < Minitest::Test
     assert_equal expected, df
   end
 
-  def test_read_csv_default_types
+  def test_parse_csv
+    df = Rover.parse_csv("a,b\n1,one\n2,two\n3,three\n")
+    expected = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_equal expected, df
+  end
+
+  def test_default_types
     df = Rover.read_csv("test/support/types.csv")
     assert_equal :int, df.types["a"]
     assert_equal :object, df.types["b"]
     assert_equal :float, df.types["c"]
   end
 
-  def test_read_csv_empty
+  def test_empty
     df = Rover.read_csv("test/support/empty.csv")
     assert_empty df
     assert_empty df.keys
   end
 
-  def test_read_csv_empty_headers
+  def test_empty_headers
     df = Rover.read_csv("test/support/empty.csv", headers: [])
     assert_empty df
     assert_empty df.keys
   end
 
-  def test_read_csv_headers
+  def test_headers
     df = Rover.read_csv("test/support/data.csv", headers: ["c", "d"])
     assert_equal ["c", "d"], df.vector_names
     assert_equal 4, df.size
   end
 
-  def test_read_csv_headers_true
+  def test_headers_true
     df = Rover.read_csv("test/support/data.csv", headers: true)
     assert_equal ["a", "b"], df.vector_names
     assert_equal 3, df.size
   end
 
-  def test_read_csv_headers_false
+  def test_headers_false
     error = assert_raises(ArgumentError) do
       Rover.read_csv("test/support/data.csv", headers: false)
     end
     assert_equal "Must specify headers", error.message
   end
 
-  def test_read_csv_headers_too_few
+  def test_headers_too_few
     error = assert_raises(ArgumentError) do
       Rover.read_csv("test/support/data.csv", headers: ["a"])
     end
@@ -53,35 +59,30 @@ class CsvTest < Minitest::Test
   end
 
   # TODO raise error in 0.3.0?
-  def test_read_csv_headers_too_many
+  def test_headers_too_many
     df = Rover.read_csv("test/support/data.csv", headers: ["a", "b", "c"])
     assert_equal ["a", "b", "c"], df.keys
   end
 
   # TODO decide on best approach, but this is current behavior
-  def test_read_csv_columns_too_many
+  def test_columns_too_many
     df = Rover.read_csv("test/support/columns.csv")
     expected = Rover::DataFrame.new({"one" => ["one", "one"], "unnamed" => ["two", "two"]})
     assert_equal expected, df
   end
 
-  def test_read_csv_headers_unnamed
+  def test_headers_unnamed
     df = Rover.read_csv("test/support/unnamed.csv")
     # TODO change last value to unnamed4 in 0.3.0
     assert_equal ["unnamed2", "unnamed", "unnamed3", ""], df.keys
   end
 
-  def test_parse_csv_headers_unnamed
+  def test_headers_unnamed_advanced
     df = Rover.parse_csv(",unnamed,,unnamed3")
     assert_equal ["unnamed2", "unnamed", "unnamed4", "unnamed3"], df.keys
   end
 
-  def test_parse_csv
-    df = Rover.parse_csv("a,b\n1,one\n2,two\n3,three\n")
-    assert_equal ["a", "b"], df.vector_names
-  end
-
-  def test_parse_csv_headers_duplicate
+  def test_headers_duplicate
     df = Rover.parse_csv("a,a\n1,2\n")
     assert_equal Rover::DataFrame.new({"a" => [1]}), df
   end
