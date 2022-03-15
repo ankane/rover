@@ -100,11 +100,6 @@ class DataFrameTest < Minitest::Test
     assert_equal [[1, 4, 7], [2, 5, 8], [3, 6, 9]], df.to_numo.to_a
   end
 
-  def test_to_csv
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    assert_equal "a,b\n1,one\n2,two\n3,three\n", df.to_csv
-  end
-
   # TODO use to_iruby when released
   def test_to_html
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
