@@ -1,10 +1,12 @@
 module Rover
   class Group
+    # TODO raise ArgumentError for empty columns in 0.3.0
     def initialize(df, columns)
       @df = df
       @columns = columns
     end
 
+    # TODO raise ArgumentError for empty columns in 0.3.0
     def group(*columns)
       Group.new(@df, @columns + columns.flatten)
     end
@@ -20,6 +22,14 @@ module Rover
 
         DataFrame.new(rows)
       end
+    end
+
+    def plot(*args, **options)
+      raise ArgumentError, "Multiple groups not supported" if @columns.size > 1
+      # same message as Ruby
+      raise ArgumentError, "unknown keyword: :group" if options.key?(:group)
+
+      @df.plot(*args, **options, group: @columns.first)
     end
 
     private
