@@ -1,6 +1,6 @@
 ## 0.2.8 (unreleased)
 
-- Added `group` option to `plot`
+- Added `group` and `stacked` options to `plot`
 
 ## 0.2.7 (2022-01-16)
 

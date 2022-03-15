@@ -401,7 +401,7 @@ module Rover
       keys.all? { |k| self[k].to_numo == other[k].to_numo }
     end
 
-    def plot(x = nil, y = nil, type: nil, group: nil)
+    def plot(x = nil, y = nil, type: nil, group: nil, stacked: nil)
       require "vega"
 
       raise ArgumentError, "Must specify columns" if keys.size != 2 && (!x || !y)
@@ -459,8 +459,7 @@ module Rover
         }
         if group
           encoding[:color] = {field: group}
-          # TODO add stack option
-          encoding[:xOffset] = {field: group}
+          encoding[:xOffset] = {field: group} unless stacked
         end
 
         Vega.lite
@@ -476,8 +475,7 @@ module Rover
         }
         if group
           encoding[:color] = {field: group}
-          # TODO add stack option
-          encoding[:yOffset] = {field: group}
+          encoding[:yOffset] = {field: group} unless stacked
         end
 
         Vega.lite
