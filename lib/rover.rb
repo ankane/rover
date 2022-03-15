@@ -33,21 +33,28 @@ module Rover
 
     # TODO use date converter
     def csv_options(options)
-      options = {headers: true, converters: :numeric}.merge(options)
-      raise ArgumentError, "Must specify headers" unless options[:headers]
+      options = {converters: :numeric}.merge(options)
+      raise ArgumentError, "Must specify headers" if options.delete(:headers) == false
       options
     end
 
     def csv_to_df(table, types: nil, headers: nil)
-      if headers && headers.size < table.headers.size
-        raise ArgumentError, "Expected #{table.headers.size} headers, got #{headers.size}"
+      if headers && table.first && headers.size < table.first.size
+        raise ArgumentError, "Expected #{table.first.size} headers, got #{headers.size}"
       end
 
-      table.by_col!
+      table_headers = (headers || table.shift || []).dup
+      # keep same behavior as headers: true
+      if table.first
+        while table_headers.size < table.first.size
+          table_headers << nil
+        end
+      end
+
       data = {}
-      keys = table.map { |k, _| [k, true] }.to_h
+      keys = table_headers.map { |k| [k, true] }.to_h
       unnamed_suffix = 1
-      table.each do |k, v|
+      table_headers.each_with_index do |k, i|
         # TODO do same for empty string in 0.3.0
         if k.nil?
           k = "unnamed"
@@ -57,7 +64,15 @@ module Rover
           end
           keys[k] = true
         end
-        data[k] = v
+        table_headers[i] = k
+      end
+
+      table_headers.each_with_index do |k, i|
+        values = []
+        table.each do |row|
+          values << row[i]
+        end
+        data[k] = values
       end
 
       DataFrame.new(data, types: types)

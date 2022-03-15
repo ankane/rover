@@ -1,6 +1,7 @@
 ## 0.2.8 (unreleased)
 
 - Added `group` and `stacked` options to `plot`
+- Improved performance of `read_csv` and `parse_csv`
 
 ## 0.2.7 (2022-01-16)
 
