@@ -10,10 +10,10 @@ Simple, powerful data frames for Ruby
 
 ## Installation
 
-Add this line to your application’s Gemfile:
+Run:
 
-```ruby
-gem "rover-df"
+```sh
+bundle add rover-df
 ```
 
 ## Intro
