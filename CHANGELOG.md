@@ -1,3 +1,7 @@
+## 0.3.1 (unreleased)
+
+- Added `to!` to vectors
+
 ## 0.3.0 (2022-04-03)
 
 - Added `deep_dup` method to data frames

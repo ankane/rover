@@ -117,4 +117,12 @@ class TypesTest < Minitest::Test
     assert_equal :object, vector.type
     assert_kind_of Numo::RObject, vector.to_numo
   end
+
+  def test_to!
+    vector = Rover::Vector.new(["1", "2", "3"])
+    vector.to!(:int)
+    assert_vector [1, 2, 3], vector
+    assert_equal :int64, vector.type
+    assert_kind_of Numo::Int64, vector.to_numo
+  end
 end

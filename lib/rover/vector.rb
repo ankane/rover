@@ -31,7 +31,12 @@ module Rover
     end
 
     def to(type)
-      Vector.new(self, type: type)
+      dup.to!(type)
+    end
+
+    def to!(type)
+      @data = cast_data(@data, type: type)
+      self
     end
 
     def to_numo
