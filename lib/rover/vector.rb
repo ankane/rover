@@ -1,23 +1,23 @@
 module Rover
   class Vector
     # if a user never specifies types,
-    # the defaults are bool, float, int, and object
-    # keep these simple
-    #
-    # we could create aliases for float64, int64, uint64
-    # if so, type should still return the simple type
+    # the defaults are bool, float64, int64, and object
     TYPE_CAST_MAPPING = {
       bool: Numo::Bit,
       float32: Numo::SFloat,
-      float: Numo::DFloat,
+      float64: Numo::DFloat,
       int8: Numo::Int8,
       int16: Numo::Int16,
       int32: Numo::Int32,
-      int: Numo::Int64,
+      int64: Numo::Int64,
       object: Numo::RObject,
       uint8: Numo::UInt8,
       uint16: Numo::UInt16,
       uint32: Numo::UInt32,
+      uint64: Numo::UInt64,
+      # legacy - must come last
+      float: Numo::DFloat,
+      int: Numo::Int64,
       uint: Numo::UInt64
     }
 

@@ -20,7 +20,7 @@ class DataFrameTest < Minitest::Test
     assert_vector [1, 2], df.first(2)[:a]
     assert_equal [:a, :b], df.vector_names
     assert_equal [:a, :b], df.keys
-    assert_equal ({a: :int, b: :object}), df.types
+    assert_equal ({a: :int64, b: :object}), df.types
     assert df.include?(:a)
     assert !df.include?(:c)
   end
@@ -388,14 +388,14 @@ class DataFrameTest < Minitest::Test
 
   def test_vector_map!
     df = Rover::DataFrame.new({"a" => [10, 20, 30]})
-    assert_equal :int, df["a"].type
-    assert_equal :int, df.types["a"]
+    assert_equal :int64, df["a"].type
+    assert_equal :int64, df.types["a"]
 
     df["a"].map! { |v| v + 0.5 }
 
     assert_vector [10.5, 20.5, 30.5], df["a"]
-    assert_equal :float, df["a"].type
-    assert_equal :float, df.types["a"]
+    assert_equal :float64, df["a"].type
+    assert_equal :float64, df.types["a"]
   end
 
   def test_first

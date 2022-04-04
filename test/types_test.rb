@@ -2,17 +2,23 @@ require_relative "test_helper"
 
 class TypesTest < Minitest::Test
   def test_constructor_vector
-    [:bool, :float32, :float, :int8, :int16, :int32, :int, :object, :uint8, :uint16, :uint32, :uint].each do |type|
+    [:bool, :float32, :float64, :int8, :int16, :int32, :int64, :object, :uint8, :uint16, :uint32, :uint64].each do |type|
       assert_equal type, Rover::Vector.new(1..3, type: type).type
     end
   end
 
   def test_constructor_data_frame
-    [:bool, :float32, :float, :int8, :int16, :int32, :int, :object, :uint8, :uint16, :uint32, :uint].each do |type|
+    [:bool, :float32, :float64, :int8, :int16, :int32, :int64, :object, :uint8, :uint16, :uint32, :uint64].each do |type|
       df = Rover::DataFrame.new({"a" => 1..3}, types: {"a" => type})
       assert_equal type, df["a"].type
       assert_equal ({"a" => type}), df.types
     end
+  end
+
+  def test_constructor_legacy
+    assert_equal :int64, Rover::Vector.new(1..3, type: :int).type
+    assert_equal :uint64, Rover::Vector.new(1..3, type: :uint).type
+    assert_equal :float64, Rover::Vector.new(1..3, type: :float).type
   end
 
   def test_read_csv
@@ -35,7 +41,7 @@ class TypesTest < Minitest::Test
   end
 
   def test_int_large
-    assert_equal :int, Rover::Vector.new([2**63 - 1]).type
+    assert_equal :int64, Rover::Vector.new([2**63 - 1]).type
     assert_raises(RangeError) do
       Rover::Vector.new([2**63])
     end
@@ -57,8 +63,8 @@ class TypesTest < Minitest::Test
   def test_to_int
     vector = Rover::Vector.new([1.5, 2.5, 3.5]).to(:int)
     assert_vector [1, 2, 3], vector
-    assert_equal :int, vector.type
-    assert_kind_of Numo::Int64, vector.to(:int).to_numo
+    assert_equal :int64, vector.type
+    assert_kind_of Numo::Int64, vector.to(:int64).to_numo
   end
 
   def test_to_int_nan
@@ -85,7 +91,7 @@ class TypesTest < Minitest::Test
   def test_to_int_object
     vector = Rover::Vector.new(["1", "2", "3"]).to(:int)
     assert_vector [1, 2, 3], vector
-    assert_equal :int, vector.type
+    assert_equal :int64, vector.type
     assert_kind_of Numo::Int64, vector.to_numo
   end
 
@@ -94,7 +100,7 @@ class TypesTest < Minitest::Test
     assert_equal vector[0], 1.0
     assert_equal vector[1], 2.1
     assert_equal vector[2].nan?, true
-    assert_equal :float, vector.type
+    assert_equal :float64, vector.type
     assert_kind_of Numo::DFloat, vector.to_numo
   end
 

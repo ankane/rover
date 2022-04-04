@@ -424,22 +424,22 @@ df.to_parquet
 You can specify column types when creating a data frame
 
 ```ruby
-Rover::DataFrame.new(data, types: {"a" => :int, "b" => :float})
+Rover::DataFrame.new(data, types: {"a" => :int64, "b" => :float64})
 ```
 
 Or
 
 ```ruby
-Rover.read_csv("data.csv", types: {"a" => :int, "b" => :float})
+Rover.read_csv("data.csv", types: {"a" => :int64, "b" => :float64})
 ```
 
 Supported types are:
 
-- boolean - `bool`
-- float - `float`, `float32`
-- integer - `int`, `int32`, `int16`, `int8`
-- unsigned integer - `uint`, `uint32`, `uint16`, `uint8`
-- object - `object`
+- boolean - `:bool`
+- float - `:float64`, `:float32`
+- integer - `:int64`, `:int32`, `:int16`, `:int8`
+- unsigned integer - `:uint64`, `:uint32`, `:uint16`, `:uint8`
+- object - `:object`
 
 Get column types
 
@@ -456,7 +456,7 @@ df[:a].type
 Change the type of a column
 
 ```ruby
-df[:a] = df[:a].to(:int)
+df[:a] = df[:a].to(:int32)
 ```
 
 ## History

@@ -1,6 +1,7 @@
-## 0.2.9 (unreleased)
+## 0.3.0 (unreleased)
 
 - Added `deep_dup` method to data frames
+- Changed `:int` to `:int64`, `:uint` to `:uint64`, and `:float` to `:float64` for type methods
 - Fixed `clone` and `dup` method for vectors
 
 ## 0.2.8 (2022-03-15)

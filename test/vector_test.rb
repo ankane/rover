@@ -213,7 +213,7 @@ class VectorTest < Minitest::Test
 
   def test_map!
     vector = Rover::Vector.new([10, 20, 30])
-    assert_equal :int, vector.type
+    assert_equal :int64, vector.type
     vector.map! { |v| "#{v}!" }
     assert_vector ["10!", "20!", "30!"], vector
     assert_equal :object, vector.type

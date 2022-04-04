@@ -15,9 +15,9 @@ class CsvTest < Minitest::Test
 
   def test_default_types
     df = Rover.read_csv("test/support/types.csv")
-    assert_equal :int, df.types["a"]
+    assert_equal :int64, df.types["a"]
     assert_equal :object, df.types["b"]
-    assert_equal :float, df.types["c"]
+    assert_equal :float64, df.types["c"]
   end
 
   def test_types
