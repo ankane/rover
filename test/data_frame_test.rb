@@ -295,11 +295,8 @@ class DataFrameTest < Minitest::Test
       df[["hello", "hello3"]]
     end
     assert_match "Missing column: hello3", error.message
-
-    if RUBY_VERSION.to_f >= 2.7
-      assert_match %{Did you mean?  "hello"}, error.message
-      assert_match "hello2", error.message
-    end
+    assert_match %{Did you mean?  "hello"}, error.message
+    assert_match "hello2", error.message
   end
 
   def test_setter
