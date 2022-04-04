@@ -63,10 +63,11 @@ class CsvTest < Minitest::Test
     assert_equal "Expected 2 headers, got 1", error.message
   end
 
-  # TODO raise error in 0.3.0?
   def test_headers_too_many
-    df = Rover.read_csv("test/support/data.csv", headers: ["a", "b", "c"])
-    assert_equal ["a", "b", "c"], df.keys
+    error = assert_raises(ArgumentError) do
+      Rover.read_csv("test/support/data.csv", headers: ["a", "b", "c"])
+    end
+    assert_equal "Expected 2 headers, got 3", error.message
   end
 
   # TODO decide on best approach, but this is current behavior

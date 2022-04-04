@@ -44,7 +44,7 @@ module Rover
       table = yield({converters: :numeric}.merge(csv_options))
 
       headers = nil if headers == true
-      if headers && table.first && headers.size < table.first.size
+      if headers && table.first && headers.size != table.first.size
         raise ArgumentError, "Expected #{table.first.size} headers, got #{headers.size}"
       end
 
