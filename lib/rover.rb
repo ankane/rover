@@ -60,8 +60,7 @@ module Rover
       keys = table_headers.map { |k| [k, true] }.to_h
       unnamed_suffix = 1
       table_headers.each_with_index do |k, i|
-        # TODO do same for empty string in 0.3.0
-        if k.nil?
+        if k.nil? || k.empty?
           k = "unnamed"
           while keys.include?(k)
             unnamed_suffix += 1
