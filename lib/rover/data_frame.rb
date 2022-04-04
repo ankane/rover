@@ -242,11 +242,11 @@ module Rover
       types.each do |name, type|
         schema[name] =
           case type
-          when :int
+          when :int64
             :int64
-          when :uint
+          when :uint64
             :uint64
-          when :float
+          when :float64
             :double
           when :float32
             :float
