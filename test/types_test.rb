@@ -15,6 +15,12 @@ class TypesTest < Minitest::Test
     end
   end
 
+  def test_constructor_nil
+    [:float, :float32, :float64].each do |type|
+      assert Rover::Vector.new([1, nil, 3], type: type)[1].nan?
+    end
+  end
+
   def test_constructor_legacy
     assert_equal :int64, Rover::Vector.new(1..3, type: :int).type
     assert_equal :uint64, Rover::Vector.new(1..3, type: :uint).type

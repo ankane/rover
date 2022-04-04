@@ -376,7 +376,7 @@ module Rover
         data = data.to_a
 
         if type
-          data = data.map { |v| v || Float::NAN } if [:float, :float32].include?(type)
+          data = data.map { |v| v || Float::NAN } if [:float, :float32, :float64].include?(type)
           data = numo_type.cast(data)
         else
           data =

@@ -1,6 +1,7 @@
 ## 0.3.1 (unreleased)
 
 - Added `to!` to vectors
+- Fixed error with `nil` and `:float64` type
 
 ## 0.3.0 (2022-04-03)
 
