@@ -2,7 +2,7 @@
 
 - Added `deep_dup` method to data frames
 - Changed `:int` to `:int64`, `:uint` to `:uint64`, and `:float` to `:float64` for type methods
-- Changed missing columns to raise `KeyError` instead of `ArgumentError` for aggregate methods
+- Changed missing column to raise `KeyError` instead of `ArgumentError` for aggregate methods
 - Changed passing too many headers to `read_csv` and `parse_csv` to raise `ArgumentError`
 - Changed empty string in CSV headers to match behavior of `nil`
 - Fixed `clone` and `dup` method for vectors
