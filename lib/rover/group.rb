@@ -1,12 +1,11 @@
 module Rover
   class Group
-    # TODO raise ArgumentError for empty columns in 0.3.0
     def initialize(df, columns)
       @df = df
       @columns = columns
+      check_columns
     end
 
-    # TODO raise ArgumentError for empty columns in 0.3.0
     def group(*columns)
       Group.new(@df, @columns + columns.flatten)
     end
@@ -38,10 +37,6 @@ module Rover
     def grouped_dfs
       # cache here so we can reuse for multiple calcuations if needed
       @grouped_dfs ||= begin
-        raise ArgumentError, "No columns given" if @columns.empty?
-        missing_keys = @columns - @df.keys
-        raise ArgumentError, "Missing keys: #{missing_keys.join(", ")}" if missing_keys.any?
-
         groups = Hash.new { |hash, key| hash[key] = [] }
         i = 0
         @df.each_row do |row|
@@ -55,6 +50,13 @@ module Rover
         end
         result
       end
+    end
+
+    def check_columns
+      raise ArgumentError, "No columns given" if @columns.empty?
+
+      missing_keys = @columns - @df.keys
+      raise ArgumentError, "Missing keys: #{missing_keys.join(", ")}" if missing_keys.any?
     end
   end
 end

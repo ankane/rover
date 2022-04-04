@@ -34,7 +34,7 @@ class GroupTest < Minitest::Test
   def test_empty
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
     error = assert_raises(ArgumentError) do
-      df.group([]).count
+      df.group([])
     end
     assert_equal "No columns given", error.message
   end
@@ -42,7 +42,7 @@ class GroupTest < Minitest::Test
   def test_missing_keys
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "one", "two"]})
     error = assert_raises(ArgumentError) do
-      df.group("c").count
+      df.group("c")
     end
     assert_equal "Missing keys: c", error.message
   end
