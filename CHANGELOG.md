@@ -1,4 +1,4 @@
-## 0.3.0 (unreleased)
+## 0.3.0 (2022-04-03)
 
 - Added `deep_dup` method to data frames
 - Changed `:int` to `:int64`, `:uint` to `:uint64`, and `:float` to `:float64` for type methods
