@@ -346,10 +346,10 @@ module Rover
       end
     end
 
-    def dup
+    def deep_dup
       df = DataFrame.new
       @vectors.each do |k, v|
-        df[k] = v
+        df[k] = v.dup
       end
       df
     end
@@ -502,6 +502,18 @@ module Rover
     end
 
     private
+
+    # for clone
+    def initialize_clone(_)
+      @vectors = @vectors.clone
+      super
+    end
+
+    # for dup
+    def initialize_dup(_)
+      @vectors = @vectors.dup
+      super
+    end
 
     def check_key(key)
       raise ArgumentError, "Key must be a string or symbol, got #{key.inspect}" unless key.is_a?(String) || key.is_a?(Symbol)

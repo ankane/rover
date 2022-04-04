@@ -333,6 +333,18 @@ module Rover
 
     private
 
+    # for clone
+    def initialize_clone(_)
+      @data = @data.clone
+      super
+    end
+
+    # for dup
+    def initialize_dup(_)
+      @data = @data.dup
+      super
+    end
+
     def cast_data(data, type: nil)
       numo_type = numo_type(type) if type
 

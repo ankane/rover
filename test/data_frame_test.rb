@@ -421,4 +421,25 @@ class DataFrameTest < Minitest::Test
     assert_equal Rover::DataFrame.new({"a" => 6..10}), df.tail
     assert_equal Rover::DataFrame.new({"a" => 8..10}), df.tail(3)
   end
+
+  def test_clone
+    df = Rover::DataFrame.new({"a" => [1, 2, 3]})
+    df2 = df.clone
+    df["a"][1] = 0
+    assert_vector [1, 0, 3], df2["a"]
+  end
+
+  def test_dup
+    df = Rover::DataFrame.new({"a" => [1, 2, 3]})
+    df2 = df.dup
+    df["a"][1] = 0
+    assert_vector [1, 0, 3], df2["a"]
+  end
+
+  def test_deep_dup
+    df = Rover::DataFrame.new({"a" => [1, 2, 3]})
+    df2 = df.deep_dup
+    df["a"][1] = 0
+    assert_vector [1, 2, 3], df2["a"]
+  end
 end

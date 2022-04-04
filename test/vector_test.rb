@@ -420,4 +420,18 @@ class VectorTest < Minitest::Test
     vector = Rover::Vector.new(1..3)
     assert_match "<table>", vector.to_html
   end
+
+  def test_clone
+    vector = Rover::Vector.new(1..3)
+    vector2 = vector.clone
+    vector[1] = 0
+    assert_vector [1, 2, 3], vector2
+  end
+
+  def test_dup
+    vector = Rover::Vector.new(1..3)
+    vector2 = vector.dup
+    vector[1] = 0
+    assert_vector [1, 2, 3], vector2
+  end
 end

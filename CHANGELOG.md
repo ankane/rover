@@ -1,3 +1,8 @@
+## 0.2.9 (unreleased)
+
+- Added `deep_dup` method to data frames
+- Fixed `clone` and `dup` method for vectors
+
 ## 0.2.8 (2022-03-15)
 
 - Added `group` and `stacked` options to `plot`
