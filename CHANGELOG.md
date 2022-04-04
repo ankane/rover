@@ -2,6 +2,7 @@
 
 - Added `deep_dup` method to data frames
 - Changed `:int` to `:int64`, `:uint` to `:uint64`, and `:float` to `:float64` for type methods
+- Changed missing columns to raise `KeyError` instead of `ArgumentError` for aggregate methods
 - Fixed `clone` and `dup` method for vectors
 - Dropped support for Ruby < 2.7
 

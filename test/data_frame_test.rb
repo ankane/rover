@@ -165,7 +165,7 @@ class DataFrameTest < Minitest::Test
   end
 
   def test_max_missing
-    error = assert_raises(ArgumentError) do
+    error = assert_raises(KeyError) do
       Rover::DataFrame.new({"a" => [1, 100, 3]}).max("b")
     end
     assert_equal "Missing column: b", error.message

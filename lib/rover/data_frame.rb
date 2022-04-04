@@ -72,7 +72,7 @@ module Rover
         # multiple columns
         df = DataFrame.new
         where.each do |k|
-          check_column(k, true)
+          check_column(k)
           df[k] = @vectors[k]
         end
         df
@@ -577,19 +577,9 @@ module Rover
       raise ArgumentError, "Missing keys: #{missing_keys.join(", ")}" if missing_keys.any?
     end
 
-    # TODO in 0.3.0
-    # always use did_you_mean
-    def check_column(key, did_you_mean = false)
+    def check_column(key)
       unless include?(key)
-        if did_you_mean
-          if RUBY_VERSION.to_f >= 2.6
-            raise KeyError.new("Missing column: #{key}", receiver: self, key: key)
-          else
-            raise KeyError.new("Missing column: #{key}")
-          end
-        else
-          raise ArgumentError, "Missing column: #{key}"
-        end
+        raise KeyError.new("Missing column: #{key}", receiver: self, key: key)
       end
     end
 
