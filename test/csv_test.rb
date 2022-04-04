@@ -60,14 +60,14 @@ class CsvTest < Minitest::Test
     error = assert_raises(ArgumentError) do
       Rover.read_csv("test/support/data.csv", headers: ["a"])
     end
-    assert_equal "wrong number of headers (given 1, expected 2)", error.message
+    assert_equal "Expected 2 headers, given 1", error.message
   end
 
   def test_headers_too_many
     error = assert_raises(ArgumentError) do
       Rover.read_csv("test/support/data.csv", headers: ["a", "b", "c"])
     end
-    assert_equal "wrong number of headers (given 3, expected 2)", error.message
+    assert_equal "Expected 2 headers, given 3", error.message
   end
 
   # TODO decide on best approach, but this is current behavior
