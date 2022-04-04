@@ -57,7 +57,7 @@ class DataFrameTest < Minitest::Test
     error = assert_raises(ArgumentError) do
       Rover::DataFrame.new(1 => 1..3)
     end
-    assert_equal "Key must be a string or symbol, got 1", error.message
+    assert_equal "Key must be a String or Symbol, given Integer", error.message
   end
 
   def test_invalid_data
@@ -250,7 +250,7 @@ class DataFrameTest < Minitest::Test
     error = assert_raises(ArgumentError) do
       df.merge(df2)
     end
-    assert_equal "Size mismatch: expected 3, got 1", error.message
+    assert_equal "Size mismatch (given 1, expected 3)", error.message
   end
 
   def test_delete
@@ -309,7 +309,7 @@ class DataFrameTest < Minitest::Test
     error = assert_raises(ArgumentError) do
       df["c"] = [1, 2]
     end
-    assert_equal "Size mismatch: expected 3, got 2", error.message
+    assert_equal "Size mismatch (given 2, expected 3)", error.message
   end
 
   def test_setter_empty

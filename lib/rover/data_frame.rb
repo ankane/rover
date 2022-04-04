@@ -102,7 +102,7 @@ module Rover
     def []=(k, v)
       check_key(k)
       v = to_vector(v, size: size)
-      raise ArgumentError, "Size mismatch: expected #{size}, got #{v.size}" if @vectors.any? && v.size != size
+      raise ArgumentError, "Size mismatch (given #{v.size}, expected #{size})" if @vectors.any? && v.size != size
       @vectors[k] = v
     end
 
@@ -516,7 +516,7 @@ module Rover
     end
 
     def check_key(key)
-      raise ArgumentError, "Key must be a string or symbol, got #{key.inspect}" unless key.is_a?(String) || key.is_a?(Symbol)
+      raise ArgumentError, "Key must be a String or Symbol, given #{key.class.name}" unless key.is_a?(String) || key.is_a?(Symbol)
     end
 
     # TODO make more efficient
