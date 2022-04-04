@@ -45,7 +45,7 @@ module Rover
 
       headers = nil if headers == true
       if headers && table.first && headers.size != table.first.size
-        raise ArgumentError, "Expected #{table.first.size} headers, got #{headers.size}"
+        raise ArgumentError, "Expected #{table.first.size} headers, given #{headers.size}"
       end
 
       table_headers = (headers || table.shift || []).dup
