@@ -330,19 +330,43 @@ class DataFrameTest < Minitest::Test
     assert_vector [3], df[(df["a"] > 1) ^ (df["b"] == "two")]["a"]
   end
 
-  def test_inspect
+  def test_to_s
     df = Rover::DataFrame.new({"a" => 1..5, "b" => ["one", "two", "three", "four", "five"]})
-    assert_equal "  a      b\n  1    one\n  2    two\n  3  three\n  4   four\n  5   five", df.inspect
+    assert_equal "  a      b\n  1    one\n  2    two\n  3  three\n  4   four\n  5   five", df.to_s
   end
 
-  def test_inspect_summary
+  def test_to_s_summary
     df = Rover::DataFrame.new({"a" => 1..99})
-    assert_equal "  a\n  1\n  2\n  3\n  4\n  5\n...\n 95\n 96\n 97\n 98\n 99", df.inspect
+    assert_equal "  a\n  1\n  2\n  3\n  4\n  5\n...\n 95\n 96\n 97\n 98\n 99", df.to_s
   end
 
+  def test_to_s_empty
+    df = Rover::DataFrame.new
+    assert_equal "#<Rover::DataFrame>", df.to_s
+  end
+
+  def test_inspect
+    df = Rover::DataFrame.new({
+        float: [1,Float::NAN,Float::INFINITY, 4, 5],
+        int:   [1, 2, 3, 4, 5],
+        str:   ["A", "B", "C", nil, ""],
+        obj:   [true, false, true, nil, false],
+        bit:   Numo::Bit[1,0,1,0,1],
+      })
+    assert_equal \
+      "Rover::DataFrame : 5 observations(rows) of 5 variables(columns).\n" <<
+      "Variables : 2 numeric, 2 objects, 1 bool\n" <<
+      "# key    type    level data_preview\n" <<
+      "1 :float float64     5 {1.0=>1, NaN=>1, Infinity=>1, 4.0=>1, 5.0=>1}\n" <<
+      "2 :int   int64       5 {1=>1, 2=>1, 3=>1, 4=>1, 5=>1}\n" <<
+      "3 :str   object      5 {\"A\"=>1, \"B\"=>1, \"C\"=>1, nil=>1, \"\"=>1}\n" <<
+      "4 :obj   object      3 {true=>2, false=>2, nil=>1}\n" <<
+      "5 :bit   bool        2 {1=>3, 0=>2}\n", df.inspect
+  end
+   
   def test_inspect_empty
     df = Rover::DataFrame.new
-    assert_equal "#<Rover::DataFrame>", df.inspect
+    assert_equal "#<Rover::DataFrame (empty)>", df.inspect
   end
 
   def test_equal

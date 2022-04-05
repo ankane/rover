@@ -317,7 +317,90 @@ module Rover
       lines.pop
       lines.map { |l| l.join(" " * spaces) }.join("\n")
     end
-    alias_method :inspect, :to_s  # alias like hash
+
+    # Supports:
+    # - tally_level: max level to use tally mode
+    # - max_element: max element to show values in each row
+    def inspect(tally_level:5, max_element:5)
+      return "#<Rover::DataFrame (empty)>" if keys.empty?
+      require "stringio"
+
+      stringio = StringIO.new  # output string buffer
+      
+      pl = ->(x){ x>1 ? "s" : "" }  # treat plural better
+
+      # show shape of the dataframe
+      nrows, ncols = self.shape
+      stringio.puts \
+        "#{self.class} : " <<
+        "#{nrows} observation#{pl.(nrows)}(row#{pl.(nrows)})" <<
+        " of #{ncols} variable#{pl.(ncols)}(column#{pl.(ncols)})."
+      
+      # show vars counts by type
+      # get together with numeric type
+      c = types.map { |key, type|
+          self[key].numeric? ? :numeric : type
+        }.tally
+      a = []
+      a << "#{c[:numeric]} numeric"                 if c[:numeric]
+      a << "#{c[:object]} object#{pl.(c[:object])}" if c[:object]
+      a << "#{c[:bool]} bool#{pl.(c[:bool])}"       if c[:bool]
+      stringio.puts "Variable#{pl.(ncols)} : #{a.join(", ")}"
+      
+      # calc column width to show
+      row_header = {
+          idx:    "#",
+          key:    "key",
+          type:   "type",
+          levels: "level",
+          data:   "data_preview", }
+      # find longest word to adjust column width
+      w_idx = Math.log10(ncols).to_i + 1
+      w_rows = [ Math.log10(nrows).to_i + 1, row_header[:levels].size ].max
+      w_key = ( keys.map{|key| key.size+1} << row_header[:key].size ).max
+      w_type = ( types.values.map(&:size) << row_header[:type].size ).max
+      
+      # print header of rows
+      stringio.printf("%-#{w_idx}s %-#{w_key}s %-#{w_type}s %-#{w_rows}s %s\n",
+        *row_header.values)
+      
+      # show details for each column (vector)
+      vectors.each.with_index(1) do |(key, vector), i|
+        type = vector.type
+        tally = vector.tally
+        str = sprintf("%#{w_rows}d ", tally.size)
+        
+        case type
+        when :object
+          if tally.size <= tally_level
+            str << "#{tally}"
+          else
+            a = vector.to_a.take(max_element)
+            a << "..." if nrows > max_element
+            str << "[#{a.join(", ")}]"
+          end
+        #  c = vector.is_nil.tally[1]   # release when impremented
+        #  str << " #{c} nil#{pl.(c)}" if c&.>(0)  # safely call c>0
+        when :bool
+          str << "#{tally}"
+        else  # numeric
+          if tally.size <= tally_level
+            str << "#{tally}"
+          else
+            a = vector.to_a.take(max_element)
+            a << "..." if nrows > max_element
+            str << "[#{a.join(", ")}]"
+          end
+        #  c = vector.is_nan.tally[1]   # release when impremented
+        #  str << " #{c} NaN#{pl.(c)}" if c&.>(0)  # safely call c>0
+        end
+        
+        stringio.printf("%#{w_idx}d %-#{w_key}s %-#{w_type}s %s\n",
+          i, ":#{key}", type, str)
+      end
+      stringio.string
+    end
+        
 
     def sort_by!
       indexes =
