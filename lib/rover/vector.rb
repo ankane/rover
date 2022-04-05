@@ -185,12 +185,7 @@ module Rover
     end
 
     def tally
-      result = Hash.new(0)
-      @data.each do |v|
-        result[v] += 1
-      end
-      result.default = nil
-      result
+      @data.to_a.tally
     end
 
     def sort
