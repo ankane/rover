@@ -285,7 +285,7 @@ module Rover
     end
 
     # TODO handle long text better
-    def inspect
+    def to_s
       return "#<Rover::DataFrame>" if keys.empty?
 
       lines = []
@@ -317,7 +317,7 @@ module Rover
       lines.pop
       lines.map { |l| l.join(" " * spaces) }.join("\n")
     end
-    alias_method :to_s, :inspect # alias like hash
+    alias_method :inspect, :to_s  # alias like hash
 
     def sort_by!
       indexes =
