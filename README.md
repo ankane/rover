@@ -89,6 +89,14 @@ Check if a column exists
 df.include?(name)
 ```
 
+Show information about a DataFrame in detail
+
+```ruby
+p df
+# or
+puts df.inspect
+```
+
 ## Selecting Data
 
 Select a column
