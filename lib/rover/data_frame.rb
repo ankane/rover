@@ -347,6 +347,9 @@ module Rover
       a << "#{c[:bool]} bool#{pl.(c[:bool])}"       if c[:bool]
       stringio.puts "Variable#{pl.(ncols)} : #{a.join(", ")}"
       
+      # calc levels (num of unique elemnets) for each Vector
+      levels = vectors.map {|key, vector| vector.to_a.uniq.size}
+
       # calc column width to show
       row_header = {
           idx:    "#",
@@ -355,8 +358,8 @@ module Rover
           levels: "level",
           data:   "data_preview", }
       # find longest word to adjust column width
-      w_idx = Math.log10(ncols).to_i + 1
-      w_rows = [ Math.log10(nrows).to_i + 1, row_header[:levels].size ].max
+      w_idx = ncols.to_s.size
+      w_rows = ( levels.map{|l| l.to_s.size} << row_header[:levels].size ).max
       w_key = ( keys.map{|key| key.size+1} << row_header[:key].size ).max
       w_type = ( types.values.map(&:size) << row_header[:type].size ).max
       
@@ -400,7 +403,6 @@ module Rover
       end
       stringio.string
     end
-        
 
     def sort_by!
       indexes =

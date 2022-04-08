@@ -346,24 +346,35 @@ class DataFrameTest < Minitest::Test
   end
 
   def test_inspect
-    df = Rover::DataFrame.new({
+    df = Rover::DataFrame.new(
         float: [1,Float::NAN,Float::INFINITY, 4, 5],
         int:   [1, 2, 3, 4, 5],
         str:   ["A", "B", "C", nil, ""],
         obj:   [true, false, true, nil, false],
         bit:   Numo::Bit[1,0,1,0,1],
-      })
-    assert_equal \
-      "Rover::DataFrame : 5 observations(rows) of 5 variables(columns).\n" <<
-      "Variables : 2 numeric, 2 objects, 1 bool\n" <<
-      "# key    type    level data_preview\n" <<
-      "1 :float float64     5 {1.0=>1, NaN=>1, Infinity=>1, 4.0=>1, 5.0=>1}\n" <<
-      "2 :int   int64       5 {1=>1, 2=>1, 3=>1, 4=>1, 5=>1}\n" <<
-      "3 :str   object      5 {\"A\"=>1, \"B\"=>1, \"C\"=>1, nil=>1, \"\"=>1}\n" <<
-      "4 :obj   object      3 {true=>2, false=>2, nil=>1}\n" <<
-      "5 :bit   bool        2 {1=>3, 0=>2}\n", df.inspect
+      )
+    assert_equal %(\
+Rover::DataFrame : 5 observations(rows) of 5 variables(columns).
+Variables : 2 numeric, 2 objects, 1 bool
+# key    type    level data_preview
+1 :float float64     5 {1.0=>1, NaN=>1, Infinity=>1, 4.0=>1, 5.0=>1}
+2 :int   int64       5 {1=>1, 2=>1, 3=>1, 4=>1, 5=>1}
+3 :str   object      5 {"A"=>1, "B"=>1, "C"=>1, nil=>1, ""=>1}
+4 :obj   object      3 {true=>2, false=>2, nil=>1}
+5 :bit   bool        2 {1=>3, 0=>2}
+), df.inspect
   end
    
+  def test_inspect_large_df
+    df = Rover::DataFrame.new(a: 1..100000)
+    assert_equal %(\
+Rover::DataFrame : 100000 observations(rows) of 1 variable(column).
+Variable : 1 numeric
+# key type  level  data_preview
+1 :a  int64 100000 [1, 2, 3, 4, 5, ...]
+), df.inspect
+  end
+
   def test_inspect_empty
     df = Rover::DataFrame.new
     assert_equal "#<Rover::DataFrame (empty)>", df.inspect
