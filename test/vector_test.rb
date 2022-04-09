@@ -40,6 +40,18 @@ class VectorTest < Minitest::Test
     assert_vector ["ad", "be", "cf"], a + b
   end
 
+  def test_is_nan
+    assert_vector [false, true, false], Rover::Vector.new([1,nil,3]).is_nan
+    assert_vector [false, false, false], Rover::Vector.new(["one", "two", nil]).is_nan
+    assert_vector [false, false, false], Rover::Vector.new(Numo::Bit[1,0,0]).is_nan
+  end
+
+  def test_is_nil
+    assert_vector [false, false, false], Rover::Vector.new([1,nil,3]).is_nil
+    assert_vector [false, false, true], Rover::Vector.new(["one", "two", nil]).is_nil
+    assert_vector [false, false, false], Rover::Vector.new(Numo::Bit[1,0,0]).is_nil
+  end
+
   def test_missing
     assert_vector [false, true, false], Rover::Vector.new([1, nil, 3]).missing
     assert_vector [false, true, false], Rover::Vector.new(["one", nil, "three"]).missing

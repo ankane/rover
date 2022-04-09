@@ -63,6 +63,26 @@ module Rover
       Vector.new(to_a.uniq)
     end
 
+    def is_nan
+      bit =
+        if @data.respond_to?(:isnan)
+          @data.isnan
+        else
+          Numo::Bit.new(size).fill(0)
+        end
+      Vector.new(bit)
+    end
+
+    def is_nil
+      bit =
+        if @data.is_a?(Numo::RObject)
+          Numo::Bit.cast(@data.map(&:nil?))
+        else
+          Numo::Bit.new(size).fill(0)
+        end
+      Vector.new(bit)
+    end
+
     def missing
       bit =
         if @data.is_a?(Numo::RObject)
@@ -75,6 +95,7 @@ module Rover
 
       Vector.new(bit)
     end
+    alias_method :is_na, :missing
 
     # keep same number of rows as original
     # to make it easy to add to original data frame
