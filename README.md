@@ -335,6 +335,15 @@ Sort rows
 df.sort_by! { |r| r[:a] }
 ```
 
+Remove rows containing missing values
+
+```ruby
+df.drop_nan
+df.drop_nil
+df.drop_na  # both NaN and nil
+df.omit   # same as drop_na
+```
+
 Clear all data
 
 ```ruby

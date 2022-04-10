@@ -439,4 +439,45 @@ class DataFrameTest < Minitest::Test
     df["a"][1] = 0
     assert_vector [1, 2, 3], df2["a"]
   end
+
+  def test_drop_na
+    df = Rover::DataFrame.new(a: [1, nil, 3], b: ["A", "B", nil])
+    assert_equal Rover::DataFrame.new(a: [1.0], b: ["A"]), df.drop_na
+    assert_equal Rover::DataFrame.new, df.drop_na(axis: :col)
+    assert_equal Rover::DataFrame.new, df.drop_na(axis: 'column')
+    assert_equal 3, df.size  # not changed
+    assert_equal df.drop_na, df.omit
+
+    df2 = Rover::DataFrame.new(a: [1, nil], b: ["A", nil])
+    assert_equal Rover::DataFrame.new(a: [1.0], b: ["A"]), df2.drop_na(how: :all)
+
+    df3 = Rover::DataFrame.new(a: [nil, nil], b: ["A", "B"])
+    assert_equal Rover::DataFrame.new(b: ["A", "B"]), df3.drop_na(how: :all, axis: 1)
+  end
+
+  def test_drop_nan
+    df = Rover::DataFrame.new(a: [1, nil], b: ["A", "B"])
+    assert_equal Rover::DataFrame.new(a: [1.0], b: ["A"]), df.drop_nan
+    assert_equal Rover::DataFrame.new(b: ["A", "B"]), df.drop_nan(axis: :col)
+    assert_equal 2, df.size  # not changed
+
+    df2 = Rover::DataFrame.new(a: [1, nil], b: [2, nil])
+    assert_equal Rover::DataFrame.new(a: [1.0], b: [2.0]), df2.drop_nan(how: :all)
+
+    df3 = Rover::DataFrame.new(a: [nil, nil], b: ["A", "B"])
+    assert_equal Rover::DataFrame.new(b: ["A", "B"]), df3.drop_nan(how: :all, axis: 1)
+  end
+
+  def test_drop_nil
+    df = Rover::DataFrame.new(a: ["1", nil], b: ["A", "B"])
+    assert_equal Rover::DataFrame.new(a: ["1"], b: ["A"]), df.drop_nil
+    assert_equal Rover::DataFrame.new(b: ["A", "B"]), df.drop_nil(axis: :col)
+    assert_equal 2, df.size  # not changed
+
+    df2 = Rover::DataFrame.new(a: ["1", nil], b: ["A", nil])
+    assert_equal Rover::DataFrame.new(a: ["1"], b: ["A"]), df2.drop_nil(how: :all)
+
+    df3 = Rover::DataFrame.new(a: Numo::RObject[nil, nil], b: ["A", "B"])
+    assert_equal Rover::DataFrame.new(b: ["A", "B"]), df3.drop_nil(how: :all, axis: 1)
+  end
 end

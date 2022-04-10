@@ -501,6 +501,28 @@ module Rover
       end
     end
 
+    # define drop_* methods
+    # Supports
+    # - how: :any ; drop if any?
+    # -      :all ; drop if all?
+    # - axis: :row ; drop rows
+    # -       :col ; drop columns (:column is also acceptable)
+    def omit  # shorthand for drop_na()
+      drop_generic(how: :any, axis: :row, &:missing)
+    end
+
+    def drop_na(how: :any, axis: :row)
+      drop_generic(how: how, axis: axis, &:missing)
+    end
+
+    def drop_nan(how: :any, axis: :row)
+      drop_generic(how: how, axis: axis, &:is_nan)
+    end
+
+    def drop_nil(how: :any, axis: :row)
+      drop_generic(how: how, axis: axis, &:is_nil)
+    end
+
     private
 
     # for clone
@@ -641,6 +663,44 @@ module Rover
       raise ArgumentError, "unknown keywords: #{unknown_keywords.join(", ")}" if unknown_keywords.any?
 
       [data, options]
+    end
+
+    # methods for na
+    # accepts :how and :axis args
+    # pass each vector to block
+    # block shold return vector of type :bool
+    def drop_generic(how: :any, axis: :row, &block)
+      if axis.to_s == "row" || axis == 0
+        drop_if(how: how, &block)
+      elsif axis[0..2] == "col" || axis == 1
+        # accepts :col, :column, 'col', 'column' or 1
+        drop_col_if(how: how, &block)
+      else
+        raise ArgumentError, "Invalid argument, axis: #{axis}"
+      end
+    end
+
+    def drop_if(how: :any, &block)
+      bits = @vectors.values.map {|vector| yield vector}
+      if how.to_sym == :any
+        bit = bits.reduce(&:|)
+      else  # formally how == :all
+        bit = bits.reduce(&:&)
+      end
+      self[ ! bit ]
+    end
+
+    def drop_col_if(how: :any, &block)
+      keys =
+        @vectors.keys.select do |key|
+          bit = yield @vectors[key]
+          if how.to_sym == :all
+            bit.all?
+          else  # formally how == :any
+            bit.any?
+          end
+        end
+      except(*keys)
     end
   end
 end
