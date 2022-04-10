@@ -276,11 +276,12 @@ module Rover
     # for IRuby
     def to_html
       require "iruby"
+      df = fill_if("<i>nil</i>", &:is_nil)
       if size > 7
         # pass 8 rows so maxrows is applied
-        IRuby::HTML.table((self[0..4] + self[-4..-1]).to_h, maxrows: 7)
+        IRuby::HTML.table((df[0..4] + df[-4..-1]).to_h, maxrows: 7)
       else
-        IRuby::HTML.table(to_h)
+        IRuby::HTML.table(df.to_h)
       end
     end
 

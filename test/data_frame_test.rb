@@ -104,6 +104,9 @@ class DataFrameTest < Minitest::Test
   def test_to_html
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
     assert_match "<table>", df.to_html
+
+    df2 = Rover::DataFrame.new(a: [nil, "nil"])
+    assert_equal "<table><tr><th>a</th></tr><tr><td><i>nil</i></td></tr><tr><td>nil</td></tr></table>", df2.to_html
   end
 
   # other
