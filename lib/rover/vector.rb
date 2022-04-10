@@ -220,13 +220,13 @@ module Rover
     def mean
       # currently only floats have mean in Numo
       # https://github.com/ruby-numo/numo-narray/issues/79
-      @data.cast_to(Numo::DFloat).mean
+      @data.cast_to(Numo::DFloat).mean(nan: true)
     end
 
     def median
       # need to cast to get correct result
       # https://github.com/ruby-numo/numo-narray/issues/165
-      @data.cast_to(Numo::DFloat).median
+      @data.cast_to(Numo::DFloat).median(nan: true)
     end
 
     def percentile(q)
@@ -239,12 +239,12 @@ module Rover
 
     # uses Bessel's correction for now since that's all Numo supports
     def std
-      @data.cast_to(Numo::DFloat).stddev
+      @data.cast_to(Numo::DFloat).stddev(nan: true)
     end
 
     # uses Bessel's correction for now since that's all Numo supports
     def var
-      @data.cast_to(Numo::DFloat).var
+      @data.cast_to(Numo::DFloat).var(nan: true)
     end
 
     def all?(&block)
