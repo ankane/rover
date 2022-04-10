@@ -480,4 +480,30 @@ class DataFrameTest < Minitest::Test
     df3 = Rover::DataFrame.new(a: Numo::RObject[nil, nil], b: ["A", "B"])
     assert_equal Rover::DataFrame.new(b: ["A", "B"]), df3.drop_nil(how: :all, axis: 1)
   end
+
+  def test_fill_na
+    df = Rover::DataFrame.new(a: [1, nil], b: ["A", nil])
+    assert_equal Rover::DataFrame.new(a: [1.0, 0], b: ["A", 0]), df.fill_na(0)
+
+    error = assert_raises(ArgumentError) do
+      df.fill_na("B")
+    end
+    assert_equal "Can't put 'B' to <float64>", error.message
+  end
+
+  def test_fill_nan
+    df = Rover::DataFrame.new(a: [1, nil], b: ["A", nil])
+    assert_equal Rover::DataFrame.new(a: [1.0, 0], b: ["A", nil]), df.fill_nan(0)
+
+    error = assert_raises(ArgumentError) do
+      df.fill_nan("B")
+    end
+    assert_equal "Can't put 'B' to <float64>", error.message
+  end
+
+  def test_fill_nil
+    df = Rover::DataFrame.new(a: [1, 2], b: ["A", nil])
+    assert_equal Rover::DataFrame.new(a: [1, 2], b: ["A", "B"]), df.fill_nil("B")
+    assert_equal Rover::DataFrame.new(a: [1, 2], b: ["A", nil]), df.fill_nil(nil)
+  end
 end

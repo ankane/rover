@@ -523,6 +523,21 @@ module Rover
       drop_generic(how: how, axis: axis, &:is_nil)
     end
 
+    def fill_na(value)
+      fill_if(value, &:missing)
+    end
+    alias_method :replace_na, :fill_na
+
+    def fill_nan(value)
+      fill_if(value, &:is_nan)
+    end
+    alias_method :replace_nan, :fill_nan
+
+    def fill_nil(value)
+      fill_if(value, &:is_nil)
+    end
+    alias_method :replace_nil, :fill_nil
+
     private
 
     # for clone
@@ -701,6 +716,21 @@ module Rover
           end
         end
       except(*keys)
+    end
+
+    def fill_if(value, &block)
+      df = self.deep_dup
+      df.vectors.map do |key, vector|
+        bit = yield vector
+        begin
+          vector[bit] = value if bit.any?
+        rescue Numo::NArray::CastError
+          value = 'nil' if value.nil?
+          value = "'#{value}'" if value.is_a? String
+          raise ArgumentError, "Can't put #{value} to <#{vector.type}>"
+        end
+      end
+      df
     end
   end
 end

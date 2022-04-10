@@ -344,6 +344,14 @@ df.drop_na  # both NaN and nil
 df.omit   # same as drop_na
 ```
 
+Replace missing values
+
+```ruby
+df.fill_nan(value)
+df.fill_nil(value)
+df.fill_na(value)
+```
+
 Clear all data
 
 ```ruby
