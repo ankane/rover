@@ -439,4 +439,12 @@ class DataFrameTest < Minitest::Test
     df["a"][1] = 0
     assert_vector [1, 2, 3], df2["a"]
   end
+
+  def test_summary
+    df = Rover::DataFrame.new(a: [1,2,3])
+    assert df.summary.is_a? Rover::DataFrame
+    expected = "[3,1]  count  mean  std  min  25%  50%  75%  max\n    a      3   2.0  1.0    1  1.5  2.0  2.5    3"
+    assert_equal expected, df.summary.to_s
+    assert_equal "[0,0]  count  mean  std  min  25%  50%  75%  max", Rover::DataFrame.new().describe.to_s
+  end
 end

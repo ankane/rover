@@ -319,6 +319,33 @@ module Rover
     end
     alias_method :to_s, :inspect # alias like hash
 
+    # Show statistical summary of self
+    # - Returns DataFrame
+    # - Make stats for numeric columns only
+    # - 1st column header indicates [n of rows, n of numeric columns] 
+    # - Int type columns are casted to Float64 in mean, std, var (by Vector)
+    # - NaNs are ignored using (nan: true) option in Numo
+    #   - counts also show non-NaN counts
+    def summary
+      num_keys = self.keys.select {|key| self[key].numeric?}
+      nrow, _ = self.shape
+      key0 = :"[#{nrow},#{num_keys.size}]"
+      round = 6
+
+      hash = {key0 => num_keys}
+      hash["count"] = num_keys.map {|k| self[k].missing.to_numo.count_false }
+      hash["mean"]  = num_keys.map {|k| self[k].mean.round(round) }
+      hash["std"]   = num_keys.map {|k| self[k].std.round(round) }
+      hash["min"]   = num_keys.map {|k| self[k].min }
+      hash["25%"]   = num_keys.map {|k| self[k].percentile(25).round(round) }
+      hash["50%"]   = num_keys.map {|k| self[k].percentile(50).round(round) }
+      hash["75%"]   = num_keys.map {|k| self[k].percentile(75).round(round) }
+      hash["max"]   = num_keys.map {|k| self[k].max }
+      
+      Rover::DataFrame.new(hash)
+    end
+    alias_method :describe, :summary
+
     def sort_by!
       indexes =
         size.times.sort_by do |i|
