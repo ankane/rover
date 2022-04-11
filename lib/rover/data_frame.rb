@@ -346,6 +346,28 @@ module Rover
     end
     alias_method :describe, :summary
 
+    # This method may be abandoned
+    # - Counts sould be Int but casted to Float
+    def summary_T
+      num_keys = self.keys.select {|key| self[key].numeric?}
+      # use key of 1st column to show n_rows and n_of_numeric_columns
+      nrow, _ = self.shape
+      key0 = :"[#{nrow},#{num_keys.size}]"
+      round = 6
+
+      ary = [] <<
+        num_keys.each_with_object({key0 => "count"}) {|k, h| h[k] = self[k].missing.to_numo.count_false } <<
+        num_keys.each_with_object({key0 => "mean"})  {|k, h| h[k] = self[k].mean.round(round) } <<
+        num_keys.each_with_object({key0 => "std"})   {|k, h| h[k] = self[k].std.round(round) } <<
+        num_keys.each_with_object({key0 => "min"})   {|k, h| h[k] = self[k].min } <<
+        num_keys.each_with_object({key0 => "25%"})   {|k, h| h[k] = self[k].percentile(25).round(round) } <<
+        num_keys.each_with_object({key0 => "50%"})   {|k, h| h[k] = self[k].percentile(50).round(round) } <<
+        num_keys.each_with_object({key0 => "75%"})   {|k, h| h[k] = self[k].percentile(75).round(round) } <<
+        num_keys.each_with_object({key0 => "max"})   {|k, h| h[k] = self[k].max }
+
+      Rover::DataFrame.new(ary)
+    end
+
     def sort_by!
       indexes =
         size.times.sort_by do |i|
