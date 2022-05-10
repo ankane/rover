@@ -3,6 +3,8 @@ Bundler.require(:default)
 require "minitest/autorun"
 require "minitest/pride"
 require "active_record"
+require "active_support"
+require "active_support/core_ext/kernel/reporting"
 
 silence_warnings do
   require "iruby"
