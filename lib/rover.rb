@@ -41,6 +41,7 @@ module Rover
       raise ArgumentError, "Must specify headers" if headers == false
 
       # TODO use date converter in 0.4.0 - need to test performance
+      csv_options[:headers] = true if headers == true
       table = yield({converters: :numeric}.merge(csv_options))
 
       headers = nil if headers == true
@@ -48,7 +49,7 @@ module Rover
         raise ArgumentError, "Expected #{table.first.size} headers, given #{headers.size}"
       end
 
-      table_headers = (headers || table.shift || []).dup
+      table_headers = (headers || (table.respond_to?(:headers) ? table.headers : table.shift) || []).dup
       # keep same behavior as headers: true
       if table.first
         while table_headers.size < table.first.size
