@@ -105,8 +105,8 @@ class CsvTest < Minitest::Test
 
   # same behavior as CSV
   def test_header_converters_headers
-    df = Rover.read_csv("test/support/data.csv", headers: ["c", "d"], header_converters: :symbol)
-    assert_equal [:c, :d], df.vector_names
+    df = Rover.read_csv("test/support/data.csv", headers: ["C", "D"], header_converters: :downcase)
+    assert_equal ["c", "d"], df.vector_names
     assert_equal 4, df.size
   end
 
