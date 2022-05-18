@@ -456,7 +456,7 @@ df[:a].type
 Change the type of a column
 
 ```ruby
-df[:a] = df[:a].to(:int32)
+df[:a].to!(:int32)
 ```
 
 ## History
