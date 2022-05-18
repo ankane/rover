@@ -55,6 +55,12 @@ module Rover
           table_headers << nil
         end
       end
+      # TODO handle date converters
+      table_headers = table_headers.map! { |v| v.nil? ? nil : v.to_s }
+
+      if csv_options[:header_converters]
+        table_headers = CSV.parse(CSV.generate_line(table_headers), headers: true, header_converters: csv_options[:header_converters]).headers
+      end
 
       data = {}
       keys = table_headers.map { |k| [k, true] }.to_h

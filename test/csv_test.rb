@@ -92,6 +92,24 @@ class CsvTest < Minitest::Test
     assert_equal Rover::DataFrame.new({"a" => [1]}), df
   end
 
+  def test_headers_numeric
+    df = Rover.parse_csv("1,2.5\n")
+    assert_equal ["1", "2.5"], df.vector_names
+  end
+
+  def test_header_converters
+    df = Rover.read_csv("test/support/data.csv", header_converters: :symbol)
+    assert_equal [:a, :b], df.vector_names
+    assert_equal 3, df.size
+  end
+
+  # same behavior as CSV
+  def test_header_converters_headers
+    df = Rover.read_csv("test/support/data.csv", headers: ["c", "d"], header_converters: :symbol)
+    assert_equal [:c, :d], df.vector_names
+    assert_equal 4, df.size
+  end
+
   def test_to_csv
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
     assert_equal "a,b\n1,one\n2,two\n3,three\n", df.to_csv

@@ -2,6 +2,7 @@
 
 - Added `to!` to vectors
 - Fixed error with `nil` and `:float64` type
+- Fixed `:header_converters` option with `read_csv` and `parse_csv`
 
 ## 0.3.0 (2022-04-03)
 
