@@ -184,6 +184,7 @@ module Rover
       Vector.new(@data.to_a.reject(&block))
     end
 
+    # use Ruby tally for performance
     def tally
       @data.to_a.tally
     end
