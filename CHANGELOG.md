@@ -1,5 +1,6 @@
 ## 0.3.2 (unreleased)
 
+- Added `sqrt` method to vectors
 - Improved performance of `tally`
 
 ## 0.3.1 (2022-05-18)

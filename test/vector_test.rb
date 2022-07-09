@@ -239,6 +239,13 @@ class VectorTest < Minitest::Test
     end
   end
 
+  def test_sqrt
+    assert_vector [1, 2, 3], Rover::Vector.new([1, 4, 9]).sqrt
+    assert_equal :float64, Rover::Vector.new([1, 4, 9]).sqrt.type
+    assert_equal :float64, Rover::Vector.new([1, 4, 9], type: :float64).sqrt.type
+    assert_equal :float32, Rover::Vector.new([1, 4, 9], type: :float32).sqrt.type
+  end
+
   def test_comparison
     vector = Rover::Vector.new(1..3)
     assert_vector [false, true, false], vector == 2

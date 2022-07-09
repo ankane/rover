@@ -197,6 +197,16 @@ module Rover
       Vector.new(@data.abs)
     end
 
+    def sqrt
+      data =
+        if @data.is_a?(Numo::SFloat)
+          Numo::SFloat::Math.sqrt(@data)
+        else
+          Numo::DFloat::Math.sqrt(@data)
+        end
+      Vector.new(data)
+    end
+
     def each(&block)
       @data.each(&block)
     end
