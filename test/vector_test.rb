@@ -88,6 +88,14 @@ class VectorTest < Minitest::Test
     assert_vector [100, 400, 900], vector ** 2
   end
 
+  def test_operations_scalar
+    vector = Rover::Vector.new([10, 20, 30])
+    assert_vector [15, 25, 35], 5 + vector
+    assert_vector [25, 15, 5], 35 - vector
+    assert_vector [50, 100, 150], 5 * vector
+    assert_vector [6, 3, 2], 60 / vector
+  end
+
   def test_operations_vector
     a = Rover::Vector.new([10, 20, 30])
     b = Rover::Vector.new([1, 2, 3])

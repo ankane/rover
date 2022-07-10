@@ -356,6 +356,14 @@ module Rover
       super
     end
 
+    def coerce(other)
+      if other.is_a?(Numeric)
+        [Vector.new([other]), self]
+      else
+        raise TypeError, "#{self.class} can't be coerced into #{other.class}"
+      end
+    end
+
     def cast_data(data, type: nil)
       numo_type = numo_type(type) if type
 
