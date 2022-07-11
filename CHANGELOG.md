@@ -1,6 +1,6 @@
 ## 0.3.3 (unreleased)
 
-- Added `sin`, `cos`, and `tan` methods to vectors
+- Added `sin`, `cos`, `tan`, `asin`, `acos`, and `atan` methods to vectors
 - Added `empty?` method to vectors
 
 ## 0.3.2 (2022-07-10)

@@ -197,7 +197,7 @@ module Rover
       Vector.new(@data.abs)
     end
 
-    [:sqrt, :sin, :cos, :tan].each do |m|
+    [:sqrt, :sin, :cos, :tan, :asin, :acos, :atan].each do |m|
       define_method(m) do
         data =
           if @data.is_a?(Numo::SFloat)

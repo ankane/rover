@@ -271,6 +271,18 @@ class VectorTest < Minitest::Test
     assert_vector_in_delta [0, 1], Rover::Vector.new([0, Math::PI / 4]).tan
   end
 
+  def test_asin
+    assert_vector_in_delta [0, Math::PI / 2], Rover::Vector.new([0, 1]).asin
+  end
+
+  def test_acos
+    assert_vector_in_delta [0, Math::PI / 2, Math::PI], Rover::Vector.new([1, 0, -1]).acos
+  end
+
+  def test_atan
+    assert_vector_in_delta [0, Math::PI / 4], Rover::Vector.new([0, 1]).atan
+  end
+
   def test_comparison
     vector = Rover::Vector.new(1..3)
     assert_vector [false, true, false], vector == 2
