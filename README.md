@@ -195,7 +195,7 @@ df[:a].sqrt
 df[:a].abs
 ```
 
-Rounding [unreleased]
+Rounding
 
 ```ruby
 df[:a].round
@@ -203,7 +203,7 @@ df[:a].ceil
 df[:a].floor
 ```
 
-Logarithm [unreleased]
+Logarithm
 
 ```ruby
 df[:a].ln # or log
@@ -211,14 +211,14 @@ df[:a].log10
 df[:a].log2
 ```
 
-Exponentiation [unreleased]
+Exponentiation
 
 ```ruby
 df[:a].exp
 df[:a].exp2
 ```
 
-Trigonometric functions [unreleased]
+Trigonometric functions
 
 ```ruby
 df[:a].sin
@@ -229,7 +229,7 @@ df[:a].acos
 df[:a].atan
 ```
 
-Hyperbolic functions [unreleased]
+Hyperbolic functions
 
 ```ruby
 df[:a].sinh
@@ -373,7 +373,7 @@ df.except!(:a, :b)
 Rename columns
 
 ```ruby
-df.rename(a: :new_a, b: :new_b) # [unreleased]
+df.rename(a: :new_a, b: :new_b)
 # or
 df[:new_a] = df.delete(:a)
 ```

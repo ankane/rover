@@ -1,4 +1,4 @@
-## 0.3.3 (unreleased)
+## 0.3.3 (2022-07-11)
 
 - Added `ln`, `log`, `log10`, and `log2` methods to vectors
 - Added `exp` and `exp2` methods to vectors
