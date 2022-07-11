@@ -25,8 +25,9 @@ class User < ActiveRecord::Base
 end
 
 class Minitest::Test
-  def assert_vector(exp, act)
+  def assert_vector(exp, act, type: nil)
     assert_kind_of Rover::Vector, act
+    assert_equal type, act.type if type
     assert_equal exp.to_a, act.to_a
   end
 
