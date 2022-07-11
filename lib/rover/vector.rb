@@ -244,6 +244,11 @@ module Rover
       log
     end
 
+    def hypot(y)
+      cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
+      Vector.new(cls.hypot(@data, y))
+    end
+
     def each(&block)
       @data.each(&block)
     end

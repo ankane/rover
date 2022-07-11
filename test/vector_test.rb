@@ -347,6 +347,13 @@ class VectorTest < Minitest::Test
     assert_vector_in_delta [1, 0], Rover::Vector.new([0, 3]).erfc, type: :float64
   end
 
+  def test_hypot
+    a = Rover::Vector.new([3])
+    b = Rover::Vector.new([4])
+    assert_vector_in_delta [5], a.hypot(4), type: :float64
+    assert_vector_in_delta [5], a.hypot(b), type: :float64
+  end
+
   def test_comparison
     vector = Rover::Vector.new(1..3)
     assert_vector [false, true, false], vector == 2
