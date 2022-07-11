@@ -197,14 +197,16 @@ module Rover
       Vector.new(@data.abs)
     end
 
-    def sqrt
-      data =
-        if @data.is_a?(Numo::SFloat)
-          Numo::SFloat::Math.sqrt(@data)
-        else
-          Numo::DFloat::Math.sqrt(@data)
-        end
-      Vector.new(data)
+    [:sqrt, :sin, :cos, :tan].each do |m|
+      define_method(m) do
+        data =
+          if @data.is_a?(Numo::SFloat)
+            Numo::SFloat::Math.send(m, @data)
+          else
+            Numo::DFloat::Math.send(m, @data)
+          end
+        Vector.new(data)
+      end
     end
 
     def each(&block)

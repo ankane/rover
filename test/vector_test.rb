@@ -259,6 +259,18 @@ class VectorTest < Minitest::Test
     assert_equal :float32, Rover::Vector.new([1, 4, 9], type: :float32).sqrt.type
   end
 
+  def test_sin
+    assert_vector_in_delta [0, 1, 0], Rover::Vector.new([0, Math::PI / 2, Math::PI]).sin
+  end
+
+  def test_cos
+    assert_vector_in_delta [1, 0, -1], Rover::Vector.new([0, Math::PI / 2, Math::PI]).cos
+  end
+
+  def test_tan
+    assert_vector_in_delta [0, 1], Rover::Vector.new([0, Math::PI / 4]).tan
+  end
+
   def test_comparison
     vector = Rover::Vector.new(1..3)
     assert_vector [false, true, false], vector == 2
