@@ -1,3 +1,7 @@
+## 0.3.3 (unreleased)
+
+- Added `empty?` method to vectors
+
 ## 0.3.2 (2022-07-10)
 
 - Added `sqrt` method to vectors

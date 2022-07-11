@@ -194,6 +194,11 @@ class VectorTest < Minitest::Test
     assert !(vector < 3).all?
   end
 
+  def test_empty
+    assert_predicate Rover::Vector.new([]), :empty?
+    refute_predicate Rover::Vector.new(1..3), :empty?
+  end
+
   def test_map
     vector = Rover::Vector.new([10, 20, 30])
     assert_vector [20, 40, 60], vector.map { |v| v * 2 }

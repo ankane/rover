@@ -261,6 +261,10 @@ module Rover
       to_a.any?(&block)
     end
 
+    def empty?
+      size == 0
+    end
+
     def zip(other, &block)
       to_a.zip(other.to_a, &block)
     end
