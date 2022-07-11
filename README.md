@@ -195,6 +195,14 @@ df[:a].sqrt
 df[:a].abs
 ```
 
+Logarithm [unreleased]
+
+```ruby
+df[:a].ln # or log
+df[:a].log10
+df[:a].log2
+```
+
 Trigonometric functions [unreleased]
 
 ```ruby

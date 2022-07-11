@@ -1,5 +1,6 @@
 ## 0.3.3 (unreleased)
 
+- Added `ln`, `log`, `log10`, and `log2` methods to vectors
 - Added `sin`, `cos`, `tan`, `asin`, `acos`, and `atan` methods to vectors
 - Added `sinh`, `cosh`, `tanh`, `asinh`, `acosh`, and `atanh` methods to vectors
 - Added `empty?` method to vectors

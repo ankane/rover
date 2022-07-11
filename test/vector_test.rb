@@ -283,6 +283,22 @@ class VectorTest < Minitest::Test
     assert_vector_in_delta [0, Math::PI / 4], Rover::Vector.new([0, 1]).atan
   end
 
+  def test_ln
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).ln
+  end
+
+  def test_log
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).log
+  end
+
+  def test_log10
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 10]).log10
+  end
+
+  def test_log2
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 2]).log2
+  end
+
   def test_comparison
     vector = Rover::Vector.new(1..3)
     assert_vector [false, true, false], vector == 2
