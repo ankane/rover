@@ -203,6 +203,13 @@ df[:a].log10
 df[:a].log2
 ```
 
+Exponentiation [unreleased]
+
+```ruby
+df[:a].exp
+df[:a].exp2
+```
+
 Trigonometric functions [unreleased]
 
 ```ruby

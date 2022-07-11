@@ -296,7 +296,15 @@ class VectorTest < Minitest::Test
   end
 
   def test_log2
-    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 2]).log2
+    assert_vector_in_delta [0, 1, 2, 3], Rover::Vector.new([1, 2, 4, 8]).log2
+  end
+
+  def test_exp
+    assert_vector_in_delta [1, Math::E], Rover::Vector.new([0, 1]).exp
+  end
+
+  def test_exp2
+    assert_vector_in_delta [1, 2, 4, 8], Rover::Vector.new([0, 1, 2, 3]).exp2
   end
 
   def test_comparison
