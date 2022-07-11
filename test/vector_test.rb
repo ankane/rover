@@ -279,6 +279,12 @@ class VectorTest < Minitest::Test
     assert_vector [1, 2, 3], Rover::Vector.new([1, 4, 9], type: :float32).sqrt, type: :float32
   end
 
+  def test_cbrt
+    assert_vector [1, 2, 3], Rover::Vector.new([1, 8, 27]).cbrt, type: :float64
+    assert_vector [1, 2, 3], Rover::Vector.new([1, 8, 27], type: :float64).cbrt, type: :float64
+    assert_vector [1, 2, 3], Rover::Vector.new([1, 8, 27], type: :float32).cbrt, type: :float32
+  end
+
   def test_sin
     assert_vector_in_delta [0, 1, 0], Rover::Vector.new([0, Math::PI / 2, Math::PI]).sin, type: :float64
   end

@@ -223,7 +223,7 @@ module Rover
       end
     end
 
-    [:sqrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log2, :log10, :exp, :exp2].each do |m|
+    [:sqrt, :cbrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log2, :log10, :exp, :exp2].each do |m|
       define_method(m) do
         cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
         Vector.new(cls.send(m, @data))

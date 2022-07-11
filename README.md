@@ -192,6 +192,7 @@ df[:a] / 5
 df[:a] % 5
 df[:a] ** 2
 df[:a].sqrt
+df[:a].cbrt # [unreleased]
 df[:a].abs
 ```
 
