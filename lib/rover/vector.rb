@@ -197,10 +197,17 @@ module Rover
       Vector.new(@data.abs)
     end
 
+    # TODO optional argument
+    def round
+      Vector.new(@data.round)
+    end
+
+    # TODO optional argument
     def ceil
       Vector.new(@data.ceil)
     end
 
+    # TODO optional argument
     def floor
       Vector.new(@data.floor)
     end

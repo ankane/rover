@@ -195,6 +195,14 @@ df[:a].sqrt
 df[:a].abs
 ```
 
+Rounding [unreleased]
+
+```ruby
+df[:a].round
+df[:a].ceil
+df[:a].floor
+```
+
 Logarithm [unreleased]
 
 ```ruby

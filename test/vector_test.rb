@@ -252,12 +252,19 @@ class VectorTest < Minitest::Test
     end
   end
 
+  def test_round
+    assert_vector [2, 5, 7], Rover::Vector.new([2.3, 4.5, 6.7]).round
+    assert_vector [2, 5, 7], Rover::Vector.new([2, 5, 7]).round
+  end
+
   def test_ceil
     assert_vector [1, 3, 5], Rover::Vector.new([0.1, 2.3, 4.5]).ceil
+    assert_vector [1, 3, 5], Rover::Vector.new([1, 3, 5]).ceil
   end
 
   def test_floor
     assert_vector [9, 7, 5], Rover::Vector.new([9.8, 7.6, 5.4]).floor
+    assert_vector [9, 7, 5], Rover::Vector.new([9, 7, 5]).floor
   end
 
   def test_sqrt

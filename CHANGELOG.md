@@ -4,7 +4,8 @@
 - Added `exp` and `exp2` methods to vectors
 - Added `sin`, `cos`, `tan`, `asin`, `acos`, and `atan` methods to vectors
 - Added `sinh`, `cosh`, `tanh`, `asinh`, `acosh`, and `atanh` methods to vectors
-- Added `ceil`, `floor`, and `empty?` method to vectors
+- Added `round`, `ceil`, and `floor` methods to vectors
+- Added `empty?` method to vectors
 - Added `rename` method to data frames
 
 ## 0.3.2 (2022-07-10)
