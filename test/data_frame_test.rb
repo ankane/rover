@@ -261,6 +261,14 @@ class DataFrameTest < Minitest::Test
     assert_vector ["a", "b", "c"], df["d"]
   end
 
+  def test_rename_missing
+    df = Rover::DataFrame.new({"a" => 1..3})
+    error = assert_raises(KeyError) do
+      df.rename("b" => "c")
+    end
+    assert_match "Missing column: b", error.message
+  end
+
   def test_delete
     df = Rover::DataFrame.new({"a" => 1..3, "b" => "a".."c"})
     assert_vector [1, 2, 3], df.delete("a")
