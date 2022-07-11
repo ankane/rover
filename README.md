@@ -208,6 +208,7 @@ Logarithm
 
 ```ruby
 df[:a].ln # or log
+df[:a].log(5) # [unreleased]
 df[:a].log10
 df[:a].log2
 ```
