@@ -205,14 +205,20 @@ module Rover
       end
     end
 
-    # TODO optional argument
-    def ceil
-      Vector.new(@data.ceil)
+    def ceil(ndigits = 0)
+      if ndigits == 0
+        Vector.new(@data.ceil)
+      else
+        map { |v| v.ceil(ndigits) }
+      end
     end
 
-    # TODO optional argument
-    def floor
-      Vector.new(@data.floor)
+    def floor(ndigits = 0)
+      if ndigits == 0
+        Vector.new(@data.floor)
+      else
+        map { |v| v.floor(ndigits) }
+      end
     end
 
     [:sqrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log, :log2, :log10, :exp, :exp2].each do |m|
