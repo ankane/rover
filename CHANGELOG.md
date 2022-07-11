@@ -1,6 +1,6 @@
 ## 0.3.4 (unreleased)
 
-- Added `cbrt` method to vectors
+- Added `cbrt`, `erf`, and `erfc` methods to vectors
 - Added `base` argument to `log` method
 
 ## 0.3.3 (2022-07-11)
