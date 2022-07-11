@@ -347,9 +347,11 @@ df.delete(:a)
 df.except!(:a, :b)
 ```
 
-Rename a column
+Rename columns
 
 ```ruby
+df.rename(a: :new_a, b: :new_b) # [unreleased]
+# or
 df[:new_a] = df.delete(:a)
 ```
 

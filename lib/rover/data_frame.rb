@@ -136,6 +136,17 @@ module Rover
     alias_method :names, :keys
     alias_method :vector_names, :keys
 
+    def rename(mapping)
+      mapping.each_key do |k|
+        check_column(k)
+      end
+      # use transform_keys! to preserve order
+      @vectors.transform_keys! do |k|
+        mapping[k] || k
+      end
+      self
+    end
+
     def delete(key)
       @vectors.delete(key)
     end

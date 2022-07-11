@@ -253,6 +253,14 @@ class DataFrameTest < Minitest::Test
     assert_equal "Size mismatch (given 1, expected 3)", error.message
   end
 
+  def test_rename
+    df = Rover::DataFrame.new({"a" => 1..3, "b" => "a".."c", "c" => 1..3})
+    df.rename("a" => "b", "b" => "d")
+    assert_equal ["b", "d", "c"], df.vector_names
+    assert_vector [1, 2, 3], df["b"]
+    assert_vector ["a", "b", "c"], df["d"]
+  end
+
   def test_delete
     df = Rover::DataFrame.new({"a" => 1..3, "b" => "a".."c"})
     assert_vector [1, 2, 3], df.delete("a")
@@ -361,6 +369,7 @@ class DataFrameTest < Minitest::Test
     end
     assert_equal [{a: 1}, {a: 2}, {a: 3}], rows
   end
+
   def test_each_row_enum
     df = Rover::DataFrame.new({a: 1..3})
     rows = df.each_row.map { |r| r }
