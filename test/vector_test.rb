@@ -276,51 +276,51 @@ class VectorTest < Minitest::Test
   end
 
   def test_sin
-    assert_vector_in_delta [0, 1, 0], Rover::Vector.new([0, Math::PI / 2, Math::PI]).sin
+    assert_vector_in_delta [0, 1, 0], Rover::Vector.new([0, Math::PI / 2, Math::PI]).sin, type: :float64
   end
 
   def test_cos
-    assert_vector_in_delta [1, 0, -1], Rover::Vector.new([0, Math::PI / 2, Math::PI]).cos
+    assert_vector_in_delta [1, 0, -1], Rover::Vector.new([0, Math::PI / 2, Math::PI]).cos, type: :float64
   end
 
   def test_tan
-    assert_vector_in_delta [0, 1], Rover::Vector.new([0, Math::PI / 4]).tan
+    assert_vector_in_delta [0, 1], Rover::Vector.new([0, Math::PI / 4]).tan, type: :float64
   end
 
   def test_asin
-    assert_vector_in_delta [0, Math::PI / 2], Rover::Vector.new([0, 1]).asin
+    assert_vector_in_delta [0, Math::PI / 2], Rover::Vector.new([0, 1]).asin, type: :float64
   end
 
   def test_acos
-    assert_vector_in_delta [0, Math::PI / 2, Math::PI], Rover::Vector.new([1, 0, -1]).acos
+    assert_vector_in_delta [0, Math::PI / 2, Math::PI], Rover::Vector.new([1, 0, -1]).acos, type: :float64
   end
 
   def test_atan
-    assert_vector_in_delta [0, Math::PI / 4], Rover::Vector.new([0, 1]).atan
+    assert_vector_in_delta [0, Math::PI / 4], Rover::Vector.new([0, 1]).atan, type: :float64
   end
 
   def test_ln
-    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).ln
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).ln, type: :float64
   end
 
   def test_log
-    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).log
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).log, type: :float64
   end
 
   def test_log10
-    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 10]).log10
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 10]).log10, type: :float64
   end
 
   def test_log2
-    assert_vector_in_delta [0, 1, 2, 3], Rover::Vector.new([1, 2, 4, 8]).log2
+    assert_vector_in_delta [0, 1, 2, 3], Rover::Vector.new([1, 2, 4, 8]).log2, type: :float64
   end
 
   def test_exp
-    assert_vector_in_delta [1, Math::E], Rover::Vector.new([0, 1]).exp
+    assert_vector_in_delta [1, Math::E], Rover::Vector.new([0, 1]).exp, type: :float64
   end
 
   def test_exp2
-    assert_vector_in_delta [1, 2, 4, 8], Rover::Vector.new([0, 1, 2, 3]).exp2
+    assert_vector_in_delta [1, 2, 4, 8], Rover::Vector.new([0, 1, 2, 3]).exp2, type: :float64
   end
 
   def test_comparison

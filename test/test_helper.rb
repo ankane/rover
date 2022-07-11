@@ -31,8 +31,9 @@ class Minitest::Test
     assert_equal exp.to_a, act.to_a
   end
 
-  def assert_vector_in_delta(exp, act)
+  def assert_vector_in_delta(exp, act, type: nil)
     assert_kind_of Rover::Vector, act
+    assert_equal type, act.type if type
     assert_elements_in_delta exp.to_a, act.to_a
   end
 
