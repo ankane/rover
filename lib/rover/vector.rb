@@ -225,17 +225,15 @@ module Rover
 
     [:sqrt, :cbrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log2, :log10, :exp, :exp2, :erf, :erfc].each do |m|
       define_method(m) do
-        cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
-        Vector.new(cls.send(m, @data))
+        Vector.new(Numo::NMath.send(m, @data))
       end
     end
 
     def log(base = NOT_SET)
       if base == NOT_SET
-        cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
-        Vector.new(cls.log(@data))
+        Vector.new(Numo::NMath.log(@data))
       else
-        type = @data.is_a?(Numo::SFloat) ? :float32 : :float64
+        type = self.type == :float32 ? :float32 : :float64
         Vector.new(@data.to_a.map { |v| Math.log(v, base) }, type: type)
       end
     end
@@ -245,8 +243,8 @@ module Rover
     end
 
     def hypot(y)
-      cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
-      Vector.new(cls.hypot(@data, y))
+      y = y.to_numo if y.is_a?(Rover::Vector)
+      Vector.new(Numo::NMath.hypot(@data, y))
     end
 
     def each(&block)
