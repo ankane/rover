@@ -1,3 +1,7 @@
+## 0.3.4 (unreleased)
+
+- Added `base` argument to `log` method
+
 ## 0.3.3 (2022-07-11)
 
 - Added `ln`, `log`, `log10`, and `log2` methods to vectors

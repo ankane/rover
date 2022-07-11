@@ -21,6 +21,8 @@ module Rover
       uint: Numo::UInt64
     }
 
+    NOT_SET = Object.new
+
     def initialize(data, type: nil)
       @data = cast_data(data, type: type)
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
@@ -221,18 +223,26 @@ module Rover
       end
     end
 
-    [:sqrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log, :log2, :log10, :exp, :exp2].each do |m|
+    [:sqrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log2, :log10, :exp, :exp2].each do |m|
       define_method(m) do
-        data =
-          if @data.is_a?(Numo::SFloat)
-            Numo::SFloat::Math.send(m, @data)
-          else
-            Numo::DFloat::Math.send(m, @data)
-          end
-        Vector.new(data)
+        cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
+        Vector.new(cls.send(m, @data))
       end
     end
-    alias_method :ln, :log
+
+    def log(base = NOT_SET)
+      if base == NOT_SET
+        cls = @data.is_a?(Numo::SFloat) ? Numo::SFloat::Math : Numo::DFloat::Math
+        Vector.new(cls.log(@data))
+      else
+        type = @data.is_a?(Numo::SFloat) ? :float32 : :float64
+        Vector.new(@data.to_a.map { |v| Math.log(v, base) }, type: type)
+      end
+    end
+
+    def ln
+      log
+    end
 
     def each(&block)
       @data.each(&block)

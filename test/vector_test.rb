@@ -309,6 +309,11 @@ class VectorTest < Minitest::Test
 
   def test_log
     assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).log, type: :float64
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E], type: :float32).log, type: :float32
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 10]).log(10), type: :float64
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, 10], type: :float32).log(10), type: :float32
+    assert_vector_in_delta [0, 1, 2, 3], Rover::Vector.new([1, 2, 4, 8]).log(2), type: :float64
+    assert_vector_in_delta [0, 1, 2, 3], Rover::Vector.new([1, 2, 4, 8], type: :float32).log(2), type: :float32
   end
 
   def test_log10
