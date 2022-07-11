@@ -191,6 +191,19 @@ df[:a] * 5
 df[:a] / 5
 df[:a] % 5
 df[:a] ** 2
+df[:a].sqrt
+df[:a].abs
+```
+
+Trigonometric functions [unreleased]
+
+```ruby
+df[:a].sin
+df[:a].cos
+df[:a].tan
+df[:a].asin
+df[:a].acos
+df[:a].atan
 ```
 
 Summary statistics
