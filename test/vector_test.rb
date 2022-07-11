@@ -255,6 +255,8 @@ class VectorTest < Minitest::Test
   def test_round
     assert_vector [2, 5, 7], Rover::Vector.new([2.3, 4.5, 6.7]).round, type: :float64
     assert_vector [2, 5, 7], Rover::Vector.new([2, 5, 7]).round, type: :int64
+    assert_vector [1.2, 4.6, 7.9], Rover::Vector.new([1.23, 4.56, 7.89]).round(1), type: :float64
+    assert_vector [20, 50, 70], Rover::Vector.new([23, 45, 67]).round(-1), type: :int64
   end
 
   def test_ceil

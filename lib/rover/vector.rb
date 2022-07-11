@@ -197,9 +197,12 @@ module Rover
       Vector.new(@data.abs)
     end
 
-    # TODO optional argument
-    def round
-      Vector.new(@data.round)
+    def round(ndigits = 0)
+      if ndigits == 0
+        Vector.new(@data.round)
+      else
+        map { |v| v.round(ndigits) }
+      end
     end
 
     # TODO optional argument
