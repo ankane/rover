@@ -206,6 +206,17 @@ df[:a].acos
 df[:a].atan
 ```
 
+Hyperbolic functions [unreleased]
+
+```ruby
+df[:a].sinh
+df[:a].cosh
+df[:a].tanh
+df[:a].asinh
+df[:a].acosh
+df[:a].atanh
+```
+
 Summary statistics
 
 ```ruby
