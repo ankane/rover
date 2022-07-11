@@ -305,6 +305,7 @@ class VectorTest < Minitest::Test
 
   def test_ln
     assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E]).ln, type: :float64
+    assert_vector_in_delta [0, 1], Rover::Vector.new([1, Math::E], type: :float32).ln, type: :float32
   end
 
   def test_log
