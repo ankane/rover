@@ -247,6 +247,16 @@ module Rover
       Vector.new(Numo::NMath.hypot(@data, y))
     end
 
+    def frexp
+      fraction, exponent = Numo::NMath.frexp(@data)
+      [Vector.new(fraction), Vector.new(exponent)]
+    end
+
+    def ldexp(exponent)
+      exponent = exponent.to_numo if exponent.is_a?(Rover::Vector)
+      Vector.new(Numo::NMath.ldexp(@data, exponent))
+    end
+
     def each(&block)
       @data.each(&block)
     end

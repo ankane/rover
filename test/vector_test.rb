@@ -354,6 +354,18 @@ class VectorTest < Minitest::Test
     assert_vector_in_delta [5], a.hypot(b), type: :float64
   end
 
+  def test_frexp
+    fraction, exponent = Rover::Vector.new([1, 2, 3]).frexp
+    assert_vector_in_delta [0.5, 0.5, 0.75], fraction, type: :float64
+    assert_vector [1, 2, 2], exponent, type: :int32
+  end
+
+  def test_ldexp
+    fraction = Rover::Vector.new([0.5, 0.5, 0.75])
+    exponent = Rover::Vector.new([1, 2, 2])
+    assert_vector_in_delta [1, 2, 3], fraction.ldexp(exponent), type: :float64
+  end
+
   def test_comparison
     vector = Rover::Vector.new(1..3)
     assert_vector [false, true, false], vector == 2

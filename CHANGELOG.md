@@ -1,6 +1,7 @@
 ## 0.3.4 (unreleased)
 
 - Added `cbrt`, `erf`, `erfc`, and `hypot` methods to vectors
+- Added `frexp` and `ldexp` methods to vectors
 - Added `base` argument to `log` method
 
 ## 0.3.3 (2022-07-11)
