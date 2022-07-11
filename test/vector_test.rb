@@ -340,11 +340,17 @@ class VectorTest < Minitest::Test
 
   def test_first
     vector = Rover::Vector.new(1..3)
+    # TODO return element instead of vector if no argument in 0.4.0
+    assert_vector 1..1, vector.first
+    assert_vector 1..1, vector.first(1)
     assert_vector 1..2, vector.first(2)
   end
 
   def test_last
     vector = Rover::Vector.new(1..3)
+    # TODO return element instead of vector if no argument in 0.4.0
+    assert_vector 3..3, vector.last
+    assert_vector 3..3, vector.last(1)
     assert_vector 2..3, vector.last(2)
   end
 

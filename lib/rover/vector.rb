@@ -269,6 +269,7 @@ module Rover
       to_a.zip(other.to_a, &block)
     end
 
+    # TODO return element instead of vector if no argument in 0.4.0
     def first(n = 1)
       if n >= size
         Vector.new(@data)
@@ -277,6 +278,7 @@ module Rover
       end
     end
 
+    # TODO return element instead of vector if no argument in 0.4.0
     def last(n = 1)
       if n >= size
         Vector.new(@data)
