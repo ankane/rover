@@ -197,6 +197,14 @@ module Rover
       Vector.new(@data.abs)
     end
 
+    def ceil
+      Vector.new(@data.ceil)
+    end
+
+    def floor
+      Vector.new(@data.floor)
+    end
+
     [:sqrt, :sin, :cos, :tan, :asin, :acos, :atan, :sinh, :cosh, :tanh, :asinh, :acosh, :atanh, :log, :log2, :log10, :exp, :exp2].each do |m|
       define_method(m) do
         data =
