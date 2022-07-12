@@ -1,4 +1,4 @@
-## 0.3.4 (unreleased)
+## 0.3.4 (2022-07-12)
 
 - Added `cbrt`, `erf`, `erfc`, and `hypot` methods to vectors
 - Added `frexp` and `ldexp` methods to vectors

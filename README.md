@@ -192,7 +192,7 @@ df[:a] / 5
 df[:a] % 5
 df[:a] ** 2
 df[:a].sqrt
-df[:a].cbrt # [unreleased]
+df[:a].cbrt
 df[:a].abs
 ```
 
@@ -208,7 +208,7 @@ Logarithm
 
 ```ruby
 df[:a].ln # or log
-df[:a].log(5) # [unreleased]
+df[:a].log(5)
 df[:a].log10
 df[:a].log2
 ```
@@ -240,6 +240,13 @@ df[:a].tanh
 df[:a].asinh
 df[:a].acosh
 df[:a].atanh
+```
+
+Error function
+
+```ruby
+df[:a].erf
+df[:a].erfc
 ```
 
 Summary statistics
