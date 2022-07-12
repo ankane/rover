@@ -89,6 +89,7 @@ module Rover
       if v.is_a?(Vector)
         Vector.new(v.to_numo.mask(@data))
       else
+        # TODO return vector unless v is an integer in 0.4.0
         @data[v]
       end
     end
