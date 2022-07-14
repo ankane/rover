@@ -121,16 +121,27 @@ class VectorTest < Minitest::Test
   end
 
   # TODO use true division in 0.4.0?
-  def test_division
+  def test_division_int
     a = Rover::Vector.new([1, 3, 5])
-    assert_vector [0, 1, 2], a / 2
+    assert_vector [0, 1, 2], a / 2, type: :int64
   end
 
   # TODO use true division in 0.4.0?
-  def test_division_vector
+  def test_division_int_vector
     a = Rover::Vector.new([1, 3, 5])
     b = Rover::Vector.new([2, 2, 2])
     assert_vector [0, 1, 2], a / b
+  end
+
+  def test_division_float
+    a = Rover::Vector.new([1.0, 3, 5])
+    assert_vector_in_delta [0.5, 1.5, 2.5], a / 2, type: :float64
+  end
+
+  def test_division_float_vector
+    a = Rover::Vector.new([1, 3, 5])
+    b = Rover::Vector.new([2.0, 2, 2])
+    assert_vector_in_delta [0.5, 1.5, 2.5], a / b, type: :float64
   end
 
   def test_inspect
