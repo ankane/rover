@@ -97,7 +97,7 @@ class DataFrameTest < Minitest::Test
 
   def test_to_numo
     df = Rover::DataFrame.new({"a" => 1..3, "b" => 4..6, "c" => 7..9})
-    assert_equal [[1, 4, 7], [2, 5, 8], [3, 6, 9]], df.to_numo.to_a
+    assert_equal Numo::Int64.cast([[1, 4, 7], [2, 5, 8], [3, 6, 9]]), df.to_numo
   end
 
   # TODO use to_iruby when released
