@@ -3,7 +3,7 @@ require_relative "test_helper"
 class VectorTest < Minitest::Test
   def test_works
     vector = Rover::Vector.new([1, 2, 3])
-    assert_equal [1, 2, 3], vector.to_a
+    assert_vector [1, 2, 3], vector
     assert_equal 3, vector.size
     assert_equal 3, vector.count
     assert_equal 3, vector.length
