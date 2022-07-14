@@ -14,6 +14,7 @@ class VectorTest < Minitest::Test
     assert_equal [1, 2], vector[0..1].to_a
     assert_equal [2, 3], vector[1..-1].to_a
     assert_equal [2, 3], vector[1..].to_a
+    assert_equal [1, 3], vector[[0, 2]].to_a
   end
 
   def test_array
@@ -510,6 +511,12 @@ class VectorTest < Minitest::Test
     vector = Rover::Vector.new([1, "bad", 3])
     vector[vector == "bad"] = nil
     assert_vector [1, nil, 3], vector
+  end
+
+  def test_setter_where_index
+    vector = Rover::Vector.new(1..3)
+    vector[[0, 2]] = 5
+    assert_vector [5, 2, 5], vector
   end
 
   def test_where
