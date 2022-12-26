@@ -5,23 +5,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [3.1, "3.0", 2.7]
+        ruby: [3.2, 3.1, "3.0", 2.7]
     runs-on: ubuntu-latest
     # env:
     #   TEST_PARQUET: 1
     steps:
-    - uses: actions/checkout@v3
-    # for iruby
-    - run: sudo apt update && sudo apt install libzmq5
-    # - run: |
-    #     wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
-    #     sudo apt install ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
-    #     sudo apt update
-    #     sudo apt install libthrift-dev libarrow-dev libarrow-glib-dev libparquet-dev
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        # disable caching when testing Parquet
-        bundler-cache: true
-    - run: bundle install
-    - run: bundle exec rake test
+      - uses: actions/checkout@v3
+      # for iruby
+      - run: sudo apt update && sudo apt install libzmq5
+      # - run: |
+      #     wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+      #     sudo apt install ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
+      #     sudo apt update
+      #     sudo apt install libthrift-dev libarrow-dev libarrow-glib-dev libparquet-dev
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          # disable caching when testing Parquet
+          bundler-cache: true
+      - run: bundle install
+      - run: bundle exec rake test
