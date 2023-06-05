@@ -2,10 +2,10 @@
 require "numo/narray"
 
 # modules
-require "rover/data_frame"
-require "rover/group"
-require "rover/vector"
-require "rover/version"
+require_relative "rover/data_frame"
+require_relative "rover/group"
+require_relative "rover/vector"
+require_relative "rover/version"
 
 module Rover
   class << self
