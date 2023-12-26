@@ -5,12 +5,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [3.2, 3.1, "3.0", 2.7]
+        ruby: [3.3, 3.2, 3.1, "3.0", 2.7]
     runs-on: ubuntu-latest
     # env:
     #   TEST_PARQUET: 1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # for iruby
       - run: sudo apt update && sudo apt install libzmq5
       # - run: |

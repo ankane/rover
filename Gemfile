@@ -9,6 +9,7 @@ gem "activesupport", ">= 5"
 gem "sqlite3"
 gem "iruby", require: false
 gem "vega"
+gem "csv"
 
 # do not install by default
 # since it tries to install arrow
