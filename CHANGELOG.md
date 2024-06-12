@@ -1,6 +1,7 @@
-## 0.3.5 (unreleased)
+## 0.4.0 (unreleased)
 
 - Added `include?` method to vectors
+- Dropped support for Ruby < 3.1
 
 ## 0.3.4 (2022-07-12)
 
