@@ -212,6 +212,12 @@ class VectorTest < Minitest::Test
     refute_predicate Rover::Vector.new(1..3), :empty?
   end
 
+  def test_include
+    vector = Rover::Vector.new(1..3)
+    assert vector.include?(2)
+    refute vector.include?(4)
+  end
+
   def test_map
     vector = Rover::Vector.new([10, 20, 30])
     assert_vector [20, 40, 60], vector.map { |v| v * 2 }

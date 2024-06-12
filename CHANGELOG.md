@@ -1,3 +1,7 @@
+## 0.3.5 (unreleased)
+
+- Added `include?` method to vectors
+
 ## 0.3.4 (2022-07-12)
 
 - Added `cbrt`, `erf`, `erfc`, and `hypot` methods to vectors

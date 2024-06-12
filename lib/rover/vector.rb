@@ -319,6 +319,10 @@ module Rover
       size == 0
     end
 
+    def include?(value)
+      to_a.include?(value)
+    end
+
     def zip(other, &block)
       to_a.zip(other.to_a, &block)
     end
