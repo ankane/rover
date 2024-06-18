@@ -62,7 +62,7 @@ module Rover
     end
 
     def [](where)
-      if (where.is_a?(Vector) && where.to_numo.is_a?(Numo::Bit)) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all? { |v| v.is_a?(Integer) } )
+      if (where.is_a?(Vector) && where.to_numo.is_a?(Numo::Bit)) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all? { |v| v.is_a?(Integer) })
         new_vectors = {}
         @vectors.each do |k, v|
           new_vectors[k] = v[where]
