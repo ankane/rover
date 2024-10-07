@@ -1,3 +1,7 @@
+## 0.4.1 (unreleased)
+
+- Fixed connection leasing for Active Record 7.2+
+
 ## 0.4.0 (2024-06-12)
 
 - Added `include?` method to vectors

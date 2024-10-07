@@ -41,7 +41,7 @@ module Rover
           @vectors[k] = to_vector(v, type: types[k])
         end
       elsif defined?(ActiveRecord) && (data.is_a?(ActiveRecord::Relation) || (data.is_a?(Class) && data < ActiveRecord::Base) || data.is_a?(ActiveRecord::Result))
-        result = data.is_a?(ActiveRecord::Result) ? data : data.connection.select_all(data.all.to_sql)
+        result = data.is_a?(ActiveRecord::Result) ? data : data.connection_pool.with_connection { |c| c.select_all(data.all.to_sql) }
         result.columns.each_with_index do |k, i|
           @vectors[k] = to_vector(result.rows.map { |r| r[i] }, type: types[k])
         end

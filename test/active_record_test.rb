@@ -28,4 +28,13 @@ class ActiveRecordTest < Minitest::Test
     assert_vector users.map(&:id), df["id"]
     assert_vector users.map(&:name), df["name"]
   end
+
+  def test_connection_leasing
+    ActiveRecord::Base.connection_handler.clear_active_connections!
+    assert_nil ActiveRecord::Base.connection_pool.active_connection?
+    ActiveRecord::Base.connection_pool.with_connection do
+      Rover::DataFrame.new(User.order(:id))
+    end
+    assert_nil ActiveRecord::Base.connection_pool.active_connection?
+  end
 end
