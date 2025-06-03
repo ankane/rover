@@ -15,6 +15,16 @@ class TypesTest < Minitest::Test
     end
   end
 
+  def test_constructor_data_frame_symbol
+    df = Rover::DataFrame.new({"a" => 1..3}, types: {a: :int8})
+    assert_equal :int8, df["a"].type
+  end
+
+  def test_constructor_data_frame_array_symbol
+    df = Rover::DataFrame.new([{"a" => 1}, {"a" => 2}, {"a" => 3}], types: {a: :int8})
+    assert_equal :int8, df["a"].type
+  end
+
   def test_constructor_nil
     [:float, :float32, :float64].each do |type|
       assert Rover::Vector.new([1, nil, 3], type: type)[1].nan?

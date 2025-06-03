@@ -25,6 +25,11 @@ class CsvTest < Minitest::Test
     assert_equal :int8, df.types["a"]
   end
 
+  def test_types_symbol
+    df = Rover.read_csv("test/support/types.csv", types: {a: :int8})
+    assert_equal :int8, df.types["a"]
+  end
+
   def test_empty
     df = Rover.read_csv("test/support/empty.csv")
     assert_empty df
@@ -99,7 +104,7 @@ class CsvTest < Minitest::Test
 
   def test_header_converters
     df = Rover.read_csv("test/support/data.csv", header_converters: :symbol)
-    assert_equal [:a, :b], df.vector_names
+    assert_equal ["a", "b"], df.vector_names
     assert_equal 3, df.size
   end
 

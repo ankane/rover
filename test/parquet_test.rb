@@ -29,6 +29,11 @@ class ParquetTest < Minitest::Test
     assert_equal :int8, df.types["a"]
   end
 
+  def test_types_symbol
+    df = Rover.read_parquet("test/support/data.parquet", types: {a: :int8})
+    assert_equal :int8, df.types["a"]
+  end
+
   def test_null
     error = assert_raises do
       Rover.read_parquet("test/support/null.parquet")

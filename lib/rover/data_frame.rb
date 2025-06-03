@@ -4,7 +4,7 @@ module Rover
       data, options = process_args(args)
 
       @vectors = {}
-      types = options[:types] || {}
+      types = (options[:types] || {}).transform_keys(&:to_s)
 
       if data.is_a?(DataFrame)
         data.vectors.each do |k, v|
@@ -14,7 +14,7 @@ module Rover
         data.to_h.each do |k, v|
           @vectors[k] =
             if v.respond_to?(:to_a)
-              Vector.new(v, type: types[k])
+              Vector.new(v, type: types[k.to_s])
             else
               v
             end
@@ -23,7 +23,7 @@ module Rover
         # handle scalars
         size = @vectors.values.find { |v| v.is_a?(Vector) }&.size || 1
         @vectors.each_key do |k|
-          @vectors[k] = to_vector(@vectors[k], size: size, type: types[k])
+          @vectors[k] = to_vector(@vectors[k], size: size, type: types[k.to_s])
         end
       elsif data.is_a?(Array)
         vectors = {}
@@ -38,12 +38,12 @@ module Rover
           end
         end
         vectors.each do |k, v|
-          @vectors[k] = to_vector(v, type: types[k])
+          @vectors[k] = to_vector(v, type: types[k.to_s])
         end
       elsif defined?(ActiveRecord) && (data.is_a?(ActiveRecord::Relation) || (data.is_a?(Class) && data < ActiveRecord::Base) || data.is_a?(ActiveRecord::Result))
         result = data.is_a?(ActiveRecord::Result) ? data : data.connection_pool.with_connection { |c| c.select_all(data.all.to_sql) }
         result.columns.each_with_index do |k, i|
-          @vectors[k] = to_vector(result.rows.map { |r| r[i] }, type: types[k])
+          @vectors[k] = to_vector(result.rows.map { |r| r[i] }, type: types[k.to_s])
         end
       else
         raise ArgumentError, "Cannot cast to data frame: #{data.class.name}"
@@ -53,6 +53,9 @@ module Rover
       @vectors.each_key do |k|
         check_key(k)
       end
+
+      # TODO check for duplicate keys
+      @vectors.transform_keys!(&:to_s)
 
       # check sizes
       sizes = @vectors.values.map(&:size).uniq
@@ -73,12 +76,12 @@ module Rover
         df = DataFrame.new
         where.each do |k|
           check_column(k)
-          df[k] = @vectors[k]
+          df[k] = @vectors[k.to_s]
         end
         df
       else
         # single column
-        @vectors[where]
+        @vectors[where.to_s]
       end
     end
 
@@ -103,7 +106,7 @@ module Rover
       check_key(k)
       v = to_vector(v, size: size)
       raise ArgumentError, "Size mismatch (given #{v.size}, expected #{size})" if @vectors.any? && v.size != size
-      @vectors[k] = v
+      @vectors[k.to_s] = v
     end
 
     def size
@@ -140,6 +143,7 @@ module Rover
       mapping.each_key do |k|
         check_column(k)
       end
+      mapping = mapping.to_h { |k, v| [k.to_s, v.to_s] }
       # use transform_keys! to preserve order
       @vectors.transform_keys! do |k|
         mapping[k] || k
@@ -148,7 +152,7 @@ module Rover
     end
 
     def delete(key)
-      @vectors.delete(key)
+      @vectors.delete(key.to_s)
     end
 
     def except(*keys)
@@ -163,7 +167,7 @@ module Rover
     end
 
     def include?(key)
-      @vectors.include?(key)
+      @vectors.include?(key.to_s)
     end
 
     def head(n = 5)
@@ -347,7 +351,7 @@ module Rover
     end
 
     def group(*columns)
-      Group.new(self, columns.flatten)
+      Group.new(self, columns.flatten.map(&:to_s))
     end
 
     [:max, :min, :median, :mean, :percentile, :sum, :std, :var].each do |name|
@@ -548,6 +552,9 @@ module Rover
 
       check_join_keys(self, self_on)
       check_join_keys(other, other_on)
+
+      self_on.map!(&:to_s)
+      other_on.map!(&:to_s)
 
       indexed = other.to_a.group_by { |r| r.values_at(*other_on) }
       indexed.default = []

@@ -112,6 +112,7 @@ module Rover
       table = yield
       data = {}
       types ||= {}
+      types = types.transform_keys(&:to_s)
       table.each_column do |column|
         k = column.field.name
         if types[k]

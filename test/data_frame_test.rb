@@ -18,9 +18,9 @@ class DataFrameTest < Minitest::Test
     assert df.any?
     assert !df.empty?
     assert_vector [1, 2], df.first(2)[:a]
-    assert_equal [:a, :b], df.vector_names
-    assert_equal [:a, :b], df.keys
-    assert_equal ({a: :int64, b: :object}), df.types
+    assert_equal ["a", "b"], df.vector_names
+    assert_equal ["a", "b"], df.keys
+    assert_equal ({"a" => :int64, "b" => :object}), df.types
     assert df.include?(:a)
     assert !df.include?(:c)
   end
@@ -261,6 +261,14 @@ class DataFrameTest < Minitest::Test
     assert_vector ["a", "b", "c"], df["d"]
   end
 
+  def test_rename_symbols
+    df = Rover::DataFrame.new({"a" => 1..3, "b" => "a".."c", "c" => 1..3})
+    df.rename(a: :b, b: :d)
+    assert_equal ["b", "d", "c"], df.vector_names
+    assert_vector [1, 2, 3], df["b"]
+    assert_vector ["a", "b", "c"], df["d"]
+  end
+
   def test_rename_missing
     df = Rover::DataFrame.new({"a" => 1..3})
     error = assert_raises(KeyError) do
@@ -376,13 +384,13 @@ class DataFrameTest < Minitest::Test
     df.each_row do |row|
       rows << row
     end
-    assert_equal [{a: 1}, {a: 2}, {a: 3}], rows
+    assert_equal [{"a" => 1}, {"a" => 2}, {"a" => 3}], rows
   end
 
   def test_each_row_enum
     df = Rover::DataFrame.new({a: 1..3})
     rows = df.each_row.map { |r| r }
-    assert_equal [{a: 1}, {a: 2}, {a: 3}], rows
+    assert_equal [{"a" => 1}, {"a" => 2}, {"a" => 3}], rows
   end
 
   def test_arguments
@@ -393,12 +401,12 @@ class DataFrameTest < Minitest::Test
   end
 
   def test_arguments_types_argument
-    assert_equal [:types], Rover::DataFrame.new({types: {}}).vector_names
+    assert_equal ["types"], Rover::DataFrame.new({types: {}}).vector_names
   end
 
   # this shouldn't be the case, but we can't use keyword arguments
   def test_arguments_types_keyword
-    assert_equal [:types], Rover::DataFrame.new(types: {}).vector_names
+    assert_equal ["types"], Rover::DataFrame.new(types: {}).vector_names
   end
 
   def test_vector_map!

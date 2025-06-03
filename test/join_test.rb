@@ -55,7 +55,7 @@ class JoinTest < Minitest::Test
 
     result = df.inner_join(other_df)
     assert_equal 0, result.size
-    assert_equal [:a, :b, :c], result.keys
+    assert_equal ["a", "b", "c"], result.keys
   end
 
   def test_inner_join_nil
