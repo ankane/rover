@@ -241,6 +241,7 @@ module Rover
 
     def to_csv
       require "csv"
+
       CSV.generate do |csv|
         csv << keys
         numo = vectors.values.map(&:to_numo)
@@ -291,6 +292,7 @@ module Rover
     # for IRuby
     def to_html
       require "iruby"
+
       if size > 7
         # pass 8 rows so maxrows is applied
         IRuby::HTML.table((self[0..4] + self[-4..-1]).to_h, maxrows: 7)
