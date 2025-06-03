@@ -10,11 +10,11 @@ class VectorTest < Minitest::Test
     assert_vector [1, 2], vector.first(2)
     assert_vector [2, 3], vector.last(2)
     assert_equal 1, vector[0]
-    # TODO change to vector
-    assert_equal [1, 2], vector[0..1].to_a
-    assert_equal [2, 3], vector[1..-1].to_a
-    assert_equal [2, 3], vector[1..].to_a
-    assert_equal [1, 3], vector[[0, 2]].to_a
+    assert_equal 2, vector[1.0]
+    assert_vector [1, 2], vector[0..1]
+    assert_vector [2, 3], vector[1..-1]
+    assert_vector [2, 3], vector[1..]
+    assert_vector [1, 3], vector[[0, 2]]
   end
 
   def test_array
