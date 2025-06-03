@@ -1,6 +1,7 @@
 ## 0.5.0 (unreleased)
 
 - Strings and symbols are no longer treated as different keys
+- Changed methods that return column names to always use strings
 - Changed `[]` method to return vector instead of Numo array with range or array argument
 - Changed `first` and `last` methods to return element instead of vector when no arguments
 - Changed `round`, `ceil`, and `floor` methods to always return same type as original vector
