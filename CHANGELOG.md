@@ -1,5 +1,6 @@
 ## 0.5.0 (unreleased)
 
+- Changed `first` and `last` methods to return element instead of vector when no arguments
 - Dropped support for Ruby < 3.2
 
 ## 0.4.1 (2024-10-07)

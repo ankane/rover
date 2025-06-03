@@ -327,18 +327,20 @@ module Rover
       to_a.zip(other.to_a, &block)
     end
 
-    # TODO return element instead of vector if no argument in 0.4.0
-    def first(n = 1)
-      if n >= size
+    def first(n = NOT_SET)
+      if n == NOT_SET
+        @data[0]
+      elsif n >= size
         Vector.new(@data)
       else
         Vector.new(@data[0...n])
       end
     end
 
-    # TODO return element instead of vector if no argument in 0.4.0
-    def last(n = 1)
-      if n >= size
+    def last(n = NOT_SET)
+      if n == NOT_SET
+        @data[-1]
+      elsif n >= size
         Vector.new(@data)
       else
         Vector.new(@data[-n..-1])
