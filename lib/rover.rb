@@ -40,7 +40,7 @@ module Rover
 
       raise ArgumentError, "Must specify headers" if headers == false
 
-      # TODO use date converter in 0.4.0 - need to test performance
+      # TODO use date converter in 0.5.0 - need to test performance
       table = yield({converters: :numeric}.merge(csv_options))
 
       headers = nil if headers == true
