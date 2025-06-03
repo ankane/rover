@@ -273,23 +273,35 @@ class VectorTest < Minitest::Test
 
   def test_round
     assert_vector [2, 5, 7], Rover::Vector.new([2.3, 4.5, 6.7]).round, type: :float64
+    assert_vector [2, 5, 7], Rover::Vector.new([2.3, 4.5, 6.7], type: :float32).round, type: :float32
     assert_vector [2, 5, 7], Rover::Vector.new([2, 5, 7]).round, type: :int64
+    assert_vector [2, 5, 7], Rover::Vector.new([2, 5, 7], type: :int8).round, type: :int8
     assert_vector [1.2, 4.6, 7.9], Rover::Vector.new([1.23, 4.56, 7.89]).round(1), type: :float64
+    # assert_vector [1.2, 4.6, 7.9], Rover::Vector.new([1.23, 4.56, 7.89], type: :float32).round(1), type: :float32
     assert_vector [20, 50, 70], Rover::Vector.new([23, 45, 67]).round(-1), type: :int64
+    assert_vector [20, 50, 70], Rover::Vector.new([23, 45, 67], type: :int8).round(-1), type: :int8
   end
 
   def test_ceil
     assert_vector [1, 3, 5], Rover::Vector.new([0.1, 2.3, 4.5]).ceil, type: :float64
+    assert_vector [1, 3, 5], Rover::Vector.new([0.1, 2.3, 4.5], type: :float32).ceil, type: :float32
     assert_vector [1, 3, 5], Rover::Vector.new([1, 3, 5]).ceil, type: :int64
+    assert_vector [1, 3, 5], Rover::Vector.new([1, 3, 5], type: :int8).ceil, type: :int8
     assert_vector [1.3, 4.6, 7.9], Rover::Vector.new([1.23, 4.56, 7.89]).ceil(1), type: :float64
+    # assert_vector [1.3, 4.6, 7.9], Rover::Vector.new([1.23, 4.56, 7.89], type: :float32).ceil(1), type: :float32
     assert_vector [30, 50, 70], Rover::Vector.new([23, 45, 67]).ceil(-1), type: :int64
+    assert_vector [30, 50, 70], Rover::Vector.new([23, 45, 67], type: :int8).ceil(-1), type: :int8
   end
 
   def test_floor
     assert_vector [9, 7, 5], Rover::Vector.new([9.8, 7.6, 5.4]).floor, type: :float64
+    assert_vector [9, 7, 5], Rover::Vector.new([9.8, 7.6, 5.4], type: :float32).floor, type: :float32
     assert_vector [9, 7, 5], Rover::Vector.new([9, 7, 5]).floor, type: :int64
+    assert_vector [9, 7, 5], Rover::Vector.new([9, 7, 5], type: :int8).floor, type: :int8
     assert_vector [1.2, 4.5, 7.8], Rover::Vector.new([1.23, 4.56, 7.89]).floor(1), type: :float64
+    # assert_vector [1.2, 4.5, 7.8], Rover::Vector.new([1.23, 4.56, 7.89], type: :float32).floor(1), type: :float32
     assert_vector [20, 40, 60], Rover::Vector.new([23, 45, 67]).floor(-1), type: :int64
+    assert_vector [20, 40, 60], Rover::Vector.new([23, 45, 67], type: :int8).floor(-1), type: :int8
   end
 
   def test_sqrt

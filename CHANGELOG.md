@@ -3,6 +3,7 @@
 - Strings and symbols are no longer treated as different keys
 - Changed `[]` method to return vector instead of Numo array with range or array argument
 - Changed `first` and `last` methods to return element instead of vector when no arguments
+- Changed `round`, `ceil`, and `floor` methods to always return same type as original vector
 - Dropped support for Ruby < 3.2
 
 ## 0.4.1 (2024-10-07)

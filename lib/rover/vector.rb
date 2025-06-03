@@ -205,8 +205,7 @@ module Rover
       if ndigits == 0
         Vector.new(@data.round)
       else
-        # TODO pass type
-        Vector.new(@data.to_a.map { |v| v.round(ndigits) })
+        Vector.new(@data.map { |v| v.round(ndigits) })
       end
     end
 
@@ -214,8 +213,7 @@ module Rover
       if ndigits == 0
         Vector.new(@data.ceil)
       else
-        # TODO pass type
-        Vector.new(@data.to_a.map { |v| v.ceil(ndigits) })
+        Vector.new(@data.map { |v| v.ceil(ndigits) })
       end
     end
 
@@ -223,8 +221,7 @@ module Rover
       if ndigits == 0
         Vector.new(@data.floor)
       else
-        # TODO pass type
-        Vector.new(@data.to_a.map { |v| v.floor(ndigits) })
+        Vector.new(@data.map { |v| v.floor(ndigits) })
       end
     end
 
