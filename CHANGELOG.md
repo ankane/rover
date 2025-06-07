@@ -1,4 +1,4 @@
-## 0.5.0 (unreleased)
+## 0.5.0 (2025-06-07)
 
 - Strings and symbols are no longer treated as different keys
 - Changed methods that return column names to always use strings

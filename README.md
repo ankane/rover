@@ -97,8 +97,6 @@ Select a column
 df[:a]
 ```
 
-> Note that strings and symbols are different keys, just like hashes. Creating a data frame from Active Record, a CSV, or Parquet uses strings.
-
 Select multiple columns
 
 ```ruby
