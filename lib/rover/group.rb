@@ -35,7 +35,7 @@ module Rover
 
     # TODO make more efficient
     def grouped_dfs
-      # cache here so we can reuse for multiple calcuations if needed
+      # cache here so we can reuse for multiple calculations if needed
       @grouped_dfs ||= begin
         groups = Hash.new { |hash, key| hash[key] = [] }
         i = 0
