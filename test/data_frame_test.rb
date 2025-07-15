@@ -318,7 +318,7 @@ class DataFrameTest < Minitest::Test
     error = assert_raises(KeyError) do
       df[["hello", "hello3"]]
     end
-    message = RUBY_VERSION.to_f >= 3.2 ? error.detailed_message : error.message
+    message = error.detailed_message
     assert_match "Missing column: hello3", message
     assert_match %{Did you mean?  "hello"}, message
     assert_match "hello2", message
