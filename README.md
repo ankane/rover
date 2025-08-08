@@ -293,6 +293,52 @@ Multiple groups
 df.group(:a, :b).count
 ```
 
+## Ranking
+
+Rank return a vector describing each vector element's rank compared to the other elements (ties get the same rank but increment the next ranked item's rank)
+
+```ruby
+df[:a].rank
+# short-hand for df[:a].rank(ascending=true)
+```
+Default ranking is in ascending order, where higher numbers are considered better (lower) rank. Example: "number of widgets sold", where a higher number is "better".
+
+Rank in desdending order, where lower numbers are considered better (lower) rank. Example: "number of widgets returned by customer", where a lower number is "better".
+
+```ruby
+df[:a].rank(ascending=false)
+```
+
+TO DO: consider allowing any datatype that is comparable (has <=> implemented). Currently does not work on vectors of Strings, although in principle it could. Awaiting a use-case.
+
+## Best_In, Worst_In
+Considering the last element of a ranked vector, this returns the number of elements it is consecutively better than until it meets a better ranked element. 
+
+```ruby
+df[:a].best_in
+# same as df[:a].best_in(ascending=true)
+```
+
+returns 0 if it isn't the better than its previous value or it exhaust previous values in the vector
+
+This answers the question, "the best value in N periods". Given a vector of 13 weeks of sales, and the last value has a rank of 2, then this returns how many weeks back from that one has to go to find a better value (here, of rank 1)
+
+As you might expect, you can specify a direction for the ranking to be used by best_in:
+
+```ruby
+df[:a].best_in(ascending=false)
+```
+
+Sometimes you want to know if it's the worst value in some number of periods:
+
+```ruby
+df[:a].worst_in
+```
+
+This and its variants are the complement to the best_in() method. 
+
+TO DO: allow user to specify which value to start looking back from, rather than only the last one. Awaiting a use-case.
+
 ## Visualization
 
 Add [Vega](https://github.com/ankane/vega) to your application’s Gemfile:
