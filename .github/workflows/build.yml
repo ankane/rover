@@ -10,7 +10,7 @@ jobs:
     # env:
     #   TEST_PARQUET: 1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       # for iruby
       - run: sudo apt update && sudo apt install libzmq5
       # - run: |
