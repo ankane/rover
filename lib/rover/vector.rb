@@ -172,6 +172,7 @@ module Rover
     def map(&block)
       # convert to Ruby first to cast properly
       # https://github.com/ruby-numo/numo-narray/issues/181
+      # numo-narray-alt has same behavior
       Vector.new(@data.to_a.map(&block))
     end
 
@@ -276,14 +277,13 @@ module Rover
     end
 
     def mean
-      # currently only floats have mean in Numo
-      # https://github.com/ruby-numo/numo-narray/issues/79
-      @data.cast_to(Numo::DFloat).mean
+      @data.mean
     end
 
     def median
       # need to cast to get correct result
       # https://github.com/ruby-numo/numo-narray/issues/165
+      # numo-narray-alt has same behavior
       @data.cast_to(Numo::DFloat).median
     end
 

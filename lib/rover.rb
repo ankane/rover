@@ -1,5 +1,5 @@
 # dependencies
-require "numo/narray"
+require "numo/narray/alt"
 
 # modules
 require_relative "rover/data_frame"
