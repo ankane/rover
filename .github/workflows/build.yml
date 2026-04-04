@@ -10,9 +10,9 @@ jobs:
     # env:
     #   TEST_PARQUET: 1
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       # for iruby
-      - run: sudo apt update && sudo apt install libzmq5
+      - run: sudo apt-get update && sudo apt-get install libzmq5
       # - run: |
       #     wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
       #     sudo apt install ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb
