@@ -1,4 +1,4 @@
-## 0.6.0 (unreleased)
+## 1.0.0 (2026-04-04)
 
 - Switched to `numo-narray-alt`
 - Dropped support for Ruby < 3.3
