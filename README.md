@@ -2,7 +2,7 @@
 
 Simple, powerful data frames for Ruby
 
-:mountain: Designed for data exploration and machine learning, and powered by [Numo](https://github.com/ruby-numo/numo-narray)
+:mountain: Designed for data exploration and machine learning, and powered by [numo-narray-alt](https://github.com/yoshoku/numo-narray-alt)
 
 :evergreen_tree: Uses [Vega](https://github.com/ankane/vega) for visualization
 
