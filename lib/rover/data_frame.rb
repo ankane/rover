@@ -382,10 +382,10 @@ module Rover
 
       size = self.size
       vectors.each do |k, v|
-        @vectors[k] = Vector.new(v.to_a + (other[k] ? other[k].to_a : [nil] * other.size))
+        @vectors[k] = Vector.new(v.to_a + (other[k] ? other[k].to_a : Array.new(other.size)))
       end
       (other.vector_names - vector_names).each do |k|
-        @vectors[k] = Vector.new([nil] * size + other[k].to_a)
+        @vectors[k] = Vector.new(Array.new(size) + other[k].to_a)
       end
       self
     end
