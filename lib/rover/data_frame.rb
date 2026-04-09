@@ -27,7 +27,7 @@ module Rover
         end
       elsif data.is_a?(Array)
         vectors = {}
-        raise ArgumentError, "Array elements must be hashes" unless data.all? { |d| d.is_a?(Hash) }
+        raise ArgumentError, "Array elements must be hashes" unless data.all?(Hash)
         keys = data.flat_map(&:keys).uniq
         keys.each do |k|
           vectors[k] = []
@@ -65,7 +65,7 @@ module Rover
     end
 
     def [](where)
-      if (where.is_a?(Vector) && where.to_numo.is_a?(Numo::Bit)) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all? { |v| v.is_a?(Integer) })
+      if (where.is_a?(Vector) && where.to_numo.is_a?(Numo::Bit)) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all?(Integer))
         new_vectors = {}
         @vectors.each do |k, v|
           new_vectors[k] = v[where]
@@ -269,7 +269,7 @@ module Rover
           when :bool
             :boolean
           when :object
-            if @vectors[name].all? { |v| v.is_a?(String) }
+            if @vectors[name].all?(String)
               :string
             else
               raise "Unknown type"

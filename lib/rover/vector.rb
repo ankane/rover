@@ -459,7 +459,7 @@ module Rover
           data = numo_type.cast(data)
         else
           data =
-            if data.all? { |v| v.is_a?(Integer) }
+            if data.all?(Integer)
               Numo::Int64.cast(data)
             elsif data.all? { |v| v.is_a?(Numeric) || v.nil? }
               Numo::DFloat.cast(data.map { |v| v || Float::NAN })
