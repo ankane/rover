@@ -1,3 +1,7 @@
+## 1.0.1 (unreleased)
+
+- Added support for positional argument to `any?` and `all?` methods
+
 ## 1.0.0 (2026-04-04)
 
 - Switched to `numo-narray-alt`

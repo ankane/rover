@@ -305,12 +305,12 @@ module Rover
       @data.cast_to(Numo::DFloat).var
     end
 
-    def all?(&block)
-      to_a.all?(&block)
+    def all?(...)
+      to_a.all?(...)
     end
 
-    def any?(&block)
-      to_a.any?(&block)
+    def any?(...)
+      to_a.any?(...)
     end
 
     def empty?
@@ -374,7 +374,7 @@ module Rover
     end
 
     def one_hot(drop: false, prefix: nil)
-      raise ArgumentError, "All elements must be strings" unless all? { |vi| vi.is_a?(String) }
+      raise ArgumentError, "All elements must be strings" unless all?(String)
 
       new_vectors = {}
       # maybe sort values first
