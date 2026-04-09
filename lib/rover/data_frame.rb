@@ -313,10 +313,10 @@ module Rover
 
       @vectors.each do |k, v|
         v = summarize ? v.first(5).to_a + ["..."] + v.last(5).to_a : v.to_a
-        width = ([k] + v).map(&:to_s).map(&:size).max
+        width = ([k] + v).map { |v2| v2.to_s.size }.max
         width = 3 if width < 3
 
-        if lines.empty? || lines[-2].map { |l| l.size + spaces }.sum + width > 120
+        if lines.empty? || lines[-2].sum { |l| l.size + spaces } + width > 120
           line_start = lines.size
           lines << []
           v.size.times do |i|
