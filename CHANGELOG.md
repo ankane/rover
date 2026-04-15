@@ -1,4 +1,4 @@
-## 1.0.1 (unreleased)
+## 1.0.1 (2026-04-15)
 
 - Added support for positional argument to `any?` and `all?` methods
 
