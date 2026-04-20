@@ -407,6 +407,52 @@ module Rover
       end
     end
 
+    # ranking the values in the Vector
+    def rank(ascending=true)
+      # return a Vector reporting the ranking of the input vector, in same order as original
+      raise ArgumentError, "All elements must be numeric" unless all? { |vi| vi.is_a?(Numeric) }
+      ascending = true unless !!ascending == ascending
+      data = @data.to_a.map { |x| x != x ? nil : x} # converts any NaN to nil; makes sorting easier
+
+      if ascending # default
+        sorted = data.sort { |a,b| a && b ? b <=> a : a ? -1 : 1 } # puts nulls at the end
+      else
+        sorted = data.sort { |a,b| a && b ? a <=> b : a ? -1 : 1 } # puts nulls at the end
+      end
+
+      Vector.new( data.map{ |e| e ? sorted.index(e)+1 : nil } )
+    end
+
+    def best_in(ascending=true)
+      # based on the last value of the input vector
+      # this returns the number of elements the last value is better than
+      # useful when the vector represents, for example, time-ordered data (e.g., "best value in 3 weeks!")
+      ascending = true unless !!ascending == ascending
+      arr = rank(ascending=ascending).to_a.reverse
+      idx = 0
+      arr.each do |e|
+        return idx if idx >= arr.length
+        return idx if arr[0] > e  
+        idx +=1
+      end
+      return idx
+    end
+
+    def worst_in(ascending=true)
+      # this is a compementary method to best_in      
+      # useful when the vector represents, for example, time-ordered data (e.g., "worst value in 3 weeks!")
+      # a worst_in() is like calling a best_in() in the opposite direction
+      ascending = true unless !!ascending == ascending
+      arr = rank(ascending=ascending).to_a.reverse
+      idx = 0
+      arr.each do |e|
+        return idx if idx >= arr.length        
+        return idx if arr[0] < e  
+        idx +=1
+      end
+      return idx
+    end
+
     private
 
     # for clone
