@@ -65,6 +65,8 @@ module Rover
     end
 
     def [](where)
+      return DataFrame.new(@vectors) if where.is_a?(Vector) && empty? && where.size.zero?
+
       if (where.is_a?(Vector) && where.to_numo.is_a?(Numo::Bit)) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all?(Integer))
         new_vectors = {}
         @vectors.each do |k, v|

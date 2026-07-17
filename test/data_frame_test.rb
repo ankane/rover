@@ -313,6 +313,16 @@ class DataFrameTest < Minitest::Test
     assert_vector [1, 3], df[where]["a"]
   end
 
+  def test_filtering_empty_data_frame
+    df = Rover::DataFrame.new({"a" => []})
+    filtered = df[Rover::Vector.new([])]
+
+    assert_instance_of Rover::DataFrame, filtered
+    assert filtered.empty?
+    assert_equal ["a"], filtered.keys
+    assert_vector [], filtered["a"]
+  end
+
   def test_reader_missing_column
     df = Rover::DataFrame.new({"hello" => [1, 2, 3], "hello2" => ["one", "two", "three"]})
     error = assert_raises(KeyError) do
