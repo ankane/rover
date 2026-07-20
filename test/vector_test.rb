@@ -549,13 +549,13 @@ class VectorTest < Minitest::Test
     assert_vector [5, 2, 5], vector
   end
 
-  def test_where
+  def test_filtering
     vector = Rover::Vector.new(1..3)
     where = Rover::Vector.new([true, false, true])
     assert_vector [1, 3], vector[where]
   end
 
-  def test_where_int_vector
+  def test_filtering_int_vector
     vector = Rover::Vector.new(1..3)
     where = Rover::Vector.new([0, 2])
     error = assert_raises(ArgumentError) do
