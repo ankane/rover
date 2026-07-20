@@ -522,6 +522,53 @@ class VectorTest < Minitest::Test
     assert_equal "Bad size: [2, 3]", error.message
   end
 
+  def test_select_int
+    vector = Rover::Vector.new(1..3)
+    assert_equal 2, vector[1]
+  end
+
+  def test_select_array
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[[0, 2]]
+  end
+
+  def test_select_range
+    vector = Rover::Vector.new(1..3)
+    assert_vector [2, 3], vector[1..]
+  end
+
+  def test_select_vector_bool
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[Rover::Vector.new([true, false, true])]
+  end
+
+  def test_select_vector_int
+    vector = Rover::Vector.new(1..3)
+    [:int8, :int16, :int32, :int64, :uint8, :uint16, :uint32, :uint64].each do |type|
+      assert_vector [1, 3], vector[Rover::Vector.new([0, 2], type: type)]
+    end
+    assert_vector [], vector[Rover::Vector.new([])]
+  end
+
+  def test_select_vector_string
+    vector = Rover::Vector.new(1..3)
+    error = assert_raises(ArgumentError) do
+      vector[Rover::Vector.new(["one"])]
+    end
+    assert_equal "Unsupported selector", error.message
+  end
+
+  def test_select_numo_bool
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[Numo::Bit.cast([true, false, true])]
+  end
+
+  def test_select_numo_int
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[Numo::Int64.cast([0, 2])]
+    assert_vector [], vector[Numo::Int64.cast([])]
+  end
+
   def test_setter
     vector = Rover::Vector.new(1..3)
     vector[1] = 5
@@ -547,53 +594,6 @@ class VectorTest < Minitest::Test
     vector = Rover::Vector.new(1..3)
     vector[[0, 2]] = 5
     assert_vector [5, 2, 5], vector
-  end
-
-  def test_filtering_int
-    vector = Rover::Vector.new(1..3)
-    assert_equal 2, vector[1]
-  end
-
-  def test_filtering_array
-    vector = Rover::Vector.new(1..3)
-    assert_vector [1, 3], vector[[0, 2]]
-  end
-
-  def test_filtering_range
-    vector = Rover::Vector.new(1..3)
-    assert_vector [2, 3], vector[1..]
-  end
-
-  def test_filtering_bool_vector
-    vector = Rover::Vector.new(1..3)
-    assert_vector [1, 3], vector[Rover::Vector.new([true, false, true])]
-  end
-
-  def test_filtering_int_vector
-    vector = Rover::Vector.new(1..3)
-    [:int8, :int16, :int32, :int64, :uint8, :uint16, :uint32, :uint64].each do |type|
-      assert_vector [1, 3], vector[Rover::Vector.new([0, 2], type: type)]
-    end
-    assert_vector [], vector[Rover::Vector.new([])]
-  end
-
-  def test_filtering_string_vector
-    vector = Rover::Vector.new(1..3)
-    error = assert_raises(ArgumentError) do
-      vector[Rover::Vector.new(["one"])]
-    end
-    assert_equal "Unsupported selector", error.message
-  end
-
-  def test_filtering_numo_bool
-    vector = Rover::Vector.new(1..3)
-    assert_vector [1, 3], vector[Numo::Bit.cast([true, false, true])]
-  end
-
-  def test_filtering_numo_int
-    vector = Rover::Vector.new(1..3)
-    assert_vector [1, 3], vector[Numo::Int64.cast([0, 2])]
-    assert_vector [], vector[Numo::Int64.cast([])]
   end
 
   def test_each

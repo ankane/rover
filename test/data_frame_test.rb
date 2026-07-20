@@ -295,25 +295,59 @@ class DataFrameTest < Minitest::Test
     assert_equal ["a"], df.vector_names
   end
 
-  def test_select
+  def test_select_int
+    df = Rover::DataFrame.new({"a" => [1, 2, 3]})
+    assert_vector [2], df[1]["a"]
+  end
+
+  def test_select_string
+    df = Rover::DataFrame.new({"a" => [1, 2, 3]})
+    assert_vector [1, 2, 3], df["a"]
+  end
+
+  def test_select_array_int
+    df = Rover::DataFrame.new({"a" => [1, 2, 3]})
+    assert_vector [1, 3], df[[0, 2]]["a"]
+  end
+
+  def test_select_array_string
     df = Rover::DataFrame.new({"a" => 1..3, "b" => 1..3, "c" => 1..3})
     assert_equal ["a", "b"], df[["a", "b"]].vector_names
   end
 
-  def test_reader
+  def test_select_range
     df = Rover::DataFrame.new({"a" => [1, 2, 3]})
-    assert_vector [2], df[1]["a"]
     assert_vector [1, 2], df[0..1]["a"]
-    assert_vector [1, 3], df[[0, 2]]["a"]
   end
 
-  def test_reader_where
+  def test_select_vector_bool
     df = Rover::DataFrame.new({"a" => [1, 2, 3]})
     where = Rover::Vector.new([true, false, true])
     assert_vector [1, 3], df[where]["a"]
   end
 
-  def test_reader_missing_column
+  def test_select_vector_int
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    expected = Rover::DataFrame.new({"a" => [1, 3], "b" => ["one", "three"]})
+    assert_equal expected, df[Rover::Vector.new([0, 2])]
+  end
+
+  def test_select_and
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_vector [2], df[(df["a"] > 1) & (df["b"] == "two")]["a"]
+  end
+
+  def test_select_or
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_vector [2, 3], df[(df["a"] > 2) | (df["b"] == "two")]["a"]
+  end
+
+  def test_select_xor
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_vector [3], df[(df["a"] > 1) ^ (df["b"] == "two")]["a"]
+  end
+
+  def test_select_missing_column
     df = Rover::DataFrame.new({"hello" => [1, 2, 3], "hello2" => ["one", "two", "three"]})
     error = assert_raises(KeyError) do
       df[["hello", "hello3"]]
@@ -322,6 +356,13 @@ class DataFrameTest < Minitest::Test
     assert_match "Missing column: hello3", message
     assert_match %{Did you mean?  "hello"}, message
     assert_match "hello2", message
+  end
+
+  def test_select_unsupported_selector
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_output(nil, /\[rover\] Unsupported selector/) do
+      assert_nil df[Object.new]
+    end
   end
 
   def test_setter
@@ -338,34 +379,6 @@ class DataFrameTest < Minitest::Test
     df = Rover::DataFrame.new
     df["a"] = [1, 2, 3]
     assert_vector [1, 2, 3], df["a"]
-  end
-
-  def test_filtering_and
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    assert_vector [2], df[(df["a"] > 1) & (df["b"] == "two")]["a"]
-  end
-
-  def test_filtering_or
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    assert_vector [2, 3], df[(df["a"] > 2) | (df["b"] == "two")]["a"]
-  end
-
-  def test_filtering_xor
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    assert_vector [3], df[(df["a"] > 1) ^ (df["b"] == "two")]["a"]
-  end
-
-  def test_filtering_int_vector
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    expected = Rover::DataFrame.new({"a" => [1, 3], "b" => ["one", "three"]})
-    assert_equal expected, df[Rover::Vector.new([0, 2])]
-  end
-
-  def test_filtering_unsupported_selector
-    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
-    assert_output(nil, /\[rover\] Unsupported selector/) do
-      assert_nil df[Object.new]
-    end
   end
 
   def test_inspect
