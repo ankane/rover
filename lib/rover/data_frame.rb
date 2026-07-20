@@ -65,6 +65,7 @@ module Rover
     end
 
     def [](where)
+      # TODO use path for all vectors in 2.0
       if (where.is_a?(Vector) && (where.type == :bool || Vector::INTEGER_TYPES.include?(where.type))) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all?(Integer))
         new_vectors = {}
         @vectors.each do |k, v|
