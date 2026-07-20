@@ -1,3 +1,7 @@
+## 1.1.0 (unreleased)
+
+- Added support for integer vectors to `[]` method
+
 ## 1.0.1 (2026-04-15)
 
 - Added support for positional argument to `any?` and `all?` methods

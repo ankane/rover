@@ -65,7 +65,7 @@ module Rover
     end
 
     def [](where)
-      if (where.is_a?(Vector) && where.to_numo.is_a?(Numo::Bit)) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all?(Integer))
+      if where.is_a?(Vector) || where.is_a?(Numeric) || where.is_a?(Range) || (where.is_a?(Array) && where.all?(Integer))
         new_vectors = {}
         @vectors.each do |k, v|
           new_vectors[k] = v[where]
@@ -80,6 +80,9 @@ module Rover
         end
         df
       else
+        unless where.is_a?(String) || where.is_a?(Symbol)
+          warn "[rover] Unsupported selector"
+        end
         # single column
         @vectors[where.to_s]
       end

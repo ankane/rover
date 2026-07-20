@@ -355,6 +355,19 @@ class DataFrameTest < Minitest::Test
     assert_vector [3], df[(df["a"] > 1) ^ (df["b"] == "two")]["a"]
   end
 
+  def test_filtering_int_vector
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    expected = Rover::DataFrame.new({"a" => [1, 3], "b" => ["one", "three"]})
+    assert_equal expected, df[Rover::Vector.new([0, 2])]
+  end
+
+  def test_filtering_unsupported_selector
+    df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
+    assert_output(nil, /\[rover\] Unsupported selector/) do
+      assert_nil df[Object.new]
+    end
+  end
+
   def test_inspect
     df = Rover::DataFrame.new({"a" => 1..5, "b" => ["one", "two", "three", "four", "five"]})
     assert_equal "  a      b\n  1    one\n  2    two\n  3  three\n  4   four\n  5   five", df.inspect
