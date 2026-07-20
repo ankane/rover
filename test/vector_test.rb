@@ -570,6 +570,17 @@ class VectorTest < Minitest::Test
     assert_equal "Unsupported selector", error.message
   end
 
+  def test_filtering_numo_bool
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[Numo::Bit.cast([true, false, true])]
+  end
+
+  def test_filtering_numo_int
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[Numo::Int64.cast([0, 2])]
+    assert_vector [], vector[Numo::Int64.cast([])]
+  end
+
   def test_each
     vector = Rover::Vector.new(1..3)
     values = []
