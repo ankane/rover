@@ -555,6 +555,15 @@ class VectorTest < Minitest::Test
     assert_vector [1, 3], vector[where]
   end
 
+  def test_where_int_vector
+    vector = Rover::Vector.new(1..3)
+    where = Rover::Vector.new([0, 2])
+    error = assert_raises(ArgumentError) do
+      assert_vector [1, 3], vector[where]
+    end
+    assert_equal "Expected bool vector", error.message
+  end
+
   def test_each
     vector = Rover::Vector.new(1..3)
     values = []

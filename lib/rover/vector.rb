@@ -87,6 +87,9 @@ module Rover
 
     def [](v)
       if v.is_a?(Vector)
+        if v.type != :bool
+          raise ArgumentError, "Expected bool vector"
+        end
         Vector.new(v.to_numo.mask(@data))
       elsif v.is_a?(Numeric)
         @data[v]
