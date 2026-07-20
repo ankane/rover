@@ -358,7 +358,7 @@ class DataFrameTest < Minitest::Test
     assert_match "hello2", message
   end
 
-  def test_select_unsupported_selector
+  def test_select_unsupported
     df = Rover::DataFrame.new({"a" => [1, 2, 3], "b" => ["one", "two", "three"]})
     assert_output(nil, /\[rover\] Unsupported selector/) do
       assert_nil df[Object.new]
