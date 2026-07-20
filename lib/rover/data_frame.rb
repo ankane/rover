@@ -89,6 +89,7 @@ module Rover
         unless where.is_a?(String) || where.is_a?(Symbol)
           warn "[rover] Unsupported selector"
         end
+
         # single column
         @vectors[where.to_s]
       end
