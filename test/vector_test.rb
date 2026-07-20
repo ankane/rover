@@ -549,7 +549,22 @@ class VectorTest < Minitest::Test
     assert_vector [5, 2, 5], vector
   end
 
-  def test_filtering
+  def test_filtering_int
+    vector = Rover::Vector.new(1..3)
+    assert_equal 2, vector[1]
+  end
+
+  def test_filtering_array
+    vector = Rover::Vector.new(1..3)
+    assert_vector [1, 3], vector[[0, 2]]
+  end
+
+  def test_filtering_range
+    vector = Rover::Vector.new(1..3)
+    assert_vector [2, 3], vector[1..]
+  end
+
+  def test_filtering_bool_vector
     vector = Rover::Vector.new(1..3)
     assert_vector [1, 3], vector[Rover::Vector.new([true, false, true])]
   end
