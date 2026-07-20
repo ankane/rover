@@ -87,10 +87,14 @@ module Rover
 
     def [](v)
       if v.is_a?(Vector)
-        if v.type != :bool
-          raise ArgumentError, "Expected bool vector"
+        case v.type
+        when :bool
+          Vector.new(v.to_numo.mask(@data))
+        when :int8, :int16, :int32, :int64, :uint8, :uint16, :uint32, :uint64
+          Vector.new(@data[v.to_numo])
+        else
+          raise ArgumentError, "Unsupported selector"
         end
-        Vector.new(v.to_numo.mask(@data))
       elsif v.is_a?(Numeric)
         @data[v]
       else

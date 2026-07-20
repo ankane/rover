@@ -551,17 +551,23 @@ class VectorTest < Minitest::Test
 
   def test_filtering
     vector = Rover::Vector.new(1..3)
-    where = Rover::Vector.new([true, false, true])
-    assert_vector [1, 3], vector[where]
+    assert_vector [1, 3], vector[Rover::Vector.new([true, false, true])]
   end
 
   def test_filtering_int_vector
     vector = Rover::Vector.new(1..3)
-    where = Rover::Vector.new([0, 2])
-    error = assert_raises(ArgumentError) do
-      assert_vector [1, 3], vector[where]
+    [:int8, :int16, :int32, :int64, :uint8, :uint16, :uint32, :uint64].each do |type|
+      assert_vector [1, 3], vector[Rover::Vector.new([0, 2], type: type)]
     end
-    assert_equal "Expected bool vector", error.message
+    assert_vector [], vector[Rover::Vector.new([])]
+  end
+
+  def test_filtering_string_vector
+    vector = Rover::Vector.new(1..3)
+    error = assert_raises(ArgumentError) do
+      vector[Rover::Vector.new(["one"])]
+    end
+    assert_equal "Unsupported selector", error.message
   end
 
   def test_each
