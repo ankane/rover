@@ -23,6 +23,9 @@ module Rover
 
     NOT_SET = Object.new
 
+    # private
+    INTEGER_TYPES = [:int8, :int16, :int32, :int64, :uint8, :uint16, :uint32, :uint64]
+
     def initialize(data, type: nil)
       @data = cast_data(data, type: type)
       raise ArgumentError, "Bad size: #{@data.shape}" unless @data.ndim == 1
@@ -90,7 +93,7 @@ module Rover
         case v.type
         when :bool
           Vector.new(v.to_numo.mask(@data))
-        when :int8, :int16, :int32, :int64, :uint8, :uint16, :uint32, :uint64
+        when *INTEGER_TYPES
           Vector.new(@data[v.to_numo])
         else
           raise ArgumentError, "Unsupported selector"
