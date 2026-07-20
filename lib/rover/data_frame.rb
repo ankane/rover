@@ -72,6 +72,11 @@ module Rover
         end
         DataFrame.new(new_vectors)
       elsif where.is_a?(Array)
+        # TODO raise error in 2.0
+        unless where.all? { |v| v.is_a?(String) || v.is_a?(Symbol) }
+          warn "[rover] Unsupported selector"
+        end
+
         # multiple columns
         df = DataFrame.new
         where.each do |k|
@@ -80,6 +85,7 @@ module Rover
         end
         df
       else
+        # TODO raise error in 2.0
         unless where.is_a?(String) || where.is_a?(Symbol)
           warn "[rover] Unsupported selector"
         end
