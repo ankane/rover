@@ -1,4 +1,4 @@
-## 1.1.0 (unreleased)
+## 1.1.0 (2026-08-15)
 
 - Added support for integer vectors to `[]` method
 
