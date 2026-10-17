@@ -63,7 +63,7 @@ module Rover
       end
 
       data = {}
-      keys = table_headers.map { |k| [k, true] }.to_h
+      keys = table_headers.to_h { |k| [k, true] }
       unnamed_suffix = 1
       table_headers.each_with_index do |k, i|
         if k.nil? || k.empty?

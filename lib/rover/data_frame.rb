@@ -100,7 +100,7 @@ module Rover
       return enum_for(:each_row) unless block_given?
 
       size.times do |i|
-        yield @vectors.map { |k, v| [k, v[i]] }.to_h
+        yield @vectors.to_h { |k, v| [k, v[i]] }
       end
     end
 
@@ -110,7 +110,7 @@ module Rover
     end
 
     def types
-      @vectors.map { |k, v| [k, v.type] }.to_h
+      @vectors.to_h { |k, v| [k, v.type] }
     end
 
     def []=(k, v)
@@ -350,7 +350,7 @@ module Rover
     def sort_by!
       indexes =
         size.times.sort_by do |i|
-          yield @vectors.map { |k, v| [k, v[i]] }.to_h
+          yield @vectors.to_h { |k, v| [k, v[i]] }
         end
 
       @vectors.each do |k, v|
